@@ -1,0 +1,18 @@
+body {
+    font-family:"Helvetica Neue", "Sans Serif", Arial;
+}
+
+th, td {
+    border:1px solid black;
+    padding:0.2em;
+    min-width:80px;
+    max-width:200px;
+}
+thead {
+    border-bottom:1px double black;
+}
+table {
+    border-collapse:collapse;
+    font-family:inherit;
+    font-size:12px;
+}
