@@ -14,6 +14,8 @@ let $v_commodity := request:get-parameter('commodity', 'wheat')
 let $v_unit:= request:get-parameter('unit', 'kile')
 let $v_year-start:= request:get-parameter('year-start', '1850')
 let $v_year-stop:= request:get-parameter('year-stop', '1950')
+(: set a separator to separate values in the resulting file:)
+let $v_separator := ','
 
 (:let $vStyleRefs := doc('/db/BachSources/xslt/Tss2Html-refs-link.xsl'):)
 let $vStyleMeasureGrp := doc('/db/BachSources/xslt/Tei2Csv-measureGrp-normalised.xsl')
@@ -29,7 +31,7 @@ let $vValueList :=    for $vMeasureGrp in $vMeasureGrps/self::tei:measureGrp
     let $vDateFormatted := concat($vDate/@year, '-', format-number($vDate/@month, '00'), '-', format-number($vDate/@day, '00'))
     order by $vDateFormatted
     return
-         concat($vDateFormatted,';',transform:transform($vMeasureGrp, $vStyleMeasureGrp, <parameters><param name="pCommodity" value="{$v_commodity}"/><param name="pUnit" value="{$v_unit}"/></parameters>))
+         concat($vDateFormatted,$v_separator,transform:transform($vMeasureGrp, $vStyleMeasureGrp, <parameters><param name="pCommodity" value="{$v_commodity}"/><param name="pUnit" value="{$v_unit}"/><param name="p_separator" value="{$v_separator}"/></parameters>))
 
 return 
 $vValueList
