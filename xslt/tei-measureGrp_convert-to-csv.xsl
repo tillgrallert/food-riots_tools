@@ -21,15 +21,15 @@
     <xsl:param name="p_normalize" select="true()"/>
     <xsl:variable name="v_new-line" select="'&#x0A;'"/>
     
-    <xsl:template match="/">
+    <!--<xsl:template match="/">
         <xsl:apply-templates select="descendant::tei:measureGrp" mode="m_tei-to-csv"/>
-    </xsl:template>
+    </xsl:template>-->
     
     <!-- currently this nested <tei:measureGrp>s -->
     <xsl:template match="tei:measureGrp" mode="m_tei-to-csv">
-        <xsl:value-of select="$v_new-line"/>
         <xsl:apply-templates select="tei:measure[not(@commodity='currency')]" mode="m_tei-to-csv"/>
         <xsl:apply-templates select="tei:measure[@commodity='currency']" mode="m_tei-to-csv"/>
+        <xsl:value-of select="$v_new-line"/>
     </xsl:template>
     
     <xsl:template match="tei:measure" mode="m_tei-to-csv">
@@ -46,7 +46,8 @@
         <xsl:value-of select="$v_normalized/tei:measure/@commodity"/><xsl:value-of select="$p_separator"/>
         <xsl:value-of select="$v_normalized/tei:measure/@quantity"/><xsl:value-of select="$p_separator"/>
         <xsl:value-of select="$v_normalized/tei:measure/@unit"/>
-        <xsl:if test="following-sibling::tei:measure">
+        <!-- since the output re-sorts the child elements, following-sibling:: is not the correct axis -->
+        <xsl:if test="count(parent::node()/tei:measure) &gt; 1">
             <xsl:value-of select="$p_separator"/>
         </xsl:if>
     </xsl:template>
