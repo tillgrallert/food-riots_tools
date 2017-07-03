@@ -4,15 +4,15 @@ declare namespace tss="http://www.thirdstreetsoftware.com/SenteXML-1.0";
 declare namespace tei="http://www.tei-c.org/ns/1.0";
 declare namespace html="http://www.w3.org/1999/xhtml";
 
-declare option exist:serialize 'method=xhtml media-type=text/html indent=yes';
-     
-let $vLib := doc('/db/BachSources/xml/SourcesClean160620.TSS.xml')
-(: let $vNyms := doc('/db/BachSources/xml/NymMaster.TEIP5.xml') :)
-let $v_commodity :=request:get-parameter('commodity','wheat')
+declare option serialize 'method=xhtml media-type=text/html indent=yes';
+
+(: select all TSS.xml files in a directory :)
+let $v_lib := collection('/Volumes/Dessau HD/BachUni/BachBibliothek/GitHub/Sente/tss_data?select=*.TSS.xml')
+let $v_commodity :='wheat'
 
 let $vStyleRefs := doc('/db/BachSources/xslt/Tss2Html-refs-link.xsl')
 let $vStyleMeasureGrp := doc('/db/BachSources/xslt/Tei2Html-measureGrp-table.xsl')
-let $vMeasureGrps := for $vHit in $vLib/descendant::tss:reference[./tss:publicationType[not(@name='Archival File')]]/descendant::tei:measureGrp[not(ancestor::tei:measureGrp)][descendant::tei:measure/@commodity=$v_commodity]
+let $vMeasureGrps := for $vHit in $v_lib/descendant::tss:reference[./tss:publicationType[not(@name='Archival File')]]/descendant::tei:measureGrp[not(ancestor::tei:measureGrp)][descendant::tei:measure/@commodity=$v_commodity]
     return $vHit
     
 (: construct a search form :)
