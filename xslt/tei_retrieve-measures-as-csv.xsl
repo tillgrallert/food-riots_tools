@@ -10,7 +10,7 @@
 <!--    <xsl:include href="tei-measure_normalize.xsl"/>-->
     <xsl:include href="tei-measureGrp_convert-to-csv.xsl"/>
     
-    <xsl:param name="p_commodity" select="'peas'"/>
+    <xsl:param name="p_commodity" select="''"/>
     <xsl:param name="p_debug" select="true()"/>
     
     <xsl:variable name="v_data-source">
@@ -27,12 +27,25 @@
     </xsl:variable>
     
     <xsl:template match="/">
+        <!-- one line for each normalized tei:measureGrp:
+        1. column: should information on dates
+        2. column: full copy of the original data
+        3. column and following: normalized CSV data -->
+        <xsl:value-of select="$v_new-line"/>
         <xsl:choose>
             <xsl:when test="$p_commodity!=''">
-                <xsl:apply-templates select="$v_data-source/descendant::tei:measureGrp[descendant::tei:measure[@commodity=$p_commodity]]" mode="m_tei-to-csv"/>
+                <xsl:apply-templates select="$v_data-source/descendant::tei:measureGrp[descendant::tei:measure[@commodity=$p_commodity]]" mode="m_tei-to-csv">
+                    <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@year"/>
+                    <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@month"/>
+                    <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@day"/>
+                </xsl:apply-templates>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:apply-templates select="$v_data-source/descendant::tei:measureGrp" mode="m_tei-to-csv"/>
+                <xsl:apply-templates select="$v_data-source/descendant::tei:measureGrp" mode="m_tei-to-csv">
+                    <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@year"/>
+                    <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@month"/>
+                    <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@day"/>
+                </xsl:apply-templates>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
