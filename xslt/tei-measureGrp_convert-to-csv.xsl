@@ -63,7 +63,12 @@
             <xsl:when test="@year and @month and @day">
                 <xsl:value-of select="concat(format-number(@year,'0000'),'-',format-number(@month,'00'),'-',format-number(@day,'00'))"/>
             </xsl:when>
-            
+            <xsl:when test="@year and @month">
+                <xsl:value-of select="concat(format-number(@year,'0000'),'-',format-number(@month,'00'),'-01')"/>
+            </xsl:when>
+            <xsl:when test="@year">
+                <xsl:value-of select="concat(format-number(@year,'0000'),'-01-01')"/>
+            </xsl:when>
         </xsl:choose>
     </xsl:template>
 </xsl:stylesheet>
