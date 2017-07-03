@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/css" href="../../tss_tools/tss.css"?><tss:senteContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns:tss="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    xmlns="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    version="1.0"
+                    xsi:schemaLocation="http://www.thirdstreetsoftware.com/SenteXML-1.0 SenteXML.xsd">
+   <tss:library>
+      <tss:references>
+         <tss:reference xmlns:html="http://www.w3.org/1999/xhtml"
+                        xmlns:tei="http://www.tei-c.org/ns/1.0">
+            <tss:publicationType name="Photograph"/>
+            <tss:authors>
+               <tss:author role="Photographer">
+                  <tss:surname>Bonfils</tss:surname>
+                  <tss:forenames/>
+                  <tss:initials/>
+               </tss:author>
+            </tss:authors>
+            <tss:dates>
+               <tss:date type="Entry" day="17" month="9" year="2015"/>
+               <tss:date type="Modification" day="17" month="9" year="2015"/>
+            </tss:dates>
+            <tss:characteristics>
+               <tss:characteristic name="articleTitle">Image 86: Tartavanne ou palanquin de voyage [c 1867-c 1914]. SYRIA, Types &amp; Scenes.</tss:characteristic>
+               <tss:characteristic name="publicationTitle">Album 407 [c 1867-c 1914]</tss:characteristic>
+               <tss:characteristic name="abstractText">Image 86: Tartavanne ou palanquin de voyage [c 1867-c 1914]. SYRIA, Types &amp; Scenes.<html:br/>Photo of an American tourist travelling in a sedan chair carried by mules. An American flag (stars and stripes) is mounted on the sedan.</tss:characteristic>
+               <tss:characteristic name="publicationCountry">Beyrouth</tss:characteristic>
+               <tss:characteristic name="publisher">Maison Bonfils</tss:characteristic>
+               <tss:characteristic name="rating">3</tss:characteristic>
+               <tss:characteristic name="UUID">3239B9F4-00C9-4234-B3B5-00F47BDCFCA8</tss:characteristic>
+               <tss:characteristic name="publicationStatus">Unknown</tss:characteristic>
+               <tss:characteristic name="call-num">EAP644/1/40 TFDC_407_136_0689</tss:characteristic>
+               <tss:characteristic name="Item">689</tss:characteristic>
+               <tss:characteristic name="Signatur">EAP644/1/40 TFDC_407_136_0689</tss:characteristic>
+               <tss:characteristic name="Repository">EAP</tss:characteristic>
+               <tss:characteristic name="Citation identifier">TFDC_407_136_0689</tss:characteristic>
+               <tss:characteristic name="Album">407</tss:characteristic>
+               <tss:characteristic name="URL">http://eap.bl.uk/EAPDigitalItems/EAP644/EAP644_1_40-TFDC_407_136_0689_01_L.jpg</tss:characteristic>
+               <tss:characteristic name="collection">The Fouad Debbas Collection</tss:characteristic>
+            </tss:characteristics>
+            <tss:keywords>
+               <tss:keyword assigner="Sente User Sebastian">Lebanon</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Palestine</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">People</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Photograph</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Portrait</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Source</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Syria</tss:keyword>
+            </tss:keywords>
+            <tss:attachments>
+               <tss:attachmentReference>
+                  <name>URL Scan 1</name>
+                  <URL>http://eap.bl.uk/EAPDigitalItems/EAP644/EAP644_1_40-TFDC_407_136_0689_01_L.jpg</URL>
+               </tss:attachmentReference>
+               <tss:attachmentReference>
+                  <name>URL Scan 2</name>
+                  <URL>http://eap.bl.uk/EAPDigitalItems/EAP644/EAP644_1_40-TFDC_407_136_0689_02_L.jpg</URL>
+               </tss:attachmentReference>
+               <tss:attachmentReference>
+                  <name>Scan 1</name>
+                  <URL>file:///BachUni/SelfSyncingLibraries/SenteLibrary/BachBibliographie.sente6lib/Contents/Attachments/Bonfils/Album%20407%20%5Bc%201867-c%201914%5D%20Image%2086%20Tartavanne%20ou%20palanquin%20de%20voyage%20%5Bc%201867-c%201914%5D.%20SYRIA%2C%20Types.jpg</URL>
+               </tss:attachmentReference>
+            </tss:attachments>
+         </tss:reference>
+      </tss:references>
+   </tss:library>
+</tss:senteContainer>

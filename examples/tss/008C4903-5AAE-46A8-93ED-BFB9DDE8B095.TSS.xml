@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/css" href="../../tss_tools/tss.css"?><tss:senteContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns:tss="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    xmlns="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    version="1.0"
+                    xsi:schemaLocation="http://www.thirdstreetsoftware.com/SenteXML-1.0 SenteXML.xsd">
+   <tss:library>
+      <tss:references>
+         <tss:reference xmlns:html="http://www.w3.org/1999/xhtml"
+                        xmlns:tei="http://www.tei-c.org/ns/1.0">
+            <tss:publicationType name="Newspaper article"/>
+            <tss:dates>
+               <tss:date type="Publication" day="28" month="10" year="1878"/>
+               <tss:date type="Entry" day="16" month="11" year="2010"/>
+               <tss:date type="Modification" day="23" month="2" year="2016"/>
+            </tss:dates>
+            <tss:characteristics>
+               <tss:characteristic name="articleTitle">murāsilāt: al-shām fī 23 al-jārī</tss:characteristic>
+               <tss:characteristic name="publicationTitle">lisān al-ḥāl</tss:characteristic>
+               <tss:characteristic name="abstractText">[achievements of the] Reform program, public works: every since the formation of a municipality the people complained about the absence of any real works being done by this administrative body. now, as corruption is dealt with, we see improvements of large roads (al-jādāt al-kabīra), such as the alleys of the Mīdān and Ṣāliḥiyya, which had been solidly paved, beautification of the citadel, its connection with a fine road for pedestrians and coaches. these two most important alleys are in a bad state: in the summer heavy clouds of dust rise into the air and during the winter they are flooded with water, so that it is easier to take small boats.<html:br/>
+                  <html:br/>- in some alleyways and aswāq, lamps are ignited at night but they do not help the people to actually see anything. but <tei:measureGrp>the officials of the lamps collect from each shop or warehouse <tei:measure commodity="currency" unit="ops" quantity="5">Ps 5</tei:measure> 
+                     <tei:measure commodity="tax" unit="month" quantity="1">per mensem as a tax for the majlis al-baladiyya</tei:measure>
+                  </tei:measureGrp>
+                  <html:br/>- it had been announced that the local municipality will closely follow the example of Beirut, both nothing had happened. as some £T 3.000 are annually collected for the repair of the city, something should be done!</tss:characteristic>
+               <tss:characteristic name="language">arabic</tss:characteristic>
+               <tss:characteristic name="publicationCountry">Bayrūt</tss:characteristic>
+               <tss:characteristic name="rating">2</tss:characteristic>
+               <tss:characteristic name="status">Complete</tss:characteristic>
+               <tss:characteristic name="UUID">008C4903-5AAE-46A8-93ED-BFB9DDE8B095</tss:characteristic>
+               <tss:characteristic name="volume">101</tss:characteristic>
+               <tss:characteristic name="ISSN">lisān al-ḥāl</tss:characteristic>
+               <tss:characteristic name="Signatur">Mic-Na:000111</tss:characteristic>
+               <tss:characteristic name="Short Titel">Lisān</tss:characteristic>
+               <tss:characteristic name="EndNote reference number">967</tss:characteristic>
+               <tss:characteristic name="Physical description">microfilm reel.</tss:characteristic>
+               <tss:characteristic name="Standort">AUB</tss:characteristic>
+               <tss:characteristic name="Citation identifier">lisan 101</tss:characteristic>
+            </tss:characteristics>
+            <tss:keywords>
+               <tss:keyword assigner="Sente User Sebastian">critique, authorities</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Midan</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Road works</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Salihiyya</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Street cleaning</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Street lighting</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">taxation</tss:keyword>
+               <tss:keyword assigner="Sente User till">baladiyya</tss:keyword>
+               <tss:keyword assigner="Sente User till">biweekly</tss:keyword>
+               <tss:keyword assigner="Sente User till">Digital copy</tss:keyword>
+               <tss:keyword assigner="Sente User till">newspaper/periodical</tss:keyword>
+               <tss:keyword assigner="Sente User till">Read</tss:keyword>
+               <tss:keyword assigner="Sente User till">reforms</tss:keyword>
+               <tss:keyword assigner="Sente User till">Source</tss:keyword>
+               <tss:keyword assigner="Sente User XSLT">referenced: PhD thesis</tss:keyword>
+            </tss:keywords>
+            <tss:attachments>
+               <tss:attachmentReference type="PDF (Portable Document Format)">
+                  <URL>file:///BachCore/SenteLibrary/BachBibliographie.sente6lib/Contents/Attachments/!%20Unknown%20Author(s)/1878%20lisa%CC%84n%20al-h%CC%A3a%CC%84l%20101%20mura%CC%84sila%CC%84t%20al-sha%CC%84m%20fi%CC%84%2023%20al-ja%CC%84ri%CC%84%20%232.pdf</URL>
+               </tss:attachmentReference>
+            </tss:attachments>
+         </tss:reference>
+      </tss:references>
+   </tss:library>
+</tss:senteContainer>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/css" href="../../tss_tools/tss.css"?><tss:senteContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns:tss="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    xmlns="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    version="1.0"
+                    xsi:schemaLocation="http://www.thirdstreetsoftware.com/SenteXML-1.0 SenteXML.xsd">
+   <tss:library>
+      <tss:references>
+         <tss:reference xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                        xmlns:html="http://www.w3.org/1999/xhtml"
+                        xmlns:tei="http://www.tei-c.org/ns/1.0">
+            <tss:publicationType name="Newspaper article"/>
+            <tss:dates>
+               <tss:date type="Publication" day="2" month="11" year="1908"/>
+               <tss:date type="Entry" day="15" month="8" year="2011"/>
+               <tss:date type="Modification" day="5" month="12" year="2012"/>
+            </tss:dates>
+            <tss:characteristics>
+               <tss:characteristic name="articleTitle">al-astāna</tss:characteristic>
+               <tss:characteristic name="publicationTitle">al-bashīr</tss:characteristic>
+               <tss:characteristic name="abstractText">2Astana: the ministry of justice instructed the provinces to supply lists with those prisoners who were sentenced for possession of illegal arms and civil strife (ithārat al-fitan) <html:br/> 2Astana: since the declaration of constitutional rights some 380 permits were granted to new newspapers and 38 new printing presses</tss:characteristic>
+               <tss:characteristic name="language">arabic</tss:characteristic>
+               <tss:characteristic name="pages">2</tss:characteristic>
+               <tss:characteristic name="publicationCountry">Bayrūt</tss:characteristic>
+               <tss:characteristic name="publisher">Maṭbaʿat al-Ābāʾ al-Yasūʿiyīn</tss:characteristic>
+               <tss:characteristic name="UUID">3237DC27-C9C6-440A-88E9-A05177E6720A</tss:characteristic>
+               <tss:characteristic name="volume">1882</tss:characteristic>
+               <tss:characteristic name="ISSN">al-Bashīr</tss:characteristic>
+               <tss:characteristic name="call-num">Mic-Na:54-8</tss:characteristic>
+               <tss:characteristic name="Short Titel">Bashīr</tss:characteristic>
+               <tss:characteristic name="Signatur">Mic-Na:54-8</tss:characteristic>
+               <tss:characteristic name="Standort">AUB</tss:characteristic>
+               <tss:characteristic name="Citation identifier">bashir 1882</tss:characteristic>
+               <tss:characteristic name="publicationStatus">Published</tss:characteristic>
+            </tss:characteristics>
+            <tss:keywords>
+               <tss:keyword assigner="DublinCore">Arabic newspapers</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">expanding government control</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Ottoman Empire</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">permit</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Press</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Prison</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Prisoners</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">provincial level</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">reform program</tss:keyword>
+               <tss:keyword assigner="Sente User till">newspaper/periodical</tss:keyword>
+               <tss:keyword assigner="Sente User till">Source</tss:keyword>
+               <tss:keyword assigner="Sente User till">weekly</tss:keyword>
+            </tss:keywords>
+            <tss:attachments>
+               <tss:attachmentReference>
+                  <URL xmlns="">file://localhost/BachUni/BachBibliothek/SenteLib/BachBibliographie.sente6lib/Contents/Attachments/!%20Unknown%20Author(s)/1908%20al-bash%C4%ABr%201882%20al-ast%C4%81na.pdf</URL>
+               </tss:attachmentReference>
+               <tss:attachmentReference>
+                  <URL xmlns="">file://localhost/BachUni/BachBibliothek/SenteLib/BachBibliographie.sente6lib/Contents/Attachments/!%20Unknown%20Author(s)/1908%20al-bash%C4%ABr%201882%20al-ast%C4%81na.pdf</URL>
+               </tss:attachmentReference>
+            </tss:attachments>
+         </tss:reference>
+      </tss:references>
+   </tss:library>
+</tss:senteContainer>

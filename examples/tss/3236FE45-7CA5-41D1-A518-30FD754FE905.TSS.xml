@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/css" href="../../tss_tools/tss.css"?><tss:senteContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns:tss="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    xmlns="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    version="1.0"
+                    xsi:schemaLocation="http://www.thirdstreetsoftware.com/SenteXML-1.0 SenteXML.xsd">
+   <tss:library>
+      <tss:references>
+         <tss:reference xmlns:html="http://www.w3.org/1999/xhtml"
+                        xmlns:tei="http://www.tei-c.org/ns/1.0">
+            <tss:publicationType name="Archival Periodical"/>
+            <tss:dates>
+               <tss:date type="Publication" day="15" month="8" year="1881"/>
+               <tss:date type="Retrieval" day="27" month="02" year="2014"/>
+               <tss:date type="Entry" day="27" month="2" year="2014"/>
+               <tss:date type="Modification" day="21" month="1" year="2015"/>
+            </tss:dates>
+            <tss:characteristics>
+               <tss:characteristic name="articleTitle">16</tss:characteristic>
+               <tss:characteristic name="publicationTitle">al-Jinān</tss:characteristic>
+               <tss:characteristic name="issue">16</tss:characteristic>
+               <tss:characteristic name="language">Arabic</tss:characteristic>
+               <tss:characteristic name="pages">481-512</tss:characteristic>
+               <tss:characteristic name="publicationCountry">Bayrūt</tss:characteristic>
+               <tss:characteristic name="publisher">Maṭbaʿa al-Maʿārif</tss:characteristic>
+               <tss:characteristic name="UUID">3236FE45-7CA5-41D1-A518-30FD754FE905</tss:characteristic>
+               <tss:characteristic name="volume">12</tss:characteristic>
+               <tss:characteristic name="Short Titel">Jinān</tss:characteristic>
+               <tss:characteristic name="Repository">PUL</tss:characteristic>
+               <tss:characteristic name="Standort">Princeton</tss:characteristic>
+               <tss:characteristic name="Citation identifier">jinan 12-16</tss:characteristic>
+               <tss:characteristic name="publicationStatus">Published</tss:characteristic>
+            </tss:characteristics>
+            <tss:keywords>
+               <tss:keyword assigner="Sente User Sebastian">fortnightly</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">newspaper/periodical</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Source</tss:keyword>
+            </tss:keywords>
+         </tss:reference>
+      </tss:references>
+   </tss:library>
+</tss:senteContainer>

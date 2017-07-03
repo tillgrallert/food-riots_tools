@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/css" href="../../tss_tools/tss.css"?><tss:senteContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns:tss="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    xmlns="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    version="1.0"
+                    xsi:schemaLocation="http://www.thirdstreetsoftware.com/SenteXML-1.0 SenteXML.xsd">
+   <tss:library>
+      <tss:references>
+         <tss:reference xmlns:html="http://www.w3.org/1999/xhtml"
+                        xmlns:tei="http://www.tei-c.org/ns/1.0">
+            <tss:publicationType name="Newspaper article"/>
+            <tss:dates>
+               <tss:date type="Publication" day="30" month="5" year="1898"/>
+               <tss:date type="Retrieval" day="12" month="07" year="2013"/>
+               <tss:date type="Entry" day="1" month="8" year="2013"/>
+               <tss:date type="Modification" day="15" month="3" year="2015"/>
+            </tss:dates>
+            <tss:characteristics>
+               <tss:characteristic name="articleTitle">1182</tss:characteristic>
+               <tss:characteristic name="publicationTitle">Thamarāt al-Funūn</tss:characteristic>
+               <tss:characteristic name="abstractText">
+                  <tei:pb n="2"/>
+                  <html:br/># aj: Damascus, from "al-Shām" [#94, 24 May 1898]<html:br/>- the Eastern section of the Umayyad Mosque has been completed. the roof has been erected and sealed. executed in most beautiful style, as is the craftsmanship of the wooden decorations. even better than before.<html:br/>-  when the Vali saw that some of the craftsmen working on the intarsia of mother-of-pearl in boxes and chairs diverted from the old and beautiful styles, he convened a meeting with some heads of the crafts and delivered a speech on the importance of this craft for Damascus. He send them home to their trade and established a period of 30 days after which none of their craft were allowed to produce anything but rock-solid work.<html:br/>- then he initiated an exposition of their craft in Damascus.<html:br/>- locusts: discovered some time ago in the Ḥawrān<html:br/>- thanks to god, the price of wheat fell substantially. <html:br/>    + <tei:measureGrp>the price for <tei:measure commodity="wheat" unit="kile" quantity="1">a kile of best wheat</tei:measure> is now <tei:measure commodity="currency" unit="ops" quantity="38">Ps 38</tei:measure>
+                  </tei:measureGrp>, <html:br/>    + <tei:measureGrp>for <tei:measure commodity="wheat" unit="kile" quantity="1">medium quality</tei:measure> its <tei:measure commodity="currency" unit="ops" quantity="35">Ps 35</tei:measure>
+                  </tei:measureGrp>, <html:br/>    + and <tei:measureGrp>
+                     <tei:measure commodity="wheat" unit="kile" quantity="1">lower quality</tei:measure> at <tei:measure commodity="currency" unit="ops" quantity="22">Ps 22</tei:measure>
+                  </tei:measureGrp>
+                  <html:br/>- construction commenced on the upper storey of the Ghurabāʾ hospital with a large inauguration party. benevolent blessings were offered to the Sultan on the occasion [full note]<html:br/>- Edhem Pasha, commander of the 9 division (firqa) of Niẓāmiye troops in the 5th army died in Damascus.<html:br/>
+                  <tei:pb n="4"/>
+                  <html:br/># am: military conscription (qiraʿa)<html:br/>- today: celebration of this year's conscription at the Serai in Beirut. public reading of the firmān. ended with benevolent blessings for the Sultan. the provincial administration council established a conscription committee<html:br/># am: complaints from subscribers in Damascus<html:br/>- again we received complains from subscribers in Damascus that TF did not arrive. call on the director of post and telegraph services in Syria to do something about this issues.<html:br/>
+                  <tei:pb n="5"/>
+                  <html:br/># am: <html:br/>- the newspaper "al-Rawḍa" has two new editors: <tei:persName>Mikhāʾīl Efendi ʿAbdallah Ghabrīl</tei:persName> and <tei:persName>Mūsā Efendi Ṣafīr</tei:persName>
+                  <html:br/># am: "al-ʿUthmānī"<html:br/>- the first issue of this paper, whose publication in Alexandria was announced by Amīn Efendi al-Khūrī, arrived in Beirut. it contains pictures and distribution is organised (in Beirut?) by Niqūlā Efendi Rizq Allah. We wish them all the best<html:br/> 
+                  <html:br/>  
+               </tss:characteristic>
+               <tss:characteristic name="issue">25</tss:characteristic>
+               <tss:characteristic name="language">Arabic</tss:characteristic>
+               <tss:characteristic name="pages">1-8</tss:characteristic>
+               <tss:characteristic name="publicationCountry">Bayrūt</tss:characteristic>
+               <tss:characteristic name="publisher">Jamʿiyyat al-Funūn</tss:characteristic>
+               <tss:characteristic name="rating">3</tss:characteristic>
+               <tss:characteristic name="status">Complete</tss:characteristic>
+               <tss:characteristic name="UUID">03221A40-231D-4A49-8EB8-E42B20A69D78</tss:characteristic>
+               <tss:characteristic name="volume">1182</tss:characteristic>
+               <tss:characteristic name="Short Titel">Thamarāt</tss:characteristic>
+               <tss:characteristic name="Repository">OIB</tss:characteristic>
+               <tss:characteristic name="bibTeXKey">ThamaratAlFunun:1898</tss:characteristic>
+               <tss:characteristic name="Citation identifier">tf-oib 1182</tss:characteristic>
+            </tss:characteristics>
+            <tss:keywords>
+               <tss:keyword assigner="Sente User Sebastian">Beirut</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Cereals</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Conscription</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Crafts</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">critique, officials</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Damascus</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">exposition</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Hawran</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">hospital</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">inauguration</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">locusts</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Military</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">newspaper/periodical</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">permit</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Press</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Press review</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Prices of Foodstuffs</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Public announcement</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Public ritual</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Public works</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">restoration</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Source</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Umayyad Mosque</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">weekly</tss:keyword>
+               <tss:keyword assigner="Sente User XSLT">referenced: PhD thesis</tss:keyword>
+            </tss:keywords>
+            <tss:attachments>
+               <tss:attachmentReference>
+                  <URL>file:///BachUni/SelfSyncingLibraries/SenteLibrary/BachBibliographie.sente6lib/Contents/Attachments/!%20Unknown%20Author(s)/1898%20Thamara%CC%84t%20al-Funu%CC%84n%201182%201182%20%232.pdf</URL>
+               </tss:attachmentReference>
+            </tss:attachments>
+         </tss:reference>
+      </tss:references>
+   </tss:library>
+</tss:senteContainer>

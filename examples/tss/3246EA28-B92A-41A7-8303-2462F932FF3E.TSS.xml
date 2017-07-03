@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/css" href="../../tss_tools/tss.css"?><tss:senteContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns:tss="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    xmlns="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    version="1.0"
+                    xsi:schemaLocation="http://www.thirdstreetsoftware.com/SenteXML-1.0 SenteXML.xsd">
+   <tss:library>
+      <tss:references>
+         <tss:reference xmlns:html="http://www.w3.org/1999/xhtml"
+                        xmlns:tei="http://www.tei-c.org/ns/1.0">
+            <tss:publicationType name="Archival Periodical"/>
+            <tss:dates>
+               <tss:date type="Publication" day="26" month="3" year="1863"/>
+               <tss:date type="Retrieval" day="11" month="04" year="2014"/>
+               <tss:date type="Entry" day="5" month="8" year="2014"/>
+               <tss:date type="Modification" day="5" month="8" year="2014"/>
+            </tss:dates>
+            <tss:characteristics>
+               <tss:characteristic name="articleTitle">258</tss:characteristic>
+               <tss:characteristic name="publicationTitle">Ḥadīqat al-Akhbār</tss:characteristic>
+               <tss:characteristic name="issue">6</tss:characteristic>
+               <tss:characteristic name="language">Arabic</tss:characteristic>
+               <tss:characteristic name="pages">1-4</tss:characteristic>
+               <tss:characteristic name="publicationCountry">Bayrūt</tss:characteristic>
+               <tss:characteristic name="publisher">al-Maṭbaʿat al-Sūriyya</tss:characteristic>
+               <tss:characteristic name="UUID">3246EA28-B92A-41A7-8303-2462F932FF3E</tss:characteristic>
+               <tss:characteristic name="volume">258</tss:characteristic>
+               <tss:characteristic name="Short Titel">Ḥadīqat</tss:characteristic>
+               <tss:characteristic name="Date Rumi">14 Ādhār 1863</tss:characteristic>
+               <tss:characteristic name="Date Hijri">6 Shaw 1279</tss:characteristic>
+               <tss:characteristic name="Repository">StaBi</tss:characteristic>
+               <tss:characteristic name="Citation identifier">hadiqat258</tss:characteristic>
+               <tss:characteristic name="publicationStatus">Published</tss:characteristic>
+            </tss:characteristics>
+            <tss:keywords>
+               <tss:keyword assigner="Sente User Sebastian">newspaper/periodical</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Source</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">weekly</tss:keyword>
+            </tss:keywords>
+            <tss:attachments>
+               <tss:attachmentReference>
+                  <URL>file:///BachUni/BachBibliothek/SenteLib/BachBibliographie.sente6lib/Contents/Attachments/!%20Unknown%20Author(s)/1863%20H%CC%A3adi%CC%84qat%20al-Akhba%CC%84r%20258%20258%20%232.pdf</URL>
+               </tss:attachmentReference>
+            </tss:attachments>
+         </tss:reference>
+      </tss:references>
+   </tss:library>
+</tss:senteContainer>

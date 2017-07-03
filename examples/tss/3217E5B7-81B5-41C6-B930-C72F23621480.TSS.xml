@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/css" href="../../tss_tools/tss.css"?><tss:senteContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns:tss="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    xmlns="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    version="1.0"
+                    xsi:schemaLocation="http://www.thirdstreetsoftware.com/SenteXML-1.0 SenteXML.xsd">
+   <tss:library>
+      <tss:references>
+         <tss:reference xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                        xmlns:html="http://www.w3.org/1999/xhtml"
+                        xmlns:tei="http://www.tei-c.org/ns/1.0">
+            <tss:publicationType name="Newspaper article"/>
+            <tss:dates>
+               <tss:date type="Publication" day="6" month="10" year="1902"/>
+               <tss:date type="Entry" day="1" month="7" year="2011"/>
+               <tss:date type="Modification" day="10" month="9" year="2011"/>
+            </tss:dates>
+            <tss:characteristics>
+               <tss:characteristic name="articleTitle">maḥalliyya</tss:characteristic>
+               <tss:characteristic name="publicationTitle">al-bashīr</tss:characteristic>
+               <tss:characteristic name="abstractText">al-bashīr wa al-shām: on the relationship between the two papers and the former congratulating the latter</tss:characteristic>
+               <tss:characteristic name="language">arabic</tss:characteristic>
+               <tss:characteristic name="pages">1</tss:characteristic>
+               <tss:characteristic name="publicationCountry">Bayrūt</tss:characteristic>
+               <tss:characteristic name="publisher">Maṭbaʿat al-Ābāʾ al-Yasūʿiyīn</tss:characteristic>
+               <tss:characteristic name="UUID">3217E5B7-81B5-41C6-B930-C72F23621480</tss:characteristic>
+               <tss:characteristic name="volume">1562</tss:characteristic>
+               <tss:characteristic name="ISSN">al-Bashīr</tss:characteristic>
+               <tss:characteristic name="call-num">Mic-Na:54-7</tss:characteristic>
+               <tss:characteristic name="Short Titel">Bashīr</tss:characteristic>
+               <tss:characteristic name="Signatur">Mic-Na:54-7</tss:characteristic>
+               <tss:characteristic name="Standort">AUB</tss:characteristic>
+               <tss:characteristic name="Citation identifier">bashir 1562</tss:characteristic>
+               <tss:characteristic name="publicationStatus">Published</tss:characteristic>
+            </tss:characteristics>
+            <tss:keywords>
+               <tss:keyword assigner="DublinCore">Arabic newspapers</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Beirut</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Damascus</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Press</tss:keyword>
+               <tss:keyword assigner="Sente User till">newspaper/periodical</tss:keyword>
+               <tss:keyword assigner="Sente User till">Source</tss:keyword>
+               <tss:keyword assigner="Sente User till">weekly</tss:keyword>
+            </tss:keywords>
+         </tss:reference>
+      </tss:references>
+   </tss:library>
+</tss:senteContainer>

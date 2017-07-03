@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/css" href="../../tss_tools/tss.css"?><tss:senteContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns:tss="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    xmlns="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    version="1.0"
+                    xsi:schemaLocation="http://www.thirdstreetsoftware.com/SenteXML-1.0 SenteXML.xsd">
+   <tss:library>
+      <tss:references>
+         <tss:reference xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                        xmlns:html="http://www.w3.org/1999/xhtml"
+                        xmlns:tei="http://www.tei-c.org/ns/1.0">
+            <tss:publicationType name="Newspaper article"/>
+            <tss:authors>
+               <tss:author role="Author">
+                  <tss:surname>R.B.</tss:surname>
+                  <tss:forenames/>
+                  <tss:initials/>
+               </tss:author>
+            </tss:authors>
+            <tss:dates>
+               <tss:date type="Publication" day="27" month="12" year="1908"/>
+               <tss:date type="Entry" day="14" month="2" year="2012"/>
+               <tss:date type="Modification" day="6" month="7" year="2013"/>
+            </tss:dates>
+            <tss:characteristics>
+               <tss:characteristic name="publicationTitle">al-muqtabas: jarīda yawmiyya siyāsiyya iqtiṣādiyya</tss:characteristic>
+               <tss:characteristic name="abstractText">reply to Zakkī Efendi al-Khatīb’s speech, by  R. B.</tss:characteristic>
+               <tss:characteristic name="language">Arabic</tss:characteristic>
+               <tss:characteristic name="pages">3-4</tss:characteristic>
+               <tss:characteristic name="publicationCountry">Dimashq</tss:characteristic>
+               <tss:characteristic name="publisher">Maṭbaʿat al-Muqtabas</tss:characteristic>
+               <tss:characteristic name="rating">1</tss:characteristic>
+               <tss:characteristic name="UUID">3212DE5E-EFC0-4CD2-834A-86A27276821B</tss:characteristic>
+               <tss:characteristic name="volume">10</tss:characteristic>
+               <tss:characteristic name="Medium consulted">Microfilm</tss:characteristic>
+               <tss:characteristic name="call-num">Mic-Na:142-1</tss:characteristic>
+               <tss:characteristic name="Short Titel">Jarīdat al-Muqtabas</tss:characteristic>
+               <tss:characteristic name="Signatur">Mic-Na:142-1</tss:characteristic>
+               <tss:characteristic name="Citation identifier">RB 1908</tss:characteristic>
+               <tss:characteristic name="publicationStatus">Published</tss:characteristic>
+            </tss:characteristics>
+            <tss:keywords>
+               <tss:keyword assigner="Sente User Sebastian">daily</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Damascus</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">newspaper/periodical</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Opinion piece</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Reply</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Source</tss:keyword>
+            </tss:keywords>
+         </tss:reference>
+      </tss:references>
+   </tss:library>
+</tss:senteContainer>

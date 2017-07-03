@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/css" href="../../tss_tools/tss.css"?><tss:senteContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns:tss="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    xmlns="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    version="1.0"
+                    xsi:schemaLocation="http://www.thirdstreetsoftware.com/SenteXML-1.0 SenteXML.xsd">
+   <tss:library>
+      <tss:references>
+         <tss:reference xmlns:html="http://www.w3.org/1999/xhtml"
+                        xmlns:tei="http://www.tei-c.org/ns/1.0">
+            <tss:publicationType name="Archival Letter"/>
+            <tss:authors>
+               <tss:author role="Author">
+                  <tss:surname>Rössler</tss:surname>
+                  <tss:forenames/>
+                  <tss:initials/>
+               </tss:author>
+            </tss:authors>
+            <tss:dates>
+               <tss:date type="Publication" day="29" month="5" year="1917"/>
+               <tss:date type="Entry" day="15" month="5" year="2015"/>
+               <tss:date type="Modification" day="28" month="5" year="2016"/>
+            </tss:dates>
+            <tss:characteristics>
+               <tss:characteristic name="publicationTitle">Aleppo, K.Nr.62 / Nr. 1044, 29 May 1917, Rössler to Reichskanzler, Abschrift an Konsulat Damaskus, eingegangen am 6 Jun 1917</tss:characteristic>
+               <tss:characteristic name="abstractText"># Aleppo, K.Nr. 62 / Nr. 1044, 29 May 1917, <tei:persName>Rössler</tei:persName> to Reichskanzler, Abschrift an Konsulat Damaskus, eingegangen am 6 Jun 1917<html:br/>
+                  <html:br/>translation of and comments on the minutes of the council conjured by <tei:persName>Cemal Pasha</tei:persName> (<tei:persName>Djemal Pascha</tei:persName>) at <tei:placeName>Jerusalem</tei:placeName> for the 4th Army's supply with cereals. According to {Grobba 1923} this meeting took place on 10 Apr 1917 in Jerusalem (listed under "Walibeschlüsse")<html:br/>
+                  <html:br/>"Das <tei:placeName>Wilayet <tei:placeName>Aleppo</tei:placeName>
+                  </tei:placeName> hätte denach im laufenden Jahre aufzubringen: 21 Millionen Kilo Weizen, 20 Millionen Kilo Viehfutter und drei Millionen Kilo andere menschliche Lebensmittel als Weizen.<html:br/>
+                  <html:br/>1. Weizen: Legt man die Ernte des Vorjahrs von 160 Millionen Kilo Weizen zu Grunde, so würden 21 Millionen Kilo fast genau einem Achter der Ernte, d.H. also dem Zehntergebnis entsprechen (denn der Zehnte beträgt 12 ½ %). nun sind im vergangenen Jahr 52 Millionen Kilo beschlagnahmt und davon 35 Millionen an die 4. Armee abgegeben - ausserdem 15 Millionen für die hier garnisionierenden und durchziehenden Truppen, Gendarmen, Polizisten, Hospitäler, Schulen und Regierungsbeamte verbraucht worden, sodass fast ein Drittel der Ernte beschlagnahmt war. - Es sieht also so aus, als ob die Weizenleistung, die dieses Jahr beansprucht wird, sehr viel geringer sein soll, als <tei:date when="1916">1916</tei:date>, und als ob im vergangenen Jahr das Wilayet Aleppo für Fehlbeträge anderer Wilayets eingetreten ist. - Vermutlich wird aber auch beim Weizen ausser dem Achtel, das als <tei:pb/> Zehnt erhoben wird, ein zweites Achtel gleich bei der Zehnterhebung vom Produzenten gekauft werden, umsomehr als unter Ziffer 4 des Protokolls vorgesehen ist, dass die etwa fehlende Menge des Viehfutters durch Ankauf von Weizen ergänzt wird, wobei es sich unter Umständen um erhebliche Mengen handeln kann.- Auch wird die Regierung wohl wieder eine Reserve für Aleppo zu ähnlicher Verwendung wie im vergangenen Jahr wünschen.<html:br/>Die Ernteaussichten haben sich gegenüber dem Stande vom Ende April etwas verbessert, weil im Mai noch Regen gefallen ist.-<html:br/>
+                  <html:br/>2. Die Ernte an Viehfutter im Wilayet Aleppo hat im vergangenen Jahre betragen:"<html:br/>
+                  <html:br/>Millionen Kilo | Art<html:br/>-|-<html:br/>60 | Gerste<html:br/>12 | Wicken (Kamelfutter)<html:br/>2,5 | Hafer<html:br/>3 | Mais<html:br/>75 | gesamt<html:br/>
+                  <html:br/>"Wieviel davon von der Regierung beanspruch worden sind, ist mir nicht bekannt geworden.- Wahrscheinlich wird es ein ähnlich hoher Betrag gewesen sein, wie beim Weizen, also ein Drittel.- Dieses Jahr ist dem Wilayet Aleppo die Lieferung von 20 Millionen Kilo Viehfutter auferlegt worden, welcher Betrag, vorausgesetzt die Ernte würde das Ergebnis des Vorjahres haben, bereits mehr, als den vierten Teil der Ernte ausmachen würde.- Daher ist für Viehfutter in dem Protokoll bereits von vornherein in Aussicht genommen, dass ausser dem Achtel, das als Zehnt erhoben wird, nicht **ein**, sondern noch bis zu zwei weiteren Achteln von Produzenten im Anschluss an die Zehnterhebung gekauft werden. <tei:pb/>
+                  <html:br/>
+                  <html:br/>3. Die Ernte anderer Lebensmittel als Weizen im Wilayet Aleppo hat im Vorjahr ergeben:"<html:br/>
+                  <html:br/>Millionen Kilo | Art<html:br/>-|-<html:br/>6 | Bohnen<html:br/>4 | Hirse<html:br/>1 | Erbsen<html:br/>1,5 | verschiedenes<html:br/>12,5 | gesamt<html:br/>
+                  <html:br/>"Dieses Jahr sind dem Vilayet Aleppo 3 Millionen Kilo auferlegt, d.h. unter der Voraussetzung der gleichen Ernte wie im Vorjahr, ¼ der Ernte, also ein Achtel als Zehnt und ein Achtel vom Produzenten zu kaufen."<html:br/>
+                  <html:br/>## Anhang: Protokoll<html:br/>
+                  <html:br/>&lt;!-- I quietly corrected obvious spelling errors --&gt;<html:br/>
+                  <html:br/>"In der Versammlung die auf Einladung Seiner Exzellenz <tei:persName>Djemal Pascha</tei:persName>s in Jerusalem zusammengetreten ist, sind die folgenden Beschlüsse gefasst worden:<html:br/>
+                  <html:br/>1. Methode der Zehnterhebung von der Ernte des Jahres <tei:date when="1917">1333 (1917)</tei:date>
+                  <html:br/> - Es wird für richtig befunden, den Zehnten des Jahres 1917 in den Vilayets Damaskus, Beirut, Aleppo, und Adana in Natur zu erheben. Ausgenommen sind nur solche Zehnten, deren Erhebung in Geld durch Gesetz vorgeschrieben ist.-<html:br/>2. Die Zehnterhebung in Natur erfolgt, nachdem die Abschätzung gebilligt ist. Es ist erlaubt, die Zehnterhebung zu verpachten, da so ein Pächter sich bietet, unter der Bedingung, dass er den Zehnten in Naturea abliefert.-<html:br/>3. Zerealienlieferungen für die Armee.-<html:br/> - Die Zehnten, welche im Jahre <tei:date when="1916">1332 (1916)</tei:date> in den vorgenannten 4 Vilayets und dem Sandjak Jerusalem festgestellt worden sind, betragen 81 Millionen Kilo Weizen 33 Millionen Kilo Viehfutter und 4 ½ Millionen Kilo Lebensmittel ausser dem Weizen.<html:br/> 
+                  <html:br/> 1. Wenn man dieses berücksichtigt, so sind die Zehntergebnisse an **Weizen** vollständig genügend für die Bedürfnisse der Armee, welche 81 Millionen Kilo ausmachen.<html:br/> 2. Was die 81 Millionen Kilo **Viehfutter**, deren man bedarf, anlangt, so wird die Gesamtheit des Zehnten der Ernte der Armee übergeben und der Rest wird bis zu einem Maximum von der doppelten Höhe des Zehntergebnisses gekauft.<html:br/> 3. Was die 15 Millionen Lebensmittel ausser dem Weizen betrifft, deren man bedürfen wird, so wird das Ergebnis des Zehnten davon vollständig an die Armee abgeführt und der Rest wird in Höhe des Zehnten gekauft.- Wenn diese Käufe die im Anschluss an die Zehnterhebung gleich vom Produzenten erfolgen die Ziffer von 15 Millionen, die erforderlich ist, nicht erreichen, so wird der Fehlbetrag durch Ankäufe ("auf dem freien Markt") ergänzt.-<html:br/>
+                  <html:br/>4. Der Gesamtbedarf an Weizen, an Viehfutter und an mensch<tei:pb/>lichen Lebensmitteln (ausser dem Weizen), der erzielt wird, sei es durch Zehnterhebung, sei es durch Ankauf, wird auf die vier Wilayets und das Sandjak Jerusalem wie folgt, verteilt:<html:br/>
+                  <html:br/>Ort | Weizen | Viehfutter | Andere menschliche Lebensmittel als Weizen<html:br/>-|-|-|-<html:br/>Damaskus | 3350000 Kilo | 30000000 Kilo | 7000000 Kilo<html:br/>Beirut | 12000000 | 12000000 | 3000000<html:br/>Aleppo | 21000000 | 20000000 | 3000000<html:br/>Adana | 12000000 | 11000000 | 1000000<html:br/>Jerusalem | 2500000 | 8000000 | 1000000<html:br/>zusammen | 81000000 | 81000000 | 15000000<html:br/>
+                  <html:br/>Wenn die Menge des Viehfutters (sei es durch Zehnterhebung oder durch Kauf gewonnen), nicht ausreicht, so wird der Fehlbetrag ergänzt durch Ankauf von soviel Weizen, dass dessen Nährwert demjenigen des Viehfutters entspricht.<html:br/>
+                  <html:br/>5. In denjenigen Bezirken, deren Ernte schlecht ausfällt, wird es den Wilayets überlassen, zu entscheiden, ob es besser ist, den Zehnten in Natur oder in Geld zu Erheben (Anmerkung des Konsulats: In letzterem Fall offenbar, um den Bestand an Saatgut nicht zu gefährden und die Ernährung der Bauern selbst nicht unmöglich zu machen.) oder auf die Ankäufe von Getreide für die Armee zu <tei:del/>verzichten, jedoch unter der Bedingung, dass die durch Zehnterhebung oder Ankauf zu gewinnende Menge durch einen Überschuss an Zehnten aus besser gestellten Bezirken oder durch Ankäufe aus solchen ergänzt wird, sodass im Ganzen genommen die der Armee zu verschaffenden Menge nicht geringer wird.<html:br/>6. Der Preis für Rechnung der Armee zu kaufenden Getreidesorten ist folgendermassen geschätzt worden:<html:br/> - <tei:measureGrp>
+                     <tei:measure commodity="wheat" unit="kg" quantity="1">Weizen</tei:measure> 
+                     <tei:measure commodity="currency" unit="ops" quantity="4">4 Piaster</tei:measure> das Kilo</tei:measureGrp>
+                  <html:br/> - <tei:measureGrp>
+                     <tei:measure commodity="barley" unit="kg" quantity="1">Gerste</tei:measure> 
+                     <tei:measure commodity="currency" unit="ops" quantity="3">3 Ps</tei:measure> / kg</tei:measureGrp>
+                  <html:br/> - <tei:measureGrp>
+                     <tei:measure commodity="lentils" unit="kg" quantity="1">Linsen</tei:measure> 
+                     <tei:measure commodity="currency" unit="ops" quantity="3">3 Ps</tei:measure> / kg</tei:measureGrp>
+                  <html:br/> - <tei:measureGrp>
+                     <tei:measure commodity="peas" unit="kg" quantity="1">Erbsen</tei:measure> 
+                     <tei:measure commodity="currency" unit="ops" quantity="4">4 Ps</tei:measure> / kg</tei:measureGrp>
+                  <html:br/> - <tei:measureGrp>
+                     <tei:measure commodity="broad-beans" unit="kg" quantity="1">Saubohnen</tei:measure> 
+                     <tei:measure commodity="currency" unit="ops" quantity="3">3 Ps</tei:measure> / kg</tei:measureGrp>
+                  <html:br/> - <tei:measureGrp>
+                     <tei:measure commodity="" unit="kg" quantity="1">Burtschak</tei:measure> 
+                     <tei:measure commodity="currency" unit="ops" quantity="2.5">2 ½ Ps</tei:measure> / kg</tei:measureGrp>
+                  <html:br/> - <tei:measureGrp>
+                     <tei:measure commodity="corn" unit="kg" quantity="1">Mais</tei:measure> 
+                     <tei:measure commodity="currency" unit="ops" quantity="3.5">3 ½ Ps</tei:measure> / kg</tei:measureGrp>
+                  <html:br/> - <tei:measureGrp>
+                     <tei:measure commodity="corn" unit="kg" quantity="1">Weisser Mais</tei:measure> 
+                     <tei:measure commodity="currency" unit="ops" quantity="3">3 Ps</tei:measure> / kg</tei:measureGrp>
+                  <html:br/> - <tei:measureGrp>
+                     <tei:measure commodity="potatoes" unit="kg" quantity="1">Kartoffeln</tei:measure> 
+                     <tei:measure commodity="currency" unit="ops" quantity="5">5 Ps</tei:measure> / kg</tei:measureGrp>
+                  <html:br/> - <tei:measureGrp>
+                     <tei:measure commodity="beans" unit="kg" quantity="1">Bohnen</tei:measure> 
+                     <tei:measure commodity="currency" unit="ops" quantity="5">5 Ps</tei:measure> / kg</tei:measureGrp>
+                  <html:br/>
+                  <html:br/>
+                  <tei:pb/>
+                  <html:br/>7. Das der Armee zu liefernde Getreide muss an den folgenden Daten übergeben werden<html:br/>
+                  <html:br/>Wilayet | Sandjak | Datum (bis Ende November) | Dauer (Monate)<html:br/>-|-|-|-<html:br/>Adana | Adana | 1. Juni bis Ende Nov. | 6 <html:br/> | Mersina | 15. Juni | 5 ½ <html:br/> | Keouan (Sis) | 1. Juli | 5 <html:br/> | Djebel Bereket | 1. Juli | 5<html:br/>Aleppo | Aleppo | 1. August | 4<html:br/> | Aintab &amp; Killis | 15. August | 3 ½<html:br/>Damaskus | Damaskus | 1. August | 4 <html:br/> | Hama | 1. August | 4<html:br/> | Hauran | 1. Juli | 5<html:br/> | Kerak | 1. Juli | 5<html:br/>Beirut | Beirut | 1. Juli | 5 <html:br/> | Lattakie | 1. Juli | 5 <html:br/> | Tripolis | 1. Juli | 5 <html:br/> | Akka | 15. Juni | 5 ½<html:br/> | Nablus | 15. Juni | 5 ½<html:br/> | Jerusalem | 15. Juni | 5 ½<html:br/>
+                  <html:br/>Man wird versuchen, in denjenigen Bezirken, deren Ernte es erlaubt, das Getreide vor den angegebenen Daten zu liefern.<html:br/>
+                  <html:br/>8. Die Lage der Magazine, die von der Armee angenommen worden sind, sind in der anliegenden Liste verzeichnet. Es wird der Entscheidung der Wilayets überlassen, die Abrechnung durch die Finanzbeamten in diesen Magazinen zu machen oder andere Magazine zu errichten.<html:br/>9. Die Kosten der Abschätzung, einschliesslich der Gehälter der Magazinbeamten für den Zehnten sollen bei den Kosten der Zehnterhebung mit verrechnet werden. Nur die Kosten, welche aus der Beaufsichtigung <tei:del/> der Ankäufe seitens der Armee entstehen, fallen dieser zur Last. Die Beamten für diese <tei:pb/> Beaufsichtigung haben die Aufgabe zu den angegebenen Zeiten das Ganze Getreide in die Magazine zu verbringen. Die Kosten hierfür fallen der Armee zur Last und sollen 7 % des Wertes des gekauften Getreides nicht übersteigen.<html:br/>10. die Kosten für den Transport des Getreides auf die Bahnhöfe oder an irgend eine andere von der Armee zu bezeichnende Stelle fallen dieser zur Last.<html:br/>11. Die für die Armee nötige <tei:measureGrp>
+                     <tei:measure commodity="butter" unit="kg" quantity="1">Butter</tei:measure> wird zum Preise von <tei:measure commodity="currency" unit="ops" quantity="20">20 Piastern</tei:measure> das Kilo gekauft</tei:measureGrp>, wobei halb in Hartgeld, halb in Papier bezahlt wird.-<html:br/>12. Die Hammel, die von der Armee requiriert werden, werden nach dem Satz von <tei:measureGrp>
+                     <tei:measure commodity="currency" unit="ops" quantity="16">16 Piastern</tei:measure> für das <tei:measure commodity="meat" unit="kg" quantity="1">Kilo Fleisch</tei:measure>
+                  </tei:measureGrp> bezahlt.<html:br/>
+                  <html:br/>Gezeichnet:<html:br/>
+                  <html:br/>- Der Kommandant der IV. Armee und Marineminister <tei:persName>Ahmed Djemal</tei:persName>
+                  <html:br/>- Der Wali von Beirut <tei:persName>Assi</tei:persName>
+                  <html:br/>- Der Wali von Damaskus <tei:persName>Iahsin</tei:persName> [sic, should be Tahsin]<html:br/>- Der Wali von Aleppo <tei:persName>M. Abdul Khalik</tei:persName>
+                  <html:br/>- Der Wali von Adana <tei:persName>Djewdet</tei:persName>
+                  <html:br/>- Der Mutessarrif von Jerusalem <tei:persName>Achmed</tei:persName> 
+                  <html:br/>
+                  <html:br/> 
+               </tss:characteristic>
+               <tss:characteristic name="issue">K.Nr. 62 / Nr. 1044</tss:characteristic>
+               <tss:characteristic name="language">German</tss:characteristic>
+               <tss:characteristic name="publicationCountry">Aleppo</tss:characteristic>
+               <tss:characteristic name="rating">3</tss:characteristic>
+               <tss:characteristic name="status">Complete</tss:characteristic>
+               <tss:characteristic name="UUID">008BEBC6-662D-4D37-89EB-605167AB383D</tss:characteristic>
+               <tss:characteristic name="Signatur">Damaskus 8</tss:characteristic>
+               <tss:characteristic name="Date read">2015-05-13</tss:characteristic>
+               <tss:characteristic name="recipient">Reichskanzler</tss:characteristic>
+               <tss:characteristic name="Repository">PA AA</tss:characteristic>
+               <tss:characteristic name="bibTeXKey">Rossler:AleppoKNr62Nr104429May:1917</tss:characteristic>
+               <tss:characteristic name="Standort">Politisches Archiv des Auswärtigen Amts</tss:characteristic>
+               <tss:characteristic name="Citation identifier">Rössler 1917b</tss:characteristic>
+            </tss:characteristics>
+            <tss:keywords>
+               <tss:keyword assigner="Sente User Sebastian">Aleppo</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Project: Food Riots</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">statistics</tss:keyword>
+               <tss:keyword assigner="Sente User till">Agriculture</tss:keyword>
+               <tss:keyword assigner="Sente User till">Cereals</tss:keyword>
+               <tss:keyword assigner="Sente User till">Digital copy</tss:keyword>
+               <tss:keyword assigner="Sente User till">Economic report</tss:keyword>
+               <tss:keyword assigner="Sente User till">German source</tss:keyword>
+               <tss:keyword assigner="Sente User till">Harvest</tss:keyword>
+               <tss:keyword assigner="Sente User till">official records</tss:keyword>
+               <tss:keyword assigner="Sente User till">Prices of Foodstuffs</tss:keyword>
+               <tss:keyword assigner="Sente User till">Source</tss:keyword>
+            </tss:keywords>
+         </tss:reference>
+      </tss:references>
+   </tss:library>
+</tss:senteContainer>
