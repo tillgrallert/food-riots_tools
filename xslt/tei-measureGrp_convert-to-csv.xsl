@@ -26,7 +26,13 @@
     </xsl:template>-->
     
     <!-- currently this nested <tei:measureGrp>s -->
-    <xsl:template match="tei:measureGrp" mode="m_tei-to-csv">
+    <!-- one line for each normalized tei:measureGrp:
+        1. column: information on dates
+        2. column: full copy of the original data
+        3. column and following: normalized CSV data -->
+    <xsl:template match="tei:measureGrp[ancestor::tss:senteContainer]" mode="m_tei-to-csv">
+        <!-- 1. column: information on dates -->
+        <xsl:apply-templates select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']"/><xsl:value-of select="$p_separator"/>
         <xsl:apply-templates select="tei:measure[not(@commodity='currency')]" mode="m_tei-to-csv"/>
         <xsl:apply-templates select="tei:measure[@commodity='currency']" mode="m_tei-to-csv"/>
         <xsl:value-of select="$v_new-line"/>
@@ -50,5 +56,14 @@
         <xsl:if test="count(parent::node()/tei:measure) &gt; 1">
             <xsl:value-of select="$p_separator"/>
         </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="tss:date">
+        <xsl:choose>
+            <xsl:when test="@year and @month and @day">
+                <xsl:value-of select="concat(format-number(@year,'0000'),'-',format-number(@month,'00'),'-',format-number(@day,'00'))"/>
+            </xsl:when>
+            
+        </xsl:choose>
     </xsl:template>
 </xsl:stylesheet>
