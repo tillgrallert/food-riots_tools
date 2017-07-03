@@ -29,9 +29,11 @@
     <xsl:template match="/">
         <!-- one line for each normalized tei:measureGrp:
         1. column: should information on dates
-        2. column: full copy of the original data
-        3. column and following: normalized CSV data -->
+        2. column: UUID of the source reference
+        3. column: full copy of the original data
+        4. column and following: normalized CSV data -->
         <xsl:value-of select="$v_new-line"/>
+        <xsl:value-of select="$v_csv-head"/>
         <xsl:choose>
             <xsl:when test="$p_commodity!=''">
                 <xsl:apply-templates select="$v_data-source/descendant::tei:measureGrp[descendant::tei:measure[@commodity=$p_commodity]]" mode="m_tei-to-csv">
