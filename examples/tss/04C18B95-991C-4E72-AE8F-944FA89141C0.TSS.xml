@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/css" href="../../tss_tools/tss.css"?><tss:senteContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns:tss="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    xmlns="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    version="1.0"
+                    xsi:schemaLocation="http://www.thirdstreetsoftware.com/SenteXML-1.0 SenteXML.xsd">
+   <tss:library>
+      <tss:references>
+         <tss:reference xmlns:html="http://www.w3.org/1999/xhtml"
+                        xmlns:tei="http://www.tei-c.org/ns/1.0">
+            <tss:publicationType name="Newspaper article"/>
+            <tss:dates>
+               <tss:date type="Publication" day="7" month="12" year="1910"/>
+               <tss:date type="Entry" day="5" month="1" year="2013"/>
+               <tss:date type="Modification" day="26" month="6" year="2017"/>
+            </tss:dates>
+            <tss:characteristics>
+               <tss:characteristic name="articleTitle">6951</tss:characteristic>
+               <tss:characteristic name="publicationTitle">al-Muqtabas: Jarīdat Yawmiyya Siyāsiyya Iqtiṣādiyya Ijtimāʿiyya</tss:characteristic>
+               <tss:characteristic name="abstractText">
+                  <tei:pb n="2"/> 
+                  <html:br/>## ḥawādith dākhiliyya:<html:br/>reprint of a long article from <tei:title level="j">al-mufīd</tei:title> by its damascene correspondent on the <tei:pb n="3"/> commissions for sending students to Europe<html:br/>## ḥawādith dākhiliyya:<html:br/>the awqāf commission asked the baladiyya to release all real-estate and gardens belonging to Sāmī Pasha Mardam Bey and the heirs of Ḥabīb Efendi Ṣabbār in the Marja on the grounds that these are türbes and tombs. the baladiyya denied the demand<html:br/>## ḥawādith dākhiliyya: the charcoal issue<html:br/>we published our convictions yesterday and call for a proper investigation by the baladiyya, that charcoal is only distributed to  need poor and not the rich, as the latter seem to live from the poor despite reports and claims to the contrary<html:br/>## ḥawādith dākhiliyya: prices at the stock markets<html:br/>- by special telegraph to al-Muqtabas<html:br/>### in Alexandria<html:br/> 
+                  <html:br/>
+                  <tei:pb n="4"/> 
+                  <html:br/># nawātij dimashq, prices of foodstuffs<html:br/>
+                  <html:br/>type | price<html:br/>-|- <html:br/>
+                  <tei:measureGrp>
+                     <tei:measure commodity="wheat" unit="kile" quantity="1">best wheat</tei:measure> | <tei:measure commodity="currency" unit="ops" quantity="46">46</tei:measure>-<tei:measure commodity="currency" unit="ops" quantity="49">49</tei:measure>
+                  </tei:measureGrp>
+                  <html:br/>
+                  <tei:measureGrp>
+                     <tei:measure commodity="wheat" unit="kile" quantity="1">medium quality wheat </tei:measure> | <tei:measure commodity="currency" unit="ops" quantity="41">41</tei:measure>-<tei:measure commodity="currency" unit="ops" quantity="44">44</tei:measure>
+                  </tei:measureGrp>
+                  <html:br/>
+                  <tei:measureGrp>
+                     <tei:measure commodity="barley" unit="kile" quantity="1">barley</tei:measure> | <tei:measure commodity="currency" unit="ops" quantity="21">21</tei:measure> - <tei:measure commodity="currency" unit="ops" quantity="23">23</tei:measure>
+                  </tei:measureGrp>
+                  <html:br/>
+                  <tei:measureGrp>
+                     <tei:measure commodity="chickpeas" unit="kile" quantity="1">chickpeas from the Jabal</tei:measure> | <tei:measure commodity="currency" unit="ops" quantity="47">47</tei:measure>-<tei:measure commodity="currency" unit="ops" quantity="54">54</tei:measure>
+                  </tei:measureGrp>
+                  <html:br/>
+                  <tei:measureGrp>
+                     <tei:measure commodity="chickpeas" unit="kile" quantity="1">chickpeas from Ḥawrān</tei:measure> | <tei:measure commodity="currency" unit="ops" quantity="45">45</tei:measure>-<tei:measure commodity="currency" unit="ops" quantity="47">47</tei:measure>
+                  </tei:measureGrp>
+                  <html:br/>
+                  <tei:measureGrp>
+                     <tei:measure commodity="lentils" unit="kile" quantity="1">lentils</tei:measure> | <tei:measure commodity="currency" unit="ops" quantity="30">30</tei:measure>-<tei:measure commodity="currency" unit="ops" quantity="32">32</tei:measure>
+                  </tei:measureGrp>
+                  <html:br/>
+                  <tei:measureGrp>
+                     <tei:measure commodity="vetch" unit="kile" quantity="1">al-kirsinna</tei:measure> | <tei:measure commodity="currency" unit="ops" quantity="30">30</tei:measure> - <tei:measure commodity="currency" unit="ops" quantity="33">33</tei:measure>
+                  </tei:measureGrp>
+               </tss:characteristic>
+               <tss:characteristic name="issue">2</tss:characteristic>
+               <tss:characteristic name="language">Arabic</tss:characteristic>
+               <tss:characteristic name="publicationCountry">Dimashq</tss:characteristic>
+               <tss:characteristic name="status">To be read</tss:characteristic>
+               <tss:characteristic name="UUID">04C18B95-991C-4E72-AE8F-944FA89141C0</tss:characteristic>
+               <tss:characteristic name="volume">544</tss:characteristic>
+               <tss:characteristic name="call-num">EAP119/1/19/196</tss:characteristic>
+               <tss:characteristic name="Short Titel">Jarīdat al-Muqtabas</tss:characteristic>
+               <tss:characteristic name="Repository">EAP</tss:characteristic>
+               <tss:characteristic name="Standort">Masjid al-Aqṣā</tss:characteristic>
+               <tss:characteristic name="Citation identifier">muqtabas 196-eap</tss:characteristic>
+               <tss:characteristic name="URL">http://eap.bl.uk/database/overview_item.a4d?catId=6951;r=31245</tss:characteristic>
+            </tss:characteristics>
+            <tss:keywords>
+               <tss:keyword assigner="Sente User Sebastian">daily</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Damascus</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Digital copy</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Market inspector</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Municipal government</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">newspaper/periodical</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Poverty</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Prices of Foodstuffs</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Project: Food Riots</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Source</tss:keyword>
+            </tss:keywords>
+            <tss:attachments>
+               <tss:attachmentReference>
+                  <URL>file:///BachCore/SenteLibrary/BachBibliographie.sente6lib/Contents/Attachments/!%20Unknown%20Author(s)/1910%20al-Muqtabas%20619%206951.jpg</URL>
+               </tss:attachmentReference>
+               <tss:attachmentReference>
+                  <URL>file:///BachCore/SenteLibrary/BachBibliographie.sente6lib/Contents/Attachments/!%20Unknown%20Author(s)/1910%20al-Muqtabas%20619%206951%20%232.jpg</URL>
+               </tss:attachmentReference>
+               <tss:attachmentReference>
+                  <URL>file:///BachCore/SenteLibrary/BachBibliographie.sente6lib/Contents/Attachments/!%20Unknown%20Author(s)/1910%20al-Muqtabas%20619%206951%20%233.jpg</URL>
+               </tss:attachmentReference>
+               <tss:attachmentReference>
+                  <URL>file:///BachCore/SenteLibrary/BachBibliographie.sente6lib/Contents/Attachments/!%20Unknown%20Author(s)/1910%20al-Muqtabas%20619%206951%20%234.jpg</URL>
+               </tss:attachmentReference>
+               <tss:attachmentReference>
+                  <URL>file:///BachCore/SenteLibrary/BachBibliographie.sente6lib/Contents/Attachments/!%20Unknown%20Author(s)/1910%20al-Muqtabas%20Jari%CC%84dat%20Yawmiyya%20Siya%CC%84siyya%20Iqtis%CC%A3a%CC%84diyya%20Ijtima%CC%84%CA%BFiyya%20544%206951%20%232.pdf</URL>
+               </tss:attachmentReference>
+            </tss:attachments>
+         </tss:reference>
+      </tss:references>
+   </tss:library>
+</tss:senteContainer>

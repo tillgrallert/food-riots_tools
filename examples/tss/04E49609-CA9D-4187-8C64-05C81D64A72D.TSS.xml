@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/css" href="../../tss_tools/tss.css"?><tss:senteContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns:tss="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    xmlns="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    version="1.0"
+                    xsi:schemaLocation="http://www.thirdstreetsoftware.com/SenteXML-1.0 SenteXML.xsd">
+   <tss:library>
+      <tss:references>
+         <tss:reference xmlns:html="http://www.w3.org/1999/xhtml"
+                        xmlns:tei="http://www.tei-c.org/ns/1.0">
+            <tss:publicationType name="Newspaper article"/>
+            <tss:dates>
+               <tss:date type="Publication" day="17" month="10" year="1878"/>
+               <tss:date type="Entry" day="20" month="6" year="2015"/>
+               <tss:date type="Modification" day="23" month="2" year="2016"/>
+            </tss:dates>
+            <tss:characteristics>
+               <tss:characteristic name="publicationTitle">Lisān al-Ḥāl</tss:characteristic>
+               <tss:characteristic name="language">arabic</tss:characteristic>
+               <tss:characteristic name="pages">1-4</tss:characteristic>
+               <tss:characteristic name="publicationCountry">Bayrūt</tss:characteristic>
+               <tss:characteristic name="status">Complete</tss:characteristic>
+               <tss:characteristic name="UUID">04E49609-CA9D-4187-8C64-05C81D64A72D</tss:characteristic>
+               <tss:characteristic name="volume">98</tss:characteristic>
+               <tss:characteristic name="Signatur">Mic-Na:111-1</tss:characteristic>
+               <tss:characteristic name="Short Titel">Lisān</tss:characteristic>
+               <tss:characteristic name="Physical description">microfilm reel.</tss:characteristic>
+               <tss:characteristic name="Standort">AUB</tss:characteristic>
+               <tss:characteristic name="Citation identifier">lisan 98c</tss:characteristic>
+            </tss:characteristics>
+            <tss:keywords>
+               <tss:keyword assigner="Sente User Sebastian">Commodity prices</tss:keyword>
+               <tss:keyword assigner="Sente User till">biweekly</tss:keyword>
+               <tss:keyword assigner="Sente User till">newspaper/periodical</tss:keyword>
+               <tss:keyword assigner="Sente User till">Source</tss:keyword>
+            </tss:keywords>
+            <tss:notes>
+               <tei:note>
+                  <title>imprint: subscription prices</title>
+                  <comment>+ <tei:measureGrp>In Beirut and Lebanon <tei:measure commodity="newspaper" unit="year" quantity="1">for a year</tei:measure>: <tei:measure commodity="currency" unit="frc" quantity="14">14 Frcs</tei:measure>
+                     </tei:measureGrp>
+                     <html:br/>+ <tei:measureGrp>All other locations <tei:measure commodity="newspaper" unit="year" quantity="1">for a year</tei:measure>: <tei:measure commodity="currency" unit="frc" quantity="18">18 Frcs</tei:measure>
+                     </tei:measureGrp>      
+                     <html:br/>+ excluding the postage and to be paid in advance</comment>
+                  <quotation/>
+                  <pages>1</pages>
+               </tei:note>
+               <tei:note>
+                  <title>imprint: price single issue1</title>
+                  <comment>
+                     <tei:measureGrp>price <tei:measure commodity="newspaper" unit="issue" quantity="1">per copy</tei:measure>: <tei:measure commodity="currency" unit="ops" quantity="1">Ps 1</tei:measure>
+                     </tei:measureGrp>
+                  </comment>
+                  <quotation/>
+                  <pages>1</pages>
+               </tei:note>
+            </tss:notes>
+            <tss:attachments>
+               <tss:attachmentReference type="Portable Document Format (PDF)">
+                  <URL>file:///BachCore/SenteLibrary/BachBibliographie.sente6lib/Contents/Attachments/!%20Unknown%20Author(s)/1878%20Lisa%CC%84n%20al-H%CC%A3a%CC%84l%2098.pdf</URL>
+               </tss:attachmentReference>
+            </tss:attachments>
+         </tss:reference>
+      </tss:references>
+   </tss:library>
+</tss:senteContainer>

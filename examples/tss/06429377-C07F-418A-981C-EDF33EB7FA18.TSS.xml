@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/css" href="../../tss_tools/tss.css"?><tss:senteContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns:tss="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    xmlns="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    version="1.0"
+                    xsi:schemaLocation="http://www.thirdstreetsoftware.com/SenteXML-1.0 SenteXML.xsd">
+   <tss:library>
+      <tss:references>
+         <tss:reference xmlns:html="http://www.w3.org/1999/xhtml"
+                        xmlns:tei="http://www.tei-c.org/ns/1.0">
+            <tss:publicationType name="Newspaper article"/>
+            <tss:dates>
+               <tss:date type="Publication" day="22" month="11" year="1883"/>
+               <tss:date type="Entry" day="5" month="3" year="2011"/>
+               <tss:date type="Modification" day="3" month="6" year="2016"/>
+            </tss:dates>
+            <tss:characteristics>
+               <tss:characteristic name="articleTitle">murāsilāt: al-shām fī 19 t 2</tss:characteristic>
+               <tss:characteristic name="publicationTitle">lisān al-ḥāl</tss:characteristic>
+               <tss:characteristic name="abstractText">by our correspondent<html:br/>- division of the municipality into 4 branches; cleaning of streets and alleyways. when the new municipalities were established. they had high hopes that everything will be dealt with. but winter commenced and the roads are transformed into lakes (ka-baḥr).<html:br/>- inspectors had been appointed but soon after their exam nothing was seen of them and the municipality was on its own. Thus, one hears nothing but complains (al-tashakkī).<html:br/>- the municipality even commenced the repair of the street (shāriʿ) in front of the house of one of its members not related to its president and paved it with nice and proper stones until it looked like the reception room of a house.<html:br/>- The municipality must direct its attention to the road (ṭarīq) in <tei:placeName>Qanāyat al-Ḥuṭub</tei:placeName> between <tei:placeName>Ḥammām al-Bakrī</tei:placeName> and the house of the Greek consul (Ilyās Qudsī) which during the recent heavy downpours was transformed into a deep lake, impassable by the pedestrians. In consequence,  it was prohibited to forward petitions and critique to the municipality. yet cleaning is a necessity. the <tei:placeName>Sāḥat al-Dawāmina</tei:placeName> has not been cleared from rubbish for ages and ill-smelling ordours abound, bringing with them all sorts of illnesses to the inhabitants of this quarter (al-ḥayy). same holds true for the Protestant church. the same in <tei:placeName>ḥārat al-jawra</tei:placeName> and some other places in the Jewish quarter. if there was a house of a member of the municipality in this area, it would haven been cleaned immediately<html:br/>- 18 Nov eve: <tei:persName>Mikhāʾīl Jabīle</tei:persName> murdered by <tei:persName>Ilyās al-Ṣāʾigh</tei:persName> near Bāb Sharqī<html:br/>   - latter was arrested and thrown into prison<html:br/>- Gold being found by some Kurds in Ṣāliḥiyya, confiscated for investigations by the authorities and the police<html:br/>- heavy rains in the Ḥawrān. <tei:measureGrp>Price of <tei:measure commodity="wheat" unit="kile" quantity="1">wheat</tei:measure> at <tei:measure commodity="currency" unit="ops" quantity="17">Ps 17</tei:measure> to <tei:measure commodity="currency" unit="ops" quantity="24">24</tei:measure>/kile</tei:measureGrp>
+               </tss:characteristic>
+               <tss:characteristic name="language">arabic</tss:characteristic>
+               <tss:characteristic name="pages">3</tss:characteristic>
+               <tss:characteristic name="publicationCountry">Bayrūt</tss:characteristic>
+               <tss:characteristic name="rating">3</tss:characteristic>
+               <tss:characteristic name="UUID">06429377-C07F-418A-981C-EDF33EB7FA18</tss:characteristic>
+               <tss:characteristic name="volume">625</tss:characteristic>
+               <tss:characteristic name="Signatur">Mic-Na:000111-4</tss:characteristic>
+               <tss:characteristic name="Short Titel">Lisān</tss:characteristic>
+               <tss:characteristic name="EndNote reference number">833</tss:characteristic>
+               <tss:characteristic name="Physical description">microfilm reel.</tss:characteristic>
+               <tss:characteristic name="Standort">AUB</tss:characteristic>
+               <tss:characteristic name="Citation identifier">lisan 625a</tss:characteristic>
+            </tss:characteristics>
+            <tss:keywords>
+               <tss:keyword assigner="Sente User BachPrivat">administrative reform</tss:keyword>
+               <tss:keyword assigner="Sente User BachPrivat">Arrest</tss:keyword>
+               <tss:keyword assigner="Sente User BachPrivat">Bab Sharqi</tss:keyword>
+               <tss:keyword assigner="Sente User BachPrivat">corruption</tss:keyword>
+               <tss:keyword assigner="Sente User BachPrivat">Damascus</tss:keyword>
+               <tss:keyword assigner="Sente User BachPrivat">Municipal government</tss:keyword>
+               <tss:keyword assigner="Sente User BachPrivat">Murder</tss:keyword>
+               <tss:keyword assigner="Sente User BachPrivat">Opinion piece</tss:keyword>
+               <tss:keyword assigner="Sente User BachPrivat">Prices of Foodstuffs</tss:keyword>
+               <tss:keyword assigner="Sente User BachPrivat">Road works</tss:keyword>
+               <tss:keyword assigner="Sente User BachPrivat">Street cleaning</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Cereals</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">critique, authorities</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">critique, officials</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">polemic</tss:keyword>
+               <tss:keyword assigner="Sente User till">biweekly</tss:keyword>
+               <tss:keyword assigner="Sente User till">newspaper/periodical</tss:keyword>
+               <tss:keyword assigner="Sente User till">Source</tss:keyword>
+               <tss:keyword assigner="Sente User XSLT">referenced: PhD thesis</tss:keyword>
+            </tss:keywords>
+            <tss:attachments>
+               <tss:attachmentReference>
+                  <URL>file:///BachCore/SenteLibrary/BachBibliographie.sente6lib/Contents/Attachments/!%20Unknown%20Author(s)/1883%20lisa%CC%84n%20al-h%CC%A3a%CC%84l%20625%20mura%CC%84sila%CC%84t%20al-sha%CC%84m%20fi%CC%84%2019%20t%202%20%232.pdf</URL>
+               </tss:attachmentReference>
+            </tss:attachments>
+         </tss:reference>
+      </tss:references>
+   </tss:library>
+</tss:senteContainer>
