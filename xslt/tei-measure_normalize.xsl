@@ -11,42 +11,42 @@
     <!-- this stylesheet normalizes the attributes on tei:measure. Unfortunately <tei:measure> is not datable and cannot carry the when attribute. Therefore normalization cannot be based on changes over time -->
 
     <!-- identity transform -->
-    <xsl:template match="@* | node()" mode="m_normalize">
+    <xsl:template match="@* | node()" mode="m_normalize-unit">
         <xsl:copy>
-            <xsl:apply-templates select="@* | node()" mode="m_normalize"/>
+            <xsl:apply-templates select="@* | node()" mode="m_normalize-unit"/>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="@* | node()" mode="m_regularize">
+    <xsl:template match="@* | node()" mode="m_normalize-quantity">
         <xsl:param name="p_regularization-factor" select="1"/>
         <xsl:copy>
-            <xsl:apply-templates select="@* | node()" mode="m_regularize">
+            <xsl:apply-templates select="@* | node()" mode="m_normalize-quantity">
                 <xsl:with-param name="p_regularization-factor" select="$p_regularization-factor"/>
             </xsl:apply-templates>
         </xsl:copy>
     </xsl:template>
 
     <!-- regularize all measureGrp that express a price to provide information on one whole unit  -->
-    <xsl:template match="tei:measureGrp[descendant::tei:measure/@commodity='currency'][descendant::tei:measure[@commodity!='currency'][@quantity!=1]]" mode="m_regularize">
+    <xsl:template match="tei:measureGrp[descendant::tei:measure/@commodity='currency'][descendant::tei:measure[@commodity!='currency'][@quantity!=1]]" mode="m_normalize-quantity">
         <xsl:variable name="v_regularization-factor" select="1 div number(descendant::tei:measure[@commodity!='currency'][1]/@quantity)" as="xs:double"/>
         <xsl:copy>
-            <xsl:apply-templates select="@* | node()" mode="m_regularize">
+            <xsl:apply-templates select="@* | node()" mode="m_normalize-quantity">
                 <xsl:with-param name="p_regularization-factor" select="$v_regularization-factor"/>
             </xsl:apply-templates>
         </xsl:copy>
     </xsl:template>
     
-    <xsl:template match="tei:measure" mode="m_regularize">
+    <xsl:template match="tei:measure" mode="m_normalize-quantity">
         <xsl:param name="p_regularization-factor" select="1" as="xs:double"/>
           <xsl:copy>
               <xsl:attribute name="type" select="'regularized'"/>
-              <xsl:apply-templates select="@commodity | @unit" mode="m_regularize"/>
+              <xsl:apply-templates select="@commodity | @unit" mode="m_normalize-quantity"/>
               <xsl:attribute name="quantity" select="@quantity * $p_regularization-factor"/>
-              <xsl:apply-templates mode="m_regularize"/>
+              <xsl:apply-templates mode="m_normalize-quantity"/>
           </xsl:copy>
     </xsl:template>
 
     <!-- normalize and harmonize the commodities and units of <tei:measure> -->
-    <xsl:template match="tei:measure" mode="m_normalize">
+    <xsl:template match="tei:measure" mode="m_normalize-unit">
         <xsl:copy>
             <!-- some commodity values vould be normalized -->
             <xsl:choose>
@@ -57,7 +57,7 @@
                     <xsl:attribute name="commodity" select="'broad-beans'"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:apply-templates select="@commodity" mode="m_normalize"/>
+                    <xsl:apply-templates select="@commodity" mode="m_normalize-unit"/>
                 </xsl:otherwise>
             </xsl:choose>
             <!-- normalise @unit -->
@@ -118,10 +118,10 @@
                 </xsl:when>
                 <!-- fallback -->
                 <xsl:otherwise>
-                    <xsl:apply-templates select="@*" mode="m_normalize"/>
+                    <xsl:apply-templates select="@*" mode="m_normalize-unit"/>
                 </xsl:otherwise>
             </xsl:choose>
-            <xsl:apply-templates mode="m_normalize"/>
+            <xsl:apply-templates mode="m_normalize-unit"/>
         </xsl:copy>
     </xsl:template>
 

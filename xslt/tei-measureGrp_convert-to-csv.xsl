@@ -57,7 +57,7 @@
         <xsl:variable name="v_normalized">
             <xsl:choose>
             <xsl:when test="$p_normalize = true()">
-                <xsl:apply-templates select="." mode="m_normalize"/>
+                <xsl:apply-templates select="." mode="m_normalize-unit"/>
             </xsl:when>
                 <xsl:otherwise>
                     <xsl:copy-of select="."/>

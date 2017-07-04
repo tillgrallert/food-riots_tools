@@ -30,10 +30,10 @@
     </xsl:variable>
     
     <xsl:variable name="v_data-source-normalized">
-        <xsl:apply-templates select="$v_data-source" mode="m_normalize"/>
+        <xsl:apply-templates select="$v_data-source" mode="m_normalize-unit"/>
     </xsl:variable>
     <xsl:variable name="v_data-source-regularized">
-        <xsl:apply-templates select="$v_data-source-normalized" mode="m_regularize"/>
+        <xsl:apply-templates select="$v_data-source-normalized" mode="m_normalize-quantity"/>
     </xsl:variable>
     
     <xsl:template match="/">
