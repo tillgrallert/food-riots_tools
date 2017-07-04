@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/css" href="../../tss_tools/tss.css"?><tss:senteContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns:tss="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    xmlns="http://www.thirdstreetsoftware.com/SenteXML-1.0"
+                    version="1.0"
+                    xsi:schemaLocation="http://www.thirdstreetsoftware.com/SenteXML-1.0 SenteXML.xsd">
+   <tss:library>
+      <tss:references>
+         <tss:reference xmlns:html="http://www.w3.org/1999/xhtml"
+                        xmlns:tei="http://www.tei-c.org/ns/1.0">
+            <tss:publicationType name="Newspaper article"/>
+            <tss:dates>
+               <tss:date type="Publication" day="2" month="7" year="1906"/>
+               <tss:date type="Original" day="26" month="6" year="1906"/>
+               <tss:date type="Entry" day="28" month="9" year="2011"/>
+               <tss:date type="Modification" day="20" month="6" year="2017"/>
+            </tss:dates>
+            <tss:characteristics>
+               <tss:characteristic name="articleTitle">mukātabāt: al-shām fī 26 al-jārī</tss:characteristic>
+               <tss:characteristic name="publicationTitle">lisān al-ḥāl</tss:characteristic>
+               <tss:characteristic name="abstractText">Most of the letter already read in al-bashīr<html:br/>- this year's yields are plenty and much better than last year's, in result the price of wheat and cereals dropped already before the arrival of the new harvests on the market.<tei:measureGrp> If the <tei:measure commodity="wheat" unit="madd" quantity="1">madd</tei:measure> had been sold at <tei:measure commodity="currency" unit="ops" quantity="10">Ps10</tei:measure> [ghurūsh] then</tei:measureGrp>, <tei:measureGrp>
+                     <tei:measure commodity="wheat" unit="madd" quantity="1">it</tei:measure> will be sold today at <tei:measure commodity="currency" unit="ops" quantity="7">Ps7</tei:measure>
+                  </tei:measureGrp>. decrease will continue until the arrival of the new wheat until reaching a level not heard of for years<html:br/>... something on the poor<html:br/>... the apricot harvest in the orchards and gardens, apples, etc. ...<html:br/>- report on the machinations of the baladiyya regarding street cleaning  ... suggestions by many dignitaries ... currently still in a state of despair. coaches jump up and down for the lack of both pavement and undergirding. many have taken to walking but by day only, as by night the lights are lacking,<html:br/>- in addition, when water is running down the streets they become mud-holes infested with microbes so that the people put wet handkerchiefs over their mouths .... etc. and there is no clean water for washing ones face, as if the municipality did not care for public health (al-ṣaḥḥa al-ʿāmma). in summer the streets are not sprinkled and all the dried mud rises into the air. all the illnesses cursing the city are brought by microbes (mīkrūbāt) in the air, they enter through the nostrils and then into the blood. this is weird, as the city has abundant water supplies to water all the public streets (al-ṭuruq al-ʿāmma) once or twice a day, which is not prevented by the traffic of coaches and pedestrians ...<html:br/>- another issue is all the filth and rubbish in the alleys and streets, which again is a breeding ground for a sorts of illnesses. the municipality collects taxes for the cleaning but still nothing is done .... people and foreigners (Ghurabāʾ) alike lament the state of the town .... and the critique of the people rises to the skies in a daily fashion<html:br/>- many spice traders sell medicines and cures which should only be sold in pharmacies and for which they have no license. in addition many of there wares are adulterated. call on the municipality to pay some attention to the issue</tss:characteristic>
+               <tss:characteristic name="language">arabic</tss:characteristic>
+               <tss:characteristic name="pages">3</tss:characteristic>
+               <tss:characteristic name="publicationCountry">Bayrūt</tss:characteristic>
+               <tss:characteristic name="rating">4</tss:characteristic>
+               <tss:characteristic name="status">Complete</tss:characteristic>
+               <tss:characteristic name="UUID">D24BC58C-8790-4514-AAA3-65411DA3CBCE</tss:characteristic>
+               <tss:characteristic name="volume">5137</tss:characteristic>
+               <tss:characteristic name="ISSN">lisān al-ḥāl</tss:characteristic>
+               <tss:characteristic name="call-num">Mic-Na:111-22</tss:characteristic>
+               <tss:characteristic name="Short Titel">Lisān</tss:characteristic>
+               <tss:characteristic name="Signatur">Mic-Na:111-22</tss:characteristic>
+               <tss:characteristic name="Physical description">microfilm reel.</tss:characteristic>
+               <tss:characteristic name="Citation identifier">lisan 5137</tss:characteristic>
+               <tss:characteristic name="Standort">AUB</tss:characteristic>
+               <tss:characteristic name="publicationStatus">Published</tss:characteristic>
+            </tss:characteristics>
+            <tss:keywords>
+               <tss:keyword assigner="Sente User Sebastian">Cereals</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">critique</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">critique, authorities</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">daily</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Damascus</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Harvest</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Market inspector</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">medicine</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Municipal government</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Poor</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Prices of Foodstuffs</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Public health</tss:keyword>
+               <tss:keyword assigner="Sente User Sebastian">Street cleaning</tss:keyword>
+               <tss:keyword assigner="Sente User till">newspaper/periodical</tss:keyword>
+               <tss:keyword assigner="Sente User till">Source</tss:keyword>
+               <tss:keyword assigner="Sente User XSLT">referenced: PhD thesis</tss:keyword>
+            </tss:keywords>
+            <tss:attachments>
+               <tss:attachmentReference>
+                  <URL>file:///BachCore/SenteLibrary/BachBibliographie.sente6lib/Contents/Attachments/!%20Unknown%20Author(s)/1906%20lisa%CC%84n%20al-h%CC%A3a%CC%84l%205137%20muka%CC%84taba%CC%84t%20al-sha%CC%84m%20fi%CC%84%2026%20al-ja%CC%84ri%CC%84%20%232.pdf</URL>
+               </tss:attachmentReference>
+            </tss:attachments>
+         </tss:reference>
+      </tss:references>
+   </tss:library>
+</tss:senteContainer>
