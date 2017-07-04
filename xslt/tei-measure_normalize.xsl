@@ -36,7 +36,7 @@
     </xsl:template>
     
     <xsl:template match="tei:measure" mode="m_regularize">
-        <xsl:param name="p_regularization-factor" as="xs:double"/>
+        <xsl:param name="p_regularization-factor" select="1" as="xs:double"/>
           <xsl:copy>
               <xsl:attribute name="type" select="'regularized'"/>
               <xsl:apply-templates select="@commodity | @unit" mode="m_regularize"/>
