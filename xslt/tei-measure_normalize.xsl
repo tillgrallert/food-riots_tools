@@ -9,6 +9,7 @@
     <xsl:output method="text" indent="yes" encoding="UTF-8" omit-xml-declaration="yes" name="text"/>
     
     <!-- this stylesheet normalizes the attributes on tei:measure. Unfortunately <tei:measure> is not datable and cannot carry the when attribute. Therefore normalization cannot be based on changes over time -->
+    <!-- The normalizations are based on a number of primary sources, most notably among them: Chambre de Commerce Française de Constantinople. *Poids, Mesures, Monnaies et Cours du Change Dans les Principales Localités de L'Empire Ottoman à la Fin du 19e Siècle.* Istanbul: Isis, 2002 [1893]; Handelsarchiv 15 Nov. 1878 (#1878, Teil 2):II 489-96. -->
 
     <!-- identity transform -->
     <xsl:template match="@* | node()" mode="m_normalize-unit">
@@ -63,6 +64,13 @@
             <!-- normalise @unit -->
             <xsl:choose>
                 <!-- normalize volumes to kile -->
+                <!--    1 shunbul = 6 madd = 3 kile (in Aleppo)
+                         1 shunbul = 2,25 kile (in Tripoli and Acre) -->
+                <xsl:when test="@unit = 'shunbul'">
+                    <xsl:attribute name="type" select="'normalized'"/>
+                    <xsl:attribute name="unit" select="'kile'"/>
+                    <xsl:attribute name="quantity" select="@quantity * 3"/>
+                </xsl:when>
                 <!-- 1 cift = 1 kile -->
                 <xsl:when test="@unit = 'cift'">
                     <xsl:attribute name="type" select="'normalized'"/>
@@ -75,24 +83,34 @@
                     <xsl:attribute name="unit" select="'kile'"/>
                     <xsl:attribute name="quantity" select="@quantity * 0.5"/>
                 </xsl:when>
-                <!-- normalize Ottoman weights to ratl -->
+                <!-- the basis of all weights in the Arabic provinces of the Ottoman Empire is the okka with the help of $v_weihgt-okka they are normalized to kg  -->
                 <!-- 1 ratl = 2 okka -->
-                <xsl:when test="@unit = 'okka'">
+                <xsl:when test="@unit = 'ratl'">
                     <xsl:attribute name="type" select="'normalized'"/>
-                    <xsl:attribute name="unit" select="'ratl'"/>
-                    <xsl:attribute name="quantity" select="@quantity * 0.5"/>
+                    <xsl:attribute name="unit" select="'kg'"/>
+                    <xsl:attribute name="quantity" select="@quantity * 2 * $v_weight-okka"/>
                 </xsl:when>
-                <!-- 1 ratl = 800 dirham -->
+                <!-- 1 okka = 400 dirham -->
                 <xsl:when test="@unit = 'dirham'">
                     <xsl:attribute name="type" select="'normalized'"/>
-                    <xsl:attribute name="unit" select="'ratl'"/>
-                    <xsl:attribute name="quantity" select="@quantity div 800"/>
+                    <xsl:attribute name="unit" select="'kg'"/>
+                    <xsl:attribute name="quantity" select="@quantity div 400 * $v_weight-okka"/>
                 </xsl:when>
-                <!-- 100 ratl = 1 qintar -->
+                <!-- 1 qintār = 44 okka in Istanbul
+                      1 qintār = 200 okka in Damascus
+                      1 qintār = 250 okka in Antiochia / 
+                      1 qinṭār = 40 okka in Mosul 
+                      1 qinṭar = 400 okka in Haifa -->
                 <xsl:when test="@unit = 'qintar'">
                     <xsl:attribute name="type" select="'normalized'"/>
-                    <xsl:attribute name="unit" select="'ratl'"/>
-                    <xsl:attribute name="quantity" select="@quantity * 100"/>
+                    <xsl:attribute name="unit" select="'kg'"/>
+                    <xsl:attribute name="quantity" select="@quantity * 200 * $v_weight-okka"/>
+                </xsl:when>
+                <!-- 1 wazna = 12,5 ratl = 25 okka (in Damascus) -->
+                <xsl:when test="@unit = 'wazana' or @unit = 'wazna'">
+                    <xsl:attribute name="type" select="'normalized'"/>
+                    <xsl:attribute name="unit" select="'kg'"/>
+                    <xsl:attribute name="quantity" select="@quantity * 25 * $v_weight-okka"/>
                 </xsl:when>
                 <!-- normalize metrical weights to kg -->
                 <!-- 1 t = 1000 kg -->
@@ -101,9 +119,15 @@
                     <xsl:attribute name="unit" select="'kg'"/>
                     <xsl:attribute name="quantity" select="@quantity * 1000"/>
                 </xsl:when>
+                <!-- 1 kg = 1000 gr -->
+                <xsl:when test="@unit = 'gr'">
+                    <xsl:attribute name="type" select="'normalized'"/>
+                    <xsl:attribute name="unit" select="'kg'"/>
+                    <xsl:attribute name="quantity" select="@quantity div 1000"/>
+                </xsl:when>
                 <!-- normalise currencies -->
                 <!-- 100 Ps = 1 Lt -->
-                <!-- even though the nominal value of £T1 remained Ps 100,the Ottoman empire established an official exchange rate of £T1= Ps 123 in May 1883 -->
+                <!-- even though the nominal value of £T1 remained Ps 100, the Ottoman empire established an official exchange rate of £T1= Ps 123 in May 1883 -->
                 <xsl:when test="@commodity = 'currency' and @unit = 'lt'">
                     <xsl:attribute name="type" select="'normalized'"/>
                     <xsl:attribute name="unit" select="'ops'"/>
@@ -124,5 +148,8 @@
             <xsl:apply-templates mode="m_normalize-unit"/>
         </xsl:copy>
     </xsl:template>
+    
+    <!-- $v_weight-okka expresses the weight of an okka in kg -->
+    <xsl:variable name="v_weight-okka" select="1.282945"/>
 
 </xsl:stylesheet>
