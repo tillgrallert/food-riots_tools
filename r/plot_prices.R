@@ -47,8 +47,8 @@ plot_wheatKile1 <- qplot(x=date, y=quantity.2,
 ### geom_XXXX for geometry
 plot_wheatKile2 <- ggplot(v_wheatKileSimple, aes(date,quantity.2, quantity.3)) +
   ggtitle("Wheat prices in Bilad al-Sham") +
-  xlab("Date") + ylab("Prices (piaster)") 
-  # + scale_x_date(breaks=date_breaks("5 years"), labels=date_format("%Y"))
+  xlab("Date") + ylab("Prices (piaster)")
+  # scale_x_date(breaks=date_breaks("5 years"), labels=date_format("%Y"))
 
 ### additional features can be added to the variable
 plot_wheatKile2 <- plot_wheatKile2 + geom_point(na.rm=TRUE, color="purple", size=3, pch=1)
@@ -61,5 +61,18 @@ v_dateStop <- as.Date("1916-12-31")
 ### create a start and end time R object
 v_period <- c(v_dateStart,v_dateStop)
 
-plot_wheatKile2 + scale_x_date(limits=v_period, breaks=date_breaks("5 years"), labels=date_format("%Y"))
+### limit the plot to the period and write everything to a new variable
+plot_wheatKilePeriod <- plot_wheatKile2 + 
+  scale_x_date(limits=v_period, breaks=date_breaks("5 years"), labels=date_format("%Y"))
+
+### trend lines
+### stat_smooth() provides a number of methods that need to be understood:
+### method="lm": linear
+### method="loess"
+plot_wheatKileTrend <- plot_wheatKile2 +
+  stat_smooth(colour="green", method="loess") +
+  scale_x_date(breaks=date_breaks("5 years"), labels=date_format("%Y"))
+
+### final plot
+plot_wheatKileTrend
 
