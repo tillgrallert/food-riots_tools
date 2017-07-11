@@ -13,8 +13,9 @@ setwd("/Volumes/Dessau HD/BachCloud/BTSync/FormerDropbox/PostDoc Food Riots/food
 ## sometimes row.names="id" throws an error
 v_prices <- read.csv("csv/prices.csv", header=TRUE, sep = ",") # this file is currently not the best choice
 v_pricesWheat <- read.csv("csv/prices_wheat-kile.csv", header=TRUE, sep = ",")
+v_pricesBread <- read.csv("csv/prices_bread-kg.csv", header=TRUE, sep = ",") # this file throws an error
 
-# covert date to Date class
+# convert date to Date class
 v_prices$date <- as.Date(v_prices$date)
 v_pricesWheat$date <- as.Date(v_pricesWheat$date)
 
@@ -35,8 +36,30 @@ v_wheatKileSimple <- v_wheatKile[,c(1,8,11)]
 
 # try to plot stuff
 ## 1. simple plot of prices with qplot
-qplot(x=date, y=quantity.2,
+plot_wheatKile1 <- qplot(x=date, y=quantity.2,
       data=v_wheatKileSimple, na.rm=TRUE,
       main="Wheat prices",
       xlab="Date", 
       ylab="Price (piasters)")
+
+## 2. plot with ggplot
+### aes for aesthetics
+### geom_XXXX for geometry
+plot_wheatKile2 <- ggplot(v_wheatKileSimple, aes(date,quantity.2, quantity.3)) +
+  ggtitle("Wheat prices in Bilad al-Sham") +
+  xlab("Date") + ylab("Prices (piaster)") 
+  # + scale_x_date(breaks=date_breaks("5 years"), labels=date_format("%Y"))
+
+### additional features can be added to the variable
+plot_wheatKile2 <- plot_wheatKile2 + geom_point(na.rm=TRUE, color="purple", size=3, pch=1)
+
+### plot only for period
+### start and end dates can be defined for the plot without subsetting the original data source, BUT: this will keep the scales adjusted to the original maximum values
+v_dateStart <- as.Date("1875-01-01")
+v_dateStop <- as.Date("1916-12-31")
+
+### create a start and end time R object
+v_period <- c(v_dateStart,v_dateStop)
+
+plot_wheatKile2 + scale_x_date(limits=v_period, breaks=date_breaks("5 years"), labels=date_format("%Y"))
+
