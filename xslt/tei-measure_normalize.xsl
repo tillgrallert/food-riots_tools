@@ -9,7 +9,7 @@
     <xsl:output method="text" indent="yes" encoding="UTF-8" omit-xml-declaration="yes" name="text"/>
     
     <!-- this stylesheet normalizes the attributes on tei:measure. Unfortunately <tei:measure> is not datable and cannot carry the when attribute. Therefore normalization cannot be based on changes over time -->
-    <!-- The normalizations are based on a number of primary sources, most notably among them: Chambre de Commerce Française de Constantinople. *Poids, Mesures, Monnaies et Cours du Change Dans les Principales Localités de L'Empire Ottoman à la Fin du 19e Siècle.* Istanbul: Isis, 2002 [1893]; Handelsarchiv 15 Nov. 1878 (#1878, Teil 2):II 489-96. -->
+    <!-- The normalizations are based on a number of primary sources, most notably among them: Chambre de Commerce Française de Constantinople. *Poids, Mesures, Monnaies et Cours du Change Dans les Principales Localités de L'Empire Ottoman à la Fin du 19e Siècle.* Istanbul: Isis, 2002 [1893]; Handelsarchiv 15 Nov. 1878 (#1878, Teil 2):II 489-96; NACP RG 84 Damascus Vol.8 Damascus 85, *Weights and Measures*, Mishāqa to Bissinger 22 Nov. 1889. -->
 
     <!-- identity transform -->
     <xsl:template match="@* | node()" mode="m_normalize-unit">
@@ -84,6 +84,11 @@
                     <xsl:attribute name="quantity" select="@quantity * 0.5"/>
                 </xsl:when>
                 <!-- the basis of all weights in the Arabic provinces of the Ottoman Empire is the okka with the help of $v_weihgt-okka they are normalized to kg  -->
+                <xsl:when test="@unit = 'okka'">
+                    <xsl:attribute name="type" select="'normalized'"/>
+                    <xsl:attribute name="unit" select="'kg'"/>
+                    <xsl:attribute name="quantity" select="@quantity  * $v_weight-okka"/>
+                </xsl:when>
                 <!-- 1 ratl = 2 okka -->
                 <xsl:when test="@unit = 'ratl'">
                     <xsl:attribute name="type" select="'normalized'"/>
