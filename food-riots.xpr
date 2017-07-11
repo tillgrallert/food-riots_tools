@@ -164,5 +164,9 @@
             </serialized>
         </options>
     </meta>
-    <projectTree name="food-riots.xpr"/>
+    <projectTree name="food-riots.xpr">
+        <folder path="../food-riots_data/"/>
+        <folder path="."/>
+        <folder path="../../../../../BachUni/BachBibliothek/GitHub/Sente/tss_data/"/>
+    </projectTree>
 </project>
