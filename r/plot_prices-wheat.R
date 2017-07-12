@@ -31,8 +31,8 @@ v_wheatKileSimple <- v_wheatKile[,c(1,8,11)]
 
 ## plot only for period
 ## specify period
-v_dateStart <- as.Date("1890-01-01")
-v_dateStop <- as.Date("1900-12-31")
+v_dateStart <- as.Date("1900-01-01")
+v_dateStop <- as.Date("1916-12-31")
 v_wheatKilePeriod <- func_period(v_wheatKileSimple,v_dateStart,v_dateStop)  
 
 ## plot
