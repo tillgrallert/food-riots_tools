@@ -27,24 +27,22 @@ v_wheatKileSimple <- v_wheatKile[,c(1,8,11)]
 
 
 # 2. plot with ggplot
-plot_wheatKile <- ggplot(v_wheatKileSimple, aes(date,quantity.2, quantity.3)) +
-  ggtitle("Wheat prices in Bilad al-Sham") +
-  xlab("Date") + ylab("Prices (piaster)") + 
-  geom_point(na.rm=TRUE, color="purple", size=3, pch=1)
+## plot_wheatKile <- ggplot(v_wheatKileSimple, aes(date,quantity.2, quantity.3)) + ggtitle("Wheat prices in Bilad al-Sham") + xlab("Date") + ylab("Prices (piaster)") + geom_point(na.rm=TRUE, color="purple", size=3, pch=1)
 
 ## plot only for period
 ## specify period
-v_dateStart <- as.Date("1875-01-01")
-v_dateStop <- as.Date("1916-12-31")
+v_dateStart <- as.Date("1890-01-01")
+v_dateStop <- as.Date("1900-12-31")
 v_wheatKilePeriod <- func_period(v_wheatKileSimple,v_dateStart,v_dateStop)  
 
 ## plot
 plot_wheatKilePeriod <- ggplot(v_wheatKilePeriod, aes(date,quantity.2, quantity.3)) +
   ggtitle("Wheat prices in Bilad al-Sham") +
-  xlab("Date") + ylab("Prices (piaster)") +
+  xlab("Date") + ylab("Prices (piaster/kile)") +
   geom_point(na.rm=TRUE, color="purple", size=1, pch=3) +
   scale_x_date(breaks=date_breaks("1 years"), labels=date_format("%Y")) +
-  stat_smooth(colour="green", method="loess")
+  stat_smooth(colour="green", method="loess") +
+  theme_bw() # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
   
 ## final plot
 plot_wheatKilePeriod
