@@ -4,6 +4,7 @@ library(lubridate) # for working with dates
 library(ggplot2)  # for creating graphs
 library(scales)   # to access breaks/formatting functions
 library(gridExtra) # for arranging plots
+library(plotly) # interactive plots based on ggplot
 
 # use a working directory
 setwd("/Volumes/Dessau HD/BachCloud/BTSync/FormerDropbox/PostDoc Food Riots/food-riots_data")
@@ -19,9 +20,14 @@ v_pricesBread <- read.csv("csv/prices_bread-kg.csv", header=TRUE, sep = ",") # t
 v_prices$date <- as.Date(v_prices$date)
 v_pricesWheat$date <- as.Date(v_pricesWheat$date)
 
+
 # create a subset of rows based on conditions
 v_wheatKile <- subset(v_pricesWheat,commodity.1=="wheat" & unit.1=="kile" & commodity.2=="currency" & unit.2=="ops")
 v_barleyKile <- subset(v_prices,commodity.1=="barley" & unit.1=="kile")
+
+## create subsets for periods
+func_period <- function(f,x,y){f[f$date >= x & f$date <= y,]}
+
 
 # select rows
 ## select the first row (containing dates), and the rows containing prices in ops
@@ -62,8 +68,24 @@ v_dateStop <- as.Date("1916-12-31")
 v_period <- c(v_dateStart,v_dateStop)
 
 ### limit the plot to the period and write everything to a new variable
-plot_wheatKilePeriod <- plot_wheatKile2 + 
+plot_wheatKilePeriod1 <- plot_wheatKile2 + 
   scale_x_date(limits=v_period, breaks=date_breaks("5 years"), labels=date_format("%Y"))
+
+
+### plot for subset of prices (this completely removes values for dates outside the specified period)
+#### specify period
+v_dateStart <- as.Date("1875-01-01")
+v_dateStop <- as.Date("1916-12-31")
+v_wheatKilePeriod <- func_period(v_wheatKileSimple,v_dateStart,v_dateStop)  
+
+#### plot
+plot_wheatKilePeriod2 <- ggplot(v_wheatKilePeriod, aes(date,quantity.2, quantity.3)) +
+  ggtitle("Wheat prices in Bilad al-Sham") +
+  xlab("Date") + ylab("Prices (piaster)") +
+  geom_point(na.rm=TRUE, color="purple", size=1, pch=3) +
+  scale_x_date(breaks=date_breaks("1 years"), labels=date_format("%Y"))
+  
+plot_wheatKilePeriod2 + stat_smooth(colour="green", method="loess")
 
 ### trend lines
 ### stat_smooth() provides a number of methods that need to be understood:
@@ -74,5 +96,6 @@ plot_wheatKileTrend <- plot_wheatKile2 +
   scale_x_date(breaks=date_breaks("5 years"), labels=date_format("%Y"))
 
 ### final plot
-plot_wheatKileTrend
+plot_wheatKilePeriod2 + stat_smooth(colour="green", method="loess")
 
+v_wheatKileSimple
