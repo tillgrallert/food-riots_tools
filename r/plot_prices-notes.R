@@ -83,7 +83,8 @@ plot_wheatKilePeriod2 <- ggplot(v_wheatKilePeriod, aes(date,quantity.2, quantity
   ggtitle("Wheat prices in Bilad al-Sham") +
   xlab("Date") + ylab("Prices (piaster)") +
   geom_point(na.rm=TRUE, color="purple", size=1, pch=3) +
-  scale_x_date(breaks=date_breaks("1 years"), labels=date_format("%Y"))
+  scale_x_date(breaks=date_breaks("1 years"), labels=date_format("%Y")) +
+  theme_bw() # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
   
 plot_wheatKilePeriod2 + stat_smooth(colour="green", method="loess")
 
@@ -95,7 +96,17 @@ plot_wheatKileTrend <- plot_wheatKile2 +
   stat_smooth(colour="green", method="loess") +
   scale_x_date(breaks=date_breaks("5 years"), labels=date_format("%Y"))
 
-### final plot
-plot_wheatKilePeriod2 + stat_smooth(colour="green", method="loess")
+### plot with two time series
+plot_wheatKilePeriod3 <- ggplot(v_wheatKilePeriod, aes(x=date, y=value)) +
+  ggtitle("Wheat prices in Bilad al-Sham") +
+  xlab("Date") + ylab("Prices (piaster/kile)") +
+  geom_point(aes(y=quantity.2, col='min price'), na.rm=TRUE, size=2, pch=1, color="black")  +
+  geom_point(aes(y=quantity.3, col='max price'), na.rm=TRUE, size=2, pch=2, color="black") +
+  scale_x_date(breaks=date_breaks("2 years"), labels=date_format("%Y")) + # add interval to x-axis
+  theme_bw() # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
 
-v_wheatKileSimple
+plot_wheatKilePeriod3
+
+### plotly
+ggplotly(plot_wheatKilePeriod3)
+
