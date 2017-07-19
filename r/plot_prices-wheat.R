@@ -13,7 +13,7 @@ func_period <- function(f,x,y){f[f$date >= x & f$date <= y,]}
 setwd("/Volumes/Dessau HD/BachCloud/BTSync/FormerDropbox/PostDoc Food Riots/food-riots_data")
 
 # 1. read price data from csv, note that the first row is a date
-v_pricesWheat <- read.csv("csv/prices_wheat-kile.csv", header=TRUE, sep = ",")
+v_pricesWheat <- read.csv("csv/prices_wheat-kile.csv", header=TRUE, sep = ",", quote = "")
 
 # convert date to Date class
 v_pricesWheat$date <- as.Date(v_pricesWheat$date)
@@ -31,7 +31,7 @@ v_wheatKileSimple <- v_wheatKile[,c(1,8,11)]
 
 ## plot only for period
 ## specify period
-v_dateStart <- as.Date("1900-01-01")
+v_dateStart <- as.Date("1875-01-01")
 v_dateStop <- as.Date("1916-12-31")
 v_wheatKilePeriod <- func_period(v_wheatKileSimple,v_dateStart,v_dateStop)  
 
@@ -40,9 +40,17 @@ plot_wheatKilePeriod <- ggplot(v_wheatKilePeriod, aes(date,quantity.2, quantity.
   ggtitle("Wheat prices in Bilad al-Sham") +
   xlab("Date") + ylab("Prices (piaster/kile)") +
   geom_point(na.rm=TRUE, color="purple", size=1, pch=3) +
-  scale_x_date(breaks=date_breaks("1 years"), labels=date_format("%Y")) +
+  scale_x_date(breaks=date_breaks("5 years"), labels=date_format("%Y")) +
   stat_smooth(colour="green", method="loess") +
   theme_bw() # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
   
+## plot with two time series
+plot_wheatKilePeriod1 <- ggplot(v_wheatKilePeriod, aes(x=date, y=value)) +
+  ggtitle("Wheat prices in Bilad al-Sham") +
+  xlab("Date") + ylab("Prices (piaster/kile)") +
+  geom_point(aes(y=quantity.2, col='min price'), na.rm=TRUE, size=2, pch=1, color="black")  +
+  geom_point(aes(y=quantity.3, col='max price'), na.rm=TRUE, size=2, pch=3, color="black") +
+  scale_x_date(breaks=date_breaks("2 years"), labels=date_format("%Y")) + # add interval to x-axis
+  theme_bw() # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
 ## final plot
-plot_wheatKilePeriod
+plot_wheatKilePeriod1
