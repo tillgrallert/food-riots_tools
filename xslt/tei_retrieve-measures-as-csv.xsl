@@ -8,19 +8,21 @@
     version="2.0">
 
 <xsl:output method="text" encoding="UTF-8" omit-xml-declaration="yes"/>
+    
+    <!-- this stylesheet can be run on any XML input. The actual data set is provided by $v_data-source -->
 
 <!--    <xsl:include href="tei-measure_normalize.xsl"/>-->
     <xsl:include href="tei-measureGrp_convert-to-csv.xsl"/>
     
     <xsl:param name="p_commodity" select="'wheat'"/>
     <xsl:param name="p_unit" select="'kile'"/>
-    <xsl:param name="p_debug" select="true()"/>
+    <xsl:param name="p_debug" select="false()"/>
     
     <xsl:variable name="v_data-source">
         <xsl:choose>
             <!-- run on small sample of test data -->
             <xsl:when test="$p_debug = true()">
-                <xsl:copy-of select="collection('/Volumes/Dessau HD/BachCloud/BTSync/FormerDropbox/PostDoc Food Riots/food-riots_tools/examples/tss?select=*.TSS.xml')[not(descendant::tss:publicationType[@name='Archival File' or @name='Archival Material'])][descendant::tei:measureGrp]"/>
+                <xsl:copy-of select="collection('/Volumes/Dessau HD/BachCloud/BTSync/FormerDropbox/FoodRiots/food-riots_tools/examples/tss?select=*.TSS.xml')[not(descendant::tss:publicationType[@name='Archival File' or @name='Archival Material'])][descendant::tei:measureGrp]"/>
             </xsl:when>
             <!-- run on full sample: the source collection does contain double entries of information (one reference for an archival file and one for each consituent letters). The summary files must be excluded to not significantly distort the sample -->
             <xsl:otherwise>
@@ -76,7 +78,7 @@
                         </xsl:apply-templates>
                     </xsl:result-document>
                 </xsl:when>
-                <!-- all prcies -->
+                <!-- all prices -->
                 <xsl:otherwise>
                     <xsl:result-document href="_output/prices-{ format-date(current-date(),'[Y0001]-[M01]-[D01]')}.csv">
                         <xsl:value-of select="$v_csv-head"/>
