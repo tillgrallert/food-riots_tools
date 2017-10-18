@@ -41,8 +41,8 @@
         <xsl:apply-templates select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']" mode="m_plain-text"/><xsl:value-of select="$p_separator"/>
         <!-- 2. column: UUID of the source reference -->
         <xsl:value-of select="ancestor::tss:reference/tss:characteristics/tss:characteristic[@name='UUID']"/><xsl:value-of select="$p_separator"/>
-        <!-- 3. column: full copy of the original data -->
-        <xsl:value-of select=" replace(normalize-space(.),$p_separator,$p_separator-escape)" disable-output-escaping="no"/><xsl:value-of select="$p_separator"/>
+        <!-- 3. column: full copy of the original data. Should be quoted -->
+        <xsl:text>"</xsl:text><xsl:value-of select=" replace(normalize-space(.),$p_separator,$p_separator-escape)" disable-output-escaping="no"/><xsl:text>"</xsl:text><xsl:value-of select="$p_separator"/>
         <xsl:apply-templates select="descendant::tei:measure[not(@commodity='currency')]" mode="m_tei-to-csv">
             <xsl:with-param name="p_normalize" select="$p_normalize"/>
         </xsl:apply-templates>
