@@ -137,21 +137,30 @@ plotLineAvgQuarterlyMin <- ggplot(vWheatKilePeriodQuarterlyMinPrice,
 plotLineAvgQuarterlyMin
 
 ## box plot
-plotBox <- ggplot(vWheatKilePeriod,
-                  aes(x=year,
-                      group=year,
-                      y=quantity.2)) +
+plotBox <- ggplot(vWheatKilePeriod) +
   # add labels
   labs(title="Wheat prices in Bilad al-Sham", 
        #subtitle="quarterly average minimum prices", 
        x="Date", 
        y="Prices (piaster/kile)") + # provides title, subtitle, x, y, caption
-  # layer: box plot
-  geom_boxplot(na.rm = T)+
-  scale_x_date(breaks=date_breaks("2 years"), 
+  # layer: box plot min prices
+  geom_boxplot(aes(x=year,
+                   group=year,
+                   y=quantity.2), na.rm = T)+
+  # layer: box plot max prices
+  #geom_boxplot(aes(x=year, group=year,y=quantity.3), na.rm = T)+
+  # layer: jitter plot
+  geom_jitter(aes(date, quantity.2), na.rm=TRUE,width = 100, # width depends on the width of the entire plot
+              size=1, color="red") +
+  # layer: line with all values
+  #geom_line(aes(date, quantity.2), na.rm=TRUE,color="red") +
+  # layer: fitted line
+  #stat_smooth(aes(date, quantity.2), na.rm = T,method="lm", se=T,color="blue") +
+  scale_x_date(breaks=date_breaks("1 years"), 
                labels=date_format("%Y"),
                limits=as.Date(c(vDateStart, vDateStop))) + # if plotting more than one graph, it is helpful to provide the same limits for each
-  theme_bw() # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
+  theme_bw()+ # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
+  theme(axis.text.x = element_text(angle = 90, vjust=0.5, size = 8))  # rotate x axis text
 plotBox
   
 ## plot with two time series
