@@ -39,19 +39,23 @@ vWheatKile <- subset(vPricesWheat,commodity.1=="wheat" & unit.1=="kile" & commod
 ## vwheatKileSimple <- vwheatKile[,c(1,8,11)]
 vWheatKileSimple <- vwheatKile[,c("date","quantity.2","quantity.3")]
 
-
-# 2. plot with ggplot
-## plot_wheatKile <- ggplot(vwheatKileSimple, aes(date,quantity.2, quantity.3)) + ggtitle("Wheat prices in Bilad al-Sham") + xlab("Date") + ylab("Prices (piaster)") + geom_point(na.rm=TRUE, color="purple", size=3, pch=1)
-
-## plot only for period
-## specify period
+# specify period
 vDateStart <- as.Date("1875-01-01")
 vDateStop <- as.Date("1916-12-31")
 vWheatKilePeriod <- funcPeriod(vWheatKile,vDateStart,vDateStop)  
 
-## plot
+# calculate means for periods
+## annual means
+vWheatKilePeriodAnnualMinPrice <- aggregate(quantity.2 ~ year, data=vWheatKilePeriod, mean)
+vWheatKilePeriodAnnualMaxPrice <- aggregate(quantity.3 ~ year, data=vWheatKilePeriod, mean)
+## quarterly means
+vWheatKilePeriodQuarterlyMinPrice <- aggregate(quantity.2 ~ quarter, data=vWheatKilePeriod, mean)
+vWheatKilePeriodQuarterlyMaxPrice <- aggregate(quantity.3 ~ quarter, data=vWheatKilePeriod, mean)
+
+# plot
+## plot all values
 plotWheatKilePeriod1 <- ggplot(vWheatKilePeriod, 
-                               aes(date,
+                               aes(date, # select period: date, year, quarter, month
                                    quantity.2, quantity.3)) +
   # add labels
   labs(title="Wheat prices in Bilad al-Sham", 
@@ -72,26 +76,44 @@ plotWheatKilePeriod1 <- ggplot(vWheatKilePeriod,
                limits=as.Date(c(vDateStart, vDateStop))) + # if plotting more than one graph, it is helpful to provide the same limits for each
   theme_bw() # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
 plotWheatKilePeriod1
+
+## plot averages per period
+plotLineAvgQuarterlyMin <- ggplot(vWheatKilePeriodQuarterlyMinPrice, 
+                               aes(quarter, # select period: date, year, quarter, month
+                                   quantity.2)) +
+  # add labels
+  labs(title="Wheat prices in Bilad al-Sham", 
+      subtitle="quarterly average minimum prices", 
+       x="Date", 
+       y="Prices (piaster/kile)") + # provides title, subtitle, x, y, caption
+  # first layer: all prices
+  # geom_point(na.rm=TRUE, color="purple", size=1, pch=3) +
+  geom_line(aes(y=quantity.2)) +
+  # second layer: fitted line
+  #stat_smooth(colour="green",na.rm = TRUE,method="loess") +
+  scale_x_date(breaks=date_breaks("2 years"), 
+               labels=date_format("%Y"),
+               limits=as.Date(c(vDateStart, vDateStop))) + # if plotting more than one graph, it is helpful to provide the same limits for each
+  theme_bw() # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
+plotLineAvgQuarterlyMin
   
 ## plot with two time series
-plotWheatKilePeriod2 <- ggplot(vWheatKilePeriod, aes(x=date, y=value)) +
+plotWheatKilePeriod2 <- ggplot(vWheatKilePeriod, aes(x=year, y=value)) +
   # add labels
   labs(title="Wheat prices in Bilad al-Sham", 
        # subtitle="based on announcements in newspapers", 
        x="Date", 
        y="Prices (piaster/kile)") + # provides title, subtitle, x, y, caption
   # first layer: min prices
-  geom_point(aes(y=quantity.2, col='min price'),
+  geom_point(aes(y=quantity.2),
              na.rm=TRUE,
              size=2, pch=1, color="black")  +
   # second layer: max prices
-  geom_point(aes(y=quantity.3, col='max price'),
+  geom_point(aes(y=quantity.3),
              na.rm=TRUE, 
              size=2, pch=3, color="black") +
   scale_x_date(breaks=date_breaks("5 years"), 
                labels=date_format("%Y"),
                limits=as.Date(c(vDateStart, vDateStop))) + # if plotting more than one graph, it is helpful to provide the same limits for each
   theme_bw() # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
-## final plot
-plotWheatKilePeriod1
 plotWheatKilePeriod2
