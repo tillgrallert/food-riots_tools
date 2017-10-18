@@ -23,7 +23,8 @@ v_breadKg <- subset(v_pricesBread,commodity.1=="bread" & unit.1=="kg" & commodit
 
 # select rows
 ## select the first row (containing dates), and the rows containing prices in ops
-v_breadKgSimple <- v_breadKg[,c(1,8,11)]
+## v_breadKgSimple <- v_breadKg[,c(1,8,11)]
+v_breadKgSimple <- v_breadKg[,c("date","quantity.2","quantity.3")]
 
 
 # 2. plot with ggplot

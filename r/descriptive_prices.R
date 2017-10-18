@@ -10,7 +10,7 @@ library(plotly) # interactive plots based on ggplot
 func_period <- function(f,x,y){f[f$date >= x & f$date <= y,]}
 
 # use a working directory
-setwd("/Volumes/Dessau HD/BachCloud/BTSync/FormerDropbox/PostDoc Food Riots/food-riots_data")
+setwd("/Volumes/Dessau HD/BachCloud/BTSync/FormerDropbox/FoodRiots/food-riots_data")
 
 # read price data from csv, note that the first row is a date
 ## colClasses can specify the data type: , colClasses=c("date"="date") this however currently throws an error

@@ -23,7 +23,8 @@ v_barleyKile <- subset(v_pricesBarley,commodity.1=="barley" & unit.1=="kile" & c
 
 # select rows
 ## select the first row (containing dates), and the rows containing prices in ops
-v_barleyKileSimple <- v_barleyKile[,c(1,8,11)]
+## v_barleyKileSimple <- v_barleyKile[,c(1,8,11)]
+v_barleyKileSimple <- v_barleyKile[,c("date","quantity.2","quantity.3")]
 
 
 # 2. plot with ggplot
