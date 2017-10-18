@@ -129,7 +129,7 @@ plotLineAvgQuarterlyMin <- ggplot(vWheatKilePeriodQuarterlyMinPrice,
   # geom_point(na.rm=TRUE, color="purple", size=1, pch=3) +
   geom_line(aes(y=quantity.2)) +
   # second layer: fitted line
-  #stat_smooth(colour="green",na.rm = TRUE,method="loess") +
+  #stat_smooth(colour="green",na.rm = TRUE,method="loess", se=F) +
   scale_x_date(breaks=date_breaks("2 years"), 
                labels=date_format("%Y"),
                limits=as.Date(c(vDateStart, vDateStop))) + # if plotting more than one graph, it is helpful to provide the same limits for each
