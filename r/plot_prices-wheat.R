@@ -54,8 +54,7 @@ vWheatKilePeriodQuarterlyMaxPrice <- aggregate(quantity.3 ~ quarter, data=vWheat
 
 # plot
 ## plot all values
-plotWheatKilePeriod1 <- ggplot(vWheatKilePeriod, 
-                               aes(date, # select period: date, year, quarter, month
+plotScatterAll <- ggplot(vWheatKilePeriod, aes(date, # select period: date, year, quarter, month
                                    quantity.2, quantity.3)) +
   # add labels
   labs(title="Wheat prices in Bilad al-Sham", 
@@ -63,19 +62,59 @@ plotWheatKilePeriod1 <- ggplot(vWheatKilePeriod,
        x="Date", 
        y="Prices (piaster/kile)") + # provides title, subtitle, x, y, caption
   # first layer: all prices
-  geom_point(na.rm=TRUE, 
-             color="purple", 
-             size=1, 
-             pch=3) +
+  geom_point(na.rm=TRUE, color="purple", size=1, pch=3) +
   # second layer: fitted line
-  stat_smooth(colour="green",
-              na.rm = TRUE,
-              method="loess") +
+  stat_smooth(colour="green",na.rm = TRUE,
+              method="loess", # methods are "lm", "loess" ...
+              se=F) + # removes the range around the fitting
   scale_x_date(breaks=date_breaks("5 years"), 
                labels=date_format("%Y"),
                limits=as.Date(c(vDateStart, vDateStop))) + # if plotting more than one graph, it is helpful to provide the same limits for each
   theme_bw() # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
-plotWheatKilePeriod1
+plotScatterAll
+
+## Jitter plot
+plotJitterAll <- ggplot(vWheatKilePeriod, aes(date, # select period: date, year, quarter, month
+                                               quantity.2, quantity.3)) +
+  # add labels
+  labs(title="Wheat prices in Bilad al-Sham", 
+       # subtitle="based on announcements in newspapers", 
+       x="Date", 
+       y="Prices (piaster/kile)") + # provides title, subtitle, x, y, caption
+  # first layer: all prices
+  # geom_point(na.rm=TRUE, color="purple", size=1, pch=3) +
+  geom_jitter(na.rm=TRUE,width = 100, # width controls the jitter around the original position. High values are required for my data
+              size=1) +
+  # second layer: fitted line
+  stat_smooth(colour="green",na.rm = TRUE,
+              method="loess", # methods are "lm", "loess" ...
+              se=F) + # removes the range around the fitting
+  scale_x_date(breaks=date_breaks("5 years"), 
+               labels=date_format("%Y"),
+               limits=as.Date(c(vDateStart, vDateStop))) + # if plotting more than one graph, it is helpful to provide the same limits for each
+  theme_bw() # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
+plotJitterAll
+
+## Counts chart
+plotCountsAll <- ggplot(vWheatKilePeriod, aes(date, # select period: date, year, quarter, month
+                                              quantity.2, quantity.3)) +
+  # add labels
+  labs(title="Wheat prices in Bilad al-Sham", 
+       # subtitle="based on announcements in newspapers", 
+       x="Date", 
+       y="Prices (piaster/kile)") + # provides title, subtitle, x, y, caption
+  # first layer: all prices
+  # geom_point(na.rm=TRUE, color="purple", size=1, pch=3) +
+  geom_count(na.rm=T, show.legend = F) +
+  # second layer: fitted line
+  stat_smooth(colour="green",na.rm = T,
+              method="loess", # methods are "lm", "loess" ...
+              se=F) + # removes the range around the fitting
+  scale_x_date(breaks=date_breaks("5 years"), 
+               labels=date_format("%Y"),
+               limits=as.Date(c(vDateStart, vDateStop))) + # if plotting more than one graph, it is helpful to provide the same limits for each
+  theme_bw() # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
+plotCountsAll
 
 ## plot averages per period
 plotLineAvgQuarterlyMin <- ggplot(vWheatKilePeriodQuarterlyMinPrice, 
