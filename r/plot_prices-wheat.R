@@ -10,7 +10,7 @@ library(plotly) # interactive plots based on ggplot
 funcPeriod <- function(f,x,y){f[f$date >= x & f$date <= y,]}
 
 # use a working directory
-setwd("/Volumes/Dessau HD/BachCloud/BTSync/FormerDropbox/FoodRiots/food-riots_data")
+setwd("/BachCloud/BTSync/FormerDropbox/FoodRiots/food-riots_data") #Volumes/Dessau HD/
 
 # 1. read price data from csv, note that the first row is a date
 vPricesWheat <- read.csv("csv/prices_wheat-kile.csv", header=TRUE, sep = ",", quote = "")
@@ -36,12 +36,12 @@ vWheatKile <- subset(vPricesWheat,commodity.1=="wheat" & unit.1=="kile" & commod
 
 # select rows
 ## select the first row (containing dates), and the rows containing prices in ops
-## vwheatKileSimple <- vwheatKile[,c(1,8,11)]
-vWheatKileSimple <- vwheatKile[,c("date","quantity.2","quantity.3")]
+## vwheatKileSimple <- vWheatKile[,c(1,8,11)]
+vWheatKileSimple <- vWheatKile[,c("date","quantity.2","quantity.3")]
 
 # specify period
-vDateStart <- as.Date("1875-01-01")
-vDateStop <- as.Date("1916-12-31")
+vDateStart <- as.Date("1876-01-01")
+vDateStop <- as.Date("1885-12-31")
 vWheatKilePeriod <- funcPeriod(vWheatKile,vDateStart,vDateStop)  
 
 # calculate means for periods
@@ -133,11 +133,12 @@ plotLineAvgQuarterlyMin <- ggplot(vWheatKilePeriodQuarterlyMinPrice,
   scale_x_date(breaks=date_breaks("2 years"), 
                labels=date_format("%Y"),
                limits=as.Date(c(vDateStart, vDateStop))) + # if plotting more than one graph, it is helpful to provide the same limits for each
+  theme(axis.text.x = element_text(angle = 45, vjust=0.5, size = 8))+  # rotate x axis text
   theme_bw() # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
 plotLineAvgQuarterlyMin
 
 ## box plot
-plotBox <- ggplot(vWheatKilePeriod) +
+plotBoxAnnualMin <- ggplot(vWheatKilePeriod) +
   # add labels
   labs(title="Wheat prices in Bilad al-Sham", 
        #subtitle="quarterly average minimum prices", 
@@ -148,20 +149,44 @@ plotBox <- ggplot(vWheatKilePeriod) +
                    group=year,
                    y=quantity.2), na.rm = T)+
   # layer: box plot max prices
-  #geom_boxplot(aes(x=year, group=year,y=quantity.3), na.rm = T)+
+  #geom_boxplot(aes(x=year, group=year,y=quantity.3), na.rm = T, color="blue", width=50)+
   # layer: jitter plot
   geom_jitter(aes(date, quantity.2), na.rm=TRUE,width = 100, # width depends on the width of the entire plot
               size=1, color="red") +
+  #geom_jitter(aes(date, quantity.3), na.rm=TRUE,width = 100,size=1, color="red") +
   # layer: line with all values
   #geom_line(aes(date, quantity.2), na.rm=TRUE,color="red") +
   # layer: fitted line
   #stat_smooth(aes(date, quantity.2), na.rm = T,method="lm", se=T,color="blue") +
-  scale_x_date(breaks=date_breaks("1 years"), 
+  # layer: vertical lines for bread riots
+  geom_vline(xintercept = as.numeric(as.Date("1878-03-18")), linetype=4)+
+  scale_x_date(breaks=date_breaks("2 years"), 
                labels=date_format("%Y"),
                limits=as.Date(c(vDateStart, vDateStop))) + # if plotting more than one graph, it is helpful to provide the same limits for each
   theme_bw()+ # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
-  theme(axis.text.x = element_text(angle = 90, vjust=0.5, size = 8))  # rotate x axis text
-plotBox
+  theme(axis.text.x = element_text(angle = 45, vjust=0.5,hjust = 0.5, size = 8))  # rotate x axis text
+plotBoxAnnualMin
+
+plotBoxAnnualMax <- ggplot(vWheatKilePeriod) +
+  # add labels
+  labs(title="Wheat prices in Bilad al-Sham", 
+       #subtitle="quarterly average minimum prices", 
+       x="Date", 
+       y="Prices (piaster/kile)") + # provides title, subtitle, x, y, caption
+  # layer: box plot max prices
+  geom_boxplot(aes(x=year,
+                   group=year,
+                   y=quantity.3), na.rm = T)+
+  # layer: line with all values
+  #geom_line(aes(date, quantity.3), na.rm=TRUE,color="red") +
+  # layer: fitted line
+  #stat_smooth(aes(date, quantity.2), na.rm = T,method="lm", se=T,color="blue") +
+  scale_x_date(breaks=date_breaks("2 years"), 
+               labels=date_format("%Y"),
+               limits=as.Date(c(vDateStart, vDateStop))) + # if plotting more than one graph, it is helpful to provide the same limits for each
+  theme_bw()+ # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
+  theme(axis.text.x = element_text(angle = 45, vjust=0.5,hjust = 0.5, size = 8))  # rotate x axis text
+plotBoxAnnualMax
   
 ## plot with two time series
 plotWheatKilePeriod2 <- ggplot(vWheatKilePeriod, aes(x=year, y=value)) +
