@@ -141,25 +141,37 @@ plotLineAvgQuarterlyMin <- ggplot(vWheatKilePeriodQuarterlyMinPrice,
 plotLineAvgQuarterlyMin
 
 ## box plot
-plotBoxAnnualMin <- ggplot(vWheatKilePeriod) +
+plotBoxAnnualMin <- ggplot() +
   # add labels
   labs(title="Wheat prices in Bilad al-Sham", 
-       #subtitle="quarterly average minimum prices", 
+       subtitle="quarterly average minimum prices", 
        x="Date", 
        y="Price (piaster/kile)") + # provides title, subtitle, x, y, caption
   # layer: vertical lines for bread riots
-  geom_vline(xintercept = as.numeric(as.Date(vFoodRiotsPeriod$date)), 
-             na.rm = T, linetype=2, # linetypes: 1=solid, 2=dashed, 
-             size=1, color = "#981103")+
+  #geom_vline(data = vFoodRiotsPeriod,
+   #          aes(xintercept = as.numeric(as.Date(date))),
+    #        na.rm = T, linetype=2, # linetypes: 1=solid, 2=dashed, 
+     #      size=1, color = "#981103")+
+  geom_segment(data = vFoodRiotsPeriod, 
+               aes(x = date, y = 10, 
+                   xend = date, yend = 24,
+                   colour = "food riot"),
+               na.rm = T, linetype=1, # linetypes: 1=solid, 2=dashed, 
+               size=1,
+               show.legend = T)+
   # layer: box plot min prices
-  geom_boxplot(aes(x=year,
+  geom_boxplot(data = vWheatKilePeriod,
+               aes(x=year,
                    group=year,
                    y=quantity.2), na.rm = T)+
   # layer: box plot max prices
   #geom_boxplot(aes(x=year, group=year,y=quantity.3), na.rm = T, color="blue", width=50)+
   # layer: jitter plot
-  geom_jitter(aes(date, quantity.2), na.rm=TRUE,width = 100, # width depends on the width of the entire plot
-              size=1, color="#8435D9") +
+  geom_jitter(data = vWheatKilePeriod,
+              aes(date, quantity.2,
+                  colour = "price points"), 
+              na.rm=TRUE,width = 50, # width depends on the width of the entire plot
+              size=1) +
   #geom_jitter(aes(date, quantity.3), na.rm=TRUE,width = 100,size=1, color="red") +
   # layer: line with all values
   #geom_line(aes(date, quantity.2), na.rm=TRUE,color="red") +
