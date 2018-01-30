@@ -14,9 +14,11 @@ setwd("/BachCloud/BTSync/FormerDropbox/FoodRiots/food-riots_data") #Volumes/Dess
 
 # 1. read price data from csv, note that the first row is a date
 vPricesWheat <- read.csv("csv/prices_wheat-kile.csv", header=TRUE, sep = ",", quote = "")
+vFoodRiots <- read.csv("csv/events_food-riots.csv", header=TRUE, sep = ",", quote = "")
 
 # convert date to Date class
 vPricesWheat$date <- as.Date(vPricesWheat$date)
+vFoodRiots$date <- as.Date(vFoodRiots$date)
 
 # aggregate periods
 ## use cut() to generate summary stats for time periods
@@ -42,7 +44,8 @@ vWheatKileSimple <- vWheatKile[,c("date","quantity.2","quantity.3")]
 # specify period
 vDateStart <- as.Date("1876-01-01")
 vDateStop <- as.Date("1885-12-31")
-vWheatKilePeriod <- funcPeriod(vWheatKile,vDateStart,vDateStop)  
+vWheatKilePeriod <- funcPeriod(vWheatKile,vDateStart,vDateStop) 
+vFoodRiotsPeriod <- funcPeriod(vFoodRiots,vDateStart,vDateStop) 
 
 # calculate means for periods
 ## annual means
@@ -143,7 +146,11 @@ plotBoxAnnualMin <- ggplot(vWheatKilePeriod) +
   labs(title="Wheat prices in Bilad al-Sham", 
        #subtitle="quarterly average minimum prices", 
        x="Date", 
-       y="Prices (piaster/kile)") + # provides title, subtitle, x, y, caption
+       y="Price (piaster/kile)") + # provides title, subtitle, x, y, caption
+  # layer: vertical lines for bread riots
+  geom_vline(xintercept = as.numeric(as.Date(vFoodRiotsPeriod$date)), 
+             na.rm = T, linetype=2, # linetypes: 1=solid, 2=dashed, 
+             size=1, color = "#981103")+
   # layer: box plot min prices
   geom_boxplot(aes(x=year,
                    group=year,
@@ -152,14 +159,12 @@ plotBoxAnnualMin <- ggplot(vWheatKilePeriod) +
   #geom_boxplot(aes(x=year, group=year,y=quantity.3), na.rm = T, color="blue", width=50)+
   # layer: jitter plot
   geom_jitter(aes(date, quantity.2), na.rm=TRUE,width = 100, # width depends on the width of the entire plot
-              size=1, color="red") +
+              size=1, color="#8435D9") +
   #geom_jitter(aes(date, quantity.3), na.rm=TRUE,width = 100,size=1, color="red") +
   # layer: line with all values
   #geom_line(aes(date, quantity.2), na.rm=TRUE,color="red") +
   # layer: fitted line
   #stat_smooth(aes(date, quantity.2), na.rm = T,method="lm", se=T,color="blue") +
-  # layer: vertical lines for bread riots
-  geom_vline(xintercept = as.numeric(as.Date("1878-03-18")), linetype=4)+
   scale_x_date(breaks=date_breaks("2 years"), 
                labels=date_format("%Y"),
                limits=as.Date(c(vDateStart, vDateStop))) + # if plotting more than one graph, it is helpful to provide the same limits for each
