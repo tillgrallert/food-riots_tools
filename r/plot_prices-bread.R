@@ -10,7 +10,7 @@ library(plotly) # interactive plots based on ggplot
 func_period <- function(f,x,y){f[f$date >= x & f$date <= y,]}
 
 # use a working directory
-setwd("/Volumes/Dessau HD/BachCloud/BTSync/FormerDropbox/PostDoc Food Riots/food-riots_data")
+setwd("/BachCloud/BTSync/FormerDropbox/FoodRiots/food-riots_data") #Volumes/Dessau HD/
 
 # 1. read price data from csv, note that the first row is a date
 v_pricesBread <- read.csv("csv/prices_bread-kg.csv", header=TRUE, sep = ",", quote = "")
@@ -41,9 +41,10 @@ plot_breadKgPeriod <- ggplot(v_breadKgPeriod, aes(date,quantity.2, quantity.3)) 
   ggtitle("Bread prices in Bilad al-Sham") +
   xlab("Date") + ylab("Prices (piaster/kg)") +
   geom_point(na.rm=TRUE, color="purple", size=1, pch=3) +
-  scale_x_date(breaks=date_breaks("5 years"), labels=date_format("%Y")) +
+  scale_x_date(breaks=date_breaks("2 years"), labels=date_format("%Y")) +
   stat_smooth(colour="green", method="loess") +
-  theme_bw() # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
+  theme_bw()+ # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
+  theme(axis.text.x = element_text(angle = 45, vjust=0.5,hjust = 0.5, size = 8))  # rotate x axis text
   
 plot_breadKgPeriod1 <- ggplot(v_breadKgPeriod, aes(x=date, y=value)) +
   ggtitle("Wheat prices in Bilad al-Sham") +
@@ -51,7 +52,8 @@ plot_breadKgPeriod1 <- ggplot(v_breadKgPeriod, aes(x=date, y=value)) +
   geom_point(aes(y=quantity.2, col='min price'), na.rm=TRUE, size=2, pch=1, color="black")  +
   geom_point(aes(y=quantity.3, col='max price'), na.rm=TRUE, size=2, pch=3, color="red") +
   scale_x_date(breaks=date_breaks("2 years"), labels=date_format("%Y")) + # add interval to x-axis
-  theme_bw() # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
+  theme_bw()+ # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
+  theme(axis.text.x = element_text(angle = 45, vjust=0.5,hjust = 0.5, size = 8))  # rotate x axis text
 
 ## final plot
 plot_breadKgPeriod
