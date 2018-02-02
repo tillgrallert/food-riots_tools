@@ -66,10 +66,11 @@ plotScatterAll <- ggplot(vWheatKilePeriod, aes(date, # select period: date, year
   stat_smooth(colour="green",na.rm = TRUE,
               method="loess", # methods are "lm", "loess" ...
               se=F) + # removes the range around the fitting
-  scale_x_date(breaks=date_breaks("5 years"), 
+  scale_x_date(breaks=date_breaks("2 years"), 
                labels=date_format("%Y"),
                limits=as.Date(c(vDateStart, vDateStop))) + # if plotting more than one graph, it is helpful to provide the same limits for each
-  theme_bw() # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
+  theme_bw()+ # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
+  theme(axis.text.x = element_text(angle = 45, vjust=0.5,hjust = 0.5, size = 8))  # rotate x axis text
 plotScatterAll
 
 ## Jitter plot
