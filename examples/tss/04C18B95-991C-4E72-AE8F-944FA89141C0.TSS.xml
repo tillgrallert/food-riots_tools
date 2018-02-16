@@ -23,7 +23,7 @@
                   <tei:pb n="4"/> 
                   <html:br/># nawātij dimashq, prices of foodstuffs<html:br/>
                   <html:br/>type | price<html:br/>-|- <html:br/>
-                  <tei:measureGrp>
+                  <tei:measureGrp when="1910-12-06" location="Damascus"><tei:measureGrp>
                      <tei:measure commodity="wheat" unit="kile" quantity="1">best wheat</tei:measure> | <tei:measure commodity="currency" unit="ops" quantity="46">46</tei:measure>-<tei:measure commodity="currency" unit="ops" quantity="49">49</tei:measure>
                   </tei:measureGrp>
                   <html:br/>
@@ -49,7 +49,7 @@
                   <html:br/>
                   <tei:measureGrp>
                      <tei:measure commodity="vetch" unit="kile" quantity="1">al-kirsinna</tei:measure> | <tei:measure commodity="currency" unit="ops" quantity="30">30</tei:measure> - <tei:measure commodity="currency" unit="ops" quantity="33">33</tei:measure>
-                  </tei:measureGrp>
+                  </tei:measureGrp></tei:measureGrp>
                </tss:characteristic>
                <tss:characteristic name="issue">2</tss:characteristic>
                <tss:characteristic name="language">Arabic</tss:characteristic>
