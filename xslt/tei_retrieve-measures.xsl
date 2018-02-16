@@ -16,8 +16,8 @@
     <xsl:include href="tei-measure_normalize.xsl"/>
     
     
-    <xsl:param name="p_commodity" select="'wheat'"/>
-    <xsl:param name="p_unit" select="'kile'"/>
+    <xsl:param name="p_commodity" select="''"/>
+    <xsl:param name="p_unit" select="''"/>
     <xsl:param name="p_debug" select="true()"/>
     
     <xsl:variable name="v_data-source">
@@ -75,7 +75,7 @@
                 </xsl:when>
                 <!-- only commodity is set -->
                 <xsl:when test="$p_commodity!=''">
-                    <xsl:result-document href="_output/measureGrp_{$p_commodity}-{ format-date(current-date(),'[Y0001]-[M01]-[D01]')}.xml">
+                    <xsl:result-document href="_output/measureGrp_{$p_commodity}-{ format-date(current-date(),'[Y0001]-[M01]-[D01]')}.xml" format="xml">
                     <tei:div><xsl:for-each select="$v_data-source-regularized/descendant::tei:measureGrp[descendant::tei:measure[@commodity=$p_commodity]]">
                         <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@year"/>
                         <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@month"/>
@@ -86,22 +86,24 @@
                 </xsl:when>
                 <!-- only unit is set  -->
                 <xsl:when test="$p_unit!=''">
-                    <xsl:result-document href="_output/measureGrp_{$p_unit}-{ format-date(current-date(),'[Y0001]-[M01]-[D01]')}.xml">
-                        <xsl:apply-templates select="$v_data-source-regularized/descendant::tei:measureGrp[descendant::tei:measure[@unit=$p_unit]]" mode="m_tei-to-csv">
+                    <xsl:result-document href="_output/measureGrp_{$p_unit}-{ format-date(current-date(),'[Y0001]-[M01]-[D01]')}.xml" format="xml">
+                        <tei:div><xsl:for-each select="$v_data-source-regularized/descendant::tei:measureGrp[descendant::tei:measure[@unit=$p_unit]]">
                             <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@year"/>
                             <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@month"/>
                             <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@day"/>
-                        </xsl:apply-templates>
+                            <xsl:copy-of select="."/>
+                        </xsl:for-each></tei:div>
                     </xsl:result-document>
                 </xsl:when>
                 <!-- all prices -->
                 <xsl:otherwise>
-                    <xsl:result-document href="_output/measureGrp-{ format-date(current-date(),'[Y0001]-[M01]-[D01]')}.xml">
-                    <xsl:apply-templates select="$v_data-source-regularized/descendant::tei:measureGrp" mode="m_tei-to-csv">
+                    <xsl:result-document href="_output/measureGrp-{ format-date(current-date(),'[Y0001]-[M01]-[D01]')}.xml" format="xml">
+                    <tei:div><xsl:for-each select="$v_data-source-regularized/descendant::tei:measureGrp">
                         <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@year"/>
                         <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@month"/>
                         <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@day"/>
-                    </xsl:apply-templates>
+                        <xsl:copy-of select="."/>
+                    </xsl:for-each></tei:div>
                     </xsl:result-document>
                 </xsl:otherwise>
             </xsl:choose>
