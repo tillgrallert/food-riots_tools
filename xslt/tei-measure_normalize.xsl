@@ -11,8 +11,7 @@
     <!-- this stylesheet normalizes the attributes on tei:measure. Unfortunately <tei:measure> is not datable and cannot carry the when attribute. Therefore normalization cannot be based on changes over time -->
     <!-- The normalizations are based on a number of primary sources, most notably among them: Chambre de Commerce Française de Constantinople. *Poids, Mesures, Monnaies et Cours du Change Dans les Principales Localités de L'Empire Ottoman à la Fin du 19e Siècle.* Istanbul: Isis, 2002 [1893]; Handelsarchiv 15 Nov. 1878 (#1878, Teil 2):II 489-96; NACP RG 84 Damascus Vol.8 Damascus 85, *Weights and Measures*, Mishāqa to Bissinger 22 Nov. 1889. -->
     
-    <!-- $v_weight-okka expresses the weight of an okka in kg -->
-    <xsl:variable name="v_weight-okka" select="1.282945"/>
+    <xsl:include href="tei-measure_parameters.xsl"/>
 
     <!-- identity transform -->
     <xsl:template match="node() | @*" mode="m_enrich-dates">
@@ -179,111 +178,70 @@
 
     <!-- normalize and harmonize the commodities and units of <tei:measure> -->
     <xsl:template match="tei:measure" mode="m_normalize-unit">
-        <xsl:copy>
-            <!-- reproduce existing attributes -->
-            <xsl:copy-of select="@*"/>
-            <!-- some commodity values should be normalized -->
-            <xsl:choose>
-                <xsl:when test="(@commodity='ervil') or (@commodity='kirsanna')">
-                    <xsl:attribute name="commodity" select="'vetch'"/>
-                </xsl:when>
-                <xsl:when test="@commodity='ful'">
-                    <xsl:attribute name="commodity" select="'broad-beans'"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:apply-templates select="@commodity" mode="m_normalize-unit"/>
-                </xsl:otherwise>
-            </xsl:choose>
-            <!-- normalise @unit -->
-            <xsl:choose>
-                <!-- normalize volumes to kile -->
-                <!--    1 shunbul = 6 madd = 3 kile (in Aleppo)
-                         1 shunbul = 2,25 kile (in Tripoli and Acre) -->
-                <xsl:when test="@unit = 'shunbul'">
-                    <xsl:attribute name="type" select="'normalized'"/>
-                    <xsl:attribute name="unit" select="'kile'"/>
-                    <xsl:attribute name="quantity" select="@quantity * 3"/>
-                </xsl:when>
-                <!-- 1 cift = 1 kile -->
-                <xsl:when test="@unit = 'cift'">
-                    <xsl:attribute name="type" select="'normalized'"/>
-                    <xsl:attribute name="unit" select="'kile'"/>
-                    <xsl:attribute name="quantity" select="@quantity"/>
-                </xsl:when>
-                <!-- 1 madd = 0.5 kile -->
-                <xsl:when test="@unit = 'madd'">
-                    <xsl:attribute name="type" select="'normalized'"/>
-                    <xsl:attribute name="unit" select="'kile'"/>
-                    <xsl:attribute name="quantity" select="@quantity * 0.5"/>
-                </xsl:when>
-                <!-- the basis of all weights in the Arabic provinces of the Ottoman Empire is the okka with the help of $v_weihgt-okka they are normalized to kg  -->
-                <xsl:when test="@unit = 'okka'">
-                    <xsl:attribute name="type" select="'normalized'"/>
-                    <xsl:attribute name="unit" select="'kg'"/>
-                    <xsl:attribute name="quantity" select="@quantity  * $v_weight-okka"/>
-                </xsl:when>
-                <!-- 1 ratl = 2 okka -->
-                <xsl:when test="@unit = 'ratl'">
-                    <xsl:attribute name="type" select="'normalized'"/>
-                    <xsl:attribute name="unit" select="'kg'"/>
-                    <xsl:attribute name="quantity" select="@quantity * 2 * $v_weight-okka"/>
-                </xsl:when>
-                <!-- 1 okka = 400 dirham -->
-                <xsl:when test="@unit = 'dirham'">
-                    <xsl:attribute name="type" select="'normalized'"/>
-                    <xsl:attribute name="unit" select="'kg'"/>
-                    <xsl:attribute name="quantity" select="@quantity div 400 * $v_weight-okka"/>
-                </xsl:when>
-                <!-- 1 qintār = 44 okka in Istanbul
-                      1 qintār = 200 okka in Damascus
-                      1 qintār = 250 okka in Antiochia / 
-                      1 qinṭār = 40 okka in Mosul 
-                      1 qinṭar = 400 okka in Haifa -->
-                <xsl:when test="@unit = 'qintar'">
-                    <xsl:attribute name="type" select="'normalized'"/>
-                    <xsl:attribute name="unit" select="'kg'"/>
-                    <xsl:attribute name="quantity" select="@quantity * 200 * $v_weight-okka"/>
-                </xsl:when>
-                <!-- 1 wazna = 12,5 ratl = 25 okka (in Damascus) -->
-                <xsl:when test="@unit = 'wazana' or @unit = 'wazna'">
-                    <xsl:attribute name="type" select="'normalized'"/>
-                    <xsl:attribute name="unit" select="'kg'"/>
-                    <xsl:attribute name="quantity" select="@quantity * 25 * $v_weight-okka"/>
-                </xsl:when>
-                <!-- normalize metrical weights to kg -->
-                <!-- 1 t = 1000 kg -->
-                <xsl:when test="@unit = 't'">
-                    <xsl:attribute name="type" select="'normalized'"/>
-                    <xsl:attribute name="unit" select="'kg'"/>
-                    <xsl:attribute name="quantity" select="@quantity * 1000"/>
-                </xsl:when>
-                <!-- 1 kg = 1000 gr -->
-                <xsl:when test="@unit = 'gr'">
-                    <xsl:attribute name="type" select="'normalized'"/>
-                    <xsl:attribute name="unit" select="'kg'"/>
-                    <xsl:attribute name="quantity" select="@quantity div 1000"/>
-                </xsl:when>
-                <!-- normalise currencies -->
-                <!-- 100 Ps = 1 Lt -->
-                <!-- even though the nominal value of £T1 remained Ps 100, the Ottoman empire established an official exchange rate of £T1= Ps 123 in May 1883 -->
-                <xsl:when test="@commodity = 'currency' and @unit = 'lt'">
-                    <xsl:attribute name="type" select="'normalized'"/>
-                    <xsl:attribute name="unit" select="'ops'"/>
-                    <xsl:attribute name="quantity" select="@quantity * 100"/>
-                </xsl:when>
-                <!-- 20 Ps = 1 Mec -->
-                <!-- the Ottoman Empire devaluated the mecidiye for the purpose of tax payments from Ps 20 to 19 in 1880 -->
-                <xsl:when test="@commodity = 'currency' and @unit = 'mec'">
-                    <xsl:attribute name="type" select="'normalized'"/>
-                    <xsl:attribute name="unit" select="'ops'"/>
-                    <xsl:attribute name="quantity" select="@quantity * 20"/>
-                </xsl:when>
-                <!-- fallback -->
-                <xsl:otherwise>
-                    <xsl:apply-templates select="@*" mode="m_normalize-unit"/>
-                </xsl:otherwise>
-            </xsl:choose>
-            <xsl:apply-templates mode="m_normalize-unit"/>
-        </xsl:copy>
+            <xsl:copy>
+                <!-- reproduce existing attributes -->
+                <xsl:copy-of select="@*"/>
+                <!-- some commodity values should be normalized -->
+                <xsl:variable name="v_commodity">
+                    <xsl:choose>
+                        <xsl:when test="(@commodity='ervil') or (@commodity='kirsanna')">
+                            <xsl:text>vetch</xsl:text>
+                        </xsl:when>
+                        <xsl:when test="@commodity='ful'">
+                            <xsl:text>broad-beans</xsl:text>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="@commodity"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+                <xsl:variable name="v_source-unit" select="@unit"/>
+                <xsl:variable name="v_location" select="@location"/>
+                <!-- check for the type of a measure, i.e. volume, weight, currency -->
+                <xsl:variable name="v_type" select="$p_measures/descendant-or-self::tei:measureGrp[tei:measure/@unit=$v_source-unit][1]/@type"/>
+                <xsl:variable name="v_target-unit">
+                    <xsl:choose>
+                        <xsl:when test="$v_type = 'volume'">
+                            <xsl:text>kile</xsl:text>
+                        </xsl:when>
+                        <xsl:when test="$v_type = 'weight'">
+                            <xsl:text>kg</xsl:text>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="@unit"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+                <!-- add attributes -->
+                <xsl:attribute name="commodity" select="$v_commodity"/>
+                <xsl:attribute name="unit" select="$v_target-unit"/>
+                <!-- normalise quantity for @unit: one has to find the normalization factor for  $v_unit and the chosen $v_target-unit -->
+                <!-- one has to find the first tei:measureGrp wich a  tei:measure child whose @unit is $v_target-unit and whose @quantity is 1 -->
+                <xsl:attribute name="quantity">
+                    <!-- find a measureGrp that has children of both $v_unit and $v_normalization-target -->
+                    <xsl:choose>
+                        <xsl:when test="$p_measures/descendant-or-self::tei:measureGrp[tei:measure[@unit=$v_target-unit]][tei:measure[@unit=$v_source-unit]]">
+                            <xsl:variable name="v_m" select="$p_measures/descendant-or-self::tei:measureGrp[tei:measure[@unit=$v_target-unit]][tei:measure[@unit=$v_source-unit]][1]"/>
+                            <xsl:variable name="v_target-unit-quantity" select="$v_m/tei:measure[@unit=$v_target-unit]/@quantity"/>
+                            <xsl:variable name="v_source-unit-quantity" select="$v_m/tei:measure[@unit=$v_source-unit]/@quantity"/>
+                            <!-- use Dreisatz -->
+                            <xsl:value-of select="@quantity * $v_source-unit-quantity div $v_target-unit-quantity"/>
+                            <xsl:if test="$p_debug=true()">
+                                <xsl:message>
+                                    <xsl:value-of select="concat(@quantity,'(',$v_source-unit,')')"/>
+                                    <xsl:text> * </xsl:text>
+                                    <xsl:value-of select="$v_source-unit-quantity"/>
+                                    <xsl:text> / </xsl:text>
+                                    <xsl:value-of select="concat($v_target-unit-quantity,'(',$v_target-unit,')')"/>
+                                </xsl:message>
+                            </xsl:if>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="@quantity"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:attribute>
+                <xsl:apply-templates/>
+            </xsl:copy>
     </xsl:template>
 </xsl:stylesheet>
