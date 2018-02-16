@@ -10,6 +10,9 @@
     
     <!-- this stylesheet normalizes the attributes on tei:measure. Unfortunately <tei:measure> is not datable and cannot carry the when attribute. Therefore normalization cannot be based on changes over time -->
     <!-- The normalizations are based on a number of primary sources, most notably among them: Chambre de Commerce Française de Constantinople. *Poids, Mesures, Monnaies et Cours du Change Dans les Principales Localités de L'Empire Ottoman à la Fin du 19e Siècle.* Istanbul: Isis, 2002 [1893]; Handelsarchiv 15 Nov. 1878 (#1878, Teil 2):II 489-96; NACP RG 84 Damascus Vol.8 Damascus 85, *Weights and Measures*, Mishāqa to Bissinger 22 Nov. 1889. -->
+    
+    <!-- $v_weight-okka expresses the weight of an okka in kg -->
+    <xsl:variable name="v_weight-okka" select="1.282945"/>
 
     <!-- identity transform -->
     <xsl:template match="@* | node()" mode="m_normalize-unit">
@@ -39,6 +42,8 @@
     <xsl:template match="tei:measure" mode="m_normalize-quantity">
         <xsl:param name="p_regularization-factor" select="1" as="xs:double"/>
           <xsl:copy>
+              <!-- reproduce existing attributes -->
+              <xsl:copy-of select="@*"/>
               <xsl:attribute name="type" select="'regularized'"/>
               <xsl:apply-templates select="@commodity | @unit" mode="m_normalize-quantity"/>
               <xsl:attribute name="quantity" select="@quantity * $p_regularization-factor"/>
@@ -49,7 +54,9 @@
     <!-- normalize and harmonize the commodities and units of <tei:measure> -->
     <xsl:template match="tei:measure" mode="m_normalize-unit">
         <xsl:copy>
-            <!-- some commodity values vould be normalized -->
+            <!-- reproduce existing attributes -->
+            <xsl:copy-of select="@*"/>
+            <!-- some commodity values should be normalized -->
             <xsl:choose>
                 <xsl:when test="(@commodity='ervil') or (@commodity='kirsanna')">
                     <xsl:attribute name="commodity" select="'vetch'"/>
@@ -153,8 +160,4 @@
             <xsl:apply-templates mode="m_normalize-unit"/>
         </xsl:copy>
     </xsl:template>
-    
-    <!-- $v_weight-okka expresses the weight of an okka in kg -->
-    <xsl:variable name="v_weight-okka" select="1.282945"/>
-
 </xsl:stylesheet>
