@@ -68,9 +68,6 @@
         <xsl:choose>
             <!-- test if the measure describing the money commodity is dated -->
             <xsl:when test="count(descendant::tei:measure[@commodity='currency'][@when]) &gt; 1">
-                <xsl:if test="$p_debug=true()">
-                    <xsl:message>This measureGrp has dated measure children</xsl:message>
-                </xsl:if>
                 <xsl:for-each select="descendant::tei:measure[@commodity='currency'][@when]">
                     <tei:measureGrp type="split" source="{$v_id-source}" when="{@when}">
                         <xsl:copy-of select="ancestor::tei:measureGrp/descendant::tei:measure[not(@commodity='currency')]"/>
@@ -92,15 +89,29 @@
 
     <!-- add location information -->
     <xsl:template match="tei:measureGrp[not(@location)]" mode="m_enrich-locations">
+        <!-- it can be that more than one of the <tei:measure> children carry location data. In this case the measureGrp should be split. Note that @location on measure is only provided in exactly these cases -->
+        <xsl:choose>
+            <!-- test if the measure describing the money commodity is dated -->
+            <xsl:when test="count(descendant::tei:measure[@commodity='currency'][@location]) &gt; 1">
+                <xsl:for-each select="descendant::tei:measure[@commodity='currency'][@location]">
+                    <tei:measureGrp type="split">
+                        <xsl:apply-templates select="@*" mode="m_enrich-locations"/>
+                        <xsl:attribute name="location" select="@location"/>
+                        <xsl:copy-of select="ancestor::tei:measureGrp/descendant::tei:measure[not(@commodity='currency')]"/>
+                        <xsl:apply-templates select="." mode="m_enrich-locations"/>
+                    </tei:measureGrp>
+                </xsl:for-each>
+            </xsl:when>
+            <xsl:otherwise>
         <xsl:variable name="v_location">
             <xsl:choose>
-                <!-- if the measureGrp has located measure children, the value of @location should be set to "NA" -->
-                <xsl:when test="count(descendant::tei:measure[@commodity='currency'][@location]) &gt; 1">
-                    <xsl:text>NA</xsl:text>
-                </xsl:when>
                 <!-- when there is only one located measure child, its @location value should also be applied to the parent -->
                 <xsl:when test="count(descendant::tei:measure[@commodity='currency'][@location]) = 1">
                     <xsl:value-of select="descendant::tei:measure[@commodity='currency'][@location]"/>
+                </xsl:when>
+                <!-- probably a parent measureGrp has location information -->
+                <xsl:when test="ancestor::tei:measureGrp[@location]">
+                    <xsl:value-of select="ancestor::tei:measureGrp/@location"/>
                 </xsl:when>
                 <!-- otherwise pick the publication place of the source -->
                 <xsl:when test="ancestor::tss:reference/tss:characteristics/tss:characteristic[@name='publicationCountry']">
@@ -113,6 +124,8 @@
             <xsl:attribute name="location" select="$v_location"/>
             <xsl:apply-templates select="node()" mode="m_enrich-locations"/>
         </xsl:copy>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     
     <!-- add source information -->
