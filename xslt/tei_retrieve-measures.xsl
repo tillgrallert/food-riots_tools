@@ -33,17 +33,21 @@
         </xsl:choose>
     </xsl:variable>
     
-    <!-- 1. enrich all measures with date information -->
+    <!-- 1. enrich all measureGrp with date information -->
     <xsl:variable name="v_data-source-enriched-dates">
         <xsl:apply-templates select="$v_data-source" mode="m_enrich-dates"/>
     </xsl:variable>
-    <!-- enrich with location information -->
+    <!-- enrich all measureGrp with location information -->
     <xsl:variable name="v_data-source-enriched-locations">
-        <xsl:apply-templates select="$v_data-source" mode="m_enrich-locations"/>
+        <xsl:apply-templates select="$v_data-source-enriched-dates" mode="m_enrich-locations"/>
+    </xsl:variable>
+    <!-- add date and location information to measure descendants -->
+    <xsl:variable name="v_data-source-enriched">
+        <xsl:apply-templates select="$v_data-source-enriched-locations" mode="m_enrich"/>
     </xsl:variable>
     <!-- 2. normalize all non-metrical values -->
     <xsl:variable name="v_data-source-normalized">
-        <xsl:apply-templates select="$v_data-source-enriched-locations" mode="m_normalize-unit"/>
+        <xsl:apply-templates select="$v_data-source-enriched" mode="m_normalize-unit"/>
     </xsl:variable>
     <!-- 3. regularize everything to quantity = 1 for comparability of values -->
     <xsl:variable name="v_data-source-regularized">
@@ -60,7 +64,7 @@
                 <!-- commodity and unit are set -->
                 <xsl:when test="$p_commodity!='' and $p_unit!=''">
                     <xsl:result-document href="_output/measureGrp_{$p_commodity}-{$p_unit}-{ format-date(current-date(),'[Y0001]-[M01]-[D01]')}.xml" format="xml">
-                    <tei:div><xsl:for-each select="$v_data-source-enriched-locations/descendant::tei:measureGrp[descendant::tei:measure[@commodity=$p_commodity][@unit=$p_unit]]">
+                    <tei:div><xsl:for-each select="$v_data-source-regularized/descendant::tei:measureGrp[descendant::tei:measure[@commodity=$p_commodity][@unit=$p_unit]]">
                         <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@year"/>
                         <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@month"/>
                         <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@day"/>
@@ -101,101 +105,5 @@
                     </xsl:result-document>
                 </xsl:otherwise>
             </xsl:choose>
-    </xsl:template>
-    
-    <!-- identity transform -->
-    <xsl:template match="node() | @*" mode="m_enrich-dates">
-        <xsl:copy>
-            <xsl:apply-templates select="@* | node()" mode="m_enrich-dates"/>
-        </xsl:copy>
-    </xsl:template>
-    <xsl:template match="node() | @*" mode="m_enrich-locations">
-        <xsl:copy>
-            <xsl:apply-templates select="@* | node()" mode="m_enrich-locations"/>
-        </xsl:copy>
-    </xsl:template>
-    <!-- add temporal information -->
-    <!-- undated measureGrp -->
-    <xsl:template match="tei:measureGrp[not(@when)]" mode="m_enrich-dates" priority="10">
-        <xsl:variable name="v_date-publication">
-            <xsl:choose>
-                <!-- check if full publication date is available -->
-                <xsl:when test="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@day!=''">
-                    <xsl:value-of select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@year"/>
-                    <xsl:text>-</xsl:text>
-                    <xsl:value-of select="format-number(ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@month,'00')"/>
-                    <xsl:text>-</xsl:text>
-                    <xsl:value-of select="format-number(ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@day,'00')"/>
-                </xsl:when>
-                <!-- otherwise use only publication year -->
-                <xsl:when test="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@year!=''">
-                    <xsl:value-of select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@year"/>
-                </xsl:when>
-            </xsl:choose>
-        </xsl:variable>
-        <xsl:variable name="v_id-source" select="ancestor::tss:reference/tss:characteristics/tss:characteristic[@name='UUID']"/>
-        <!-- it can be that more than one of the <tei:measure> children are dated. In this case the measureGrp should be split -->
-        <xsl:choose>
-            <!-- test if the measure describing the money commodity is dated -->
-            <xsl:when test="count(descendant::tei:measure[@commodity='currency'][@when]) &gt; 1">
-                <xsl:if test="$p_debug=true()">
-                    <xsl:message>This measureGrp has dated measure children</xsl:message>
-                </xsl:if>
-                <xsl:for-each select="descendant::tei:measure[@commodity='currency'][@when]">
-                    <tei:measureGrp type="split" source="{$v_id-source}" when="{@when}">
-                        <xsl:copy-of select="ancestor::tei:measureGrp/descendant::tei:measure[not(@commodity='currency')]"/>
-                        <xsl:apply-templates select="." mode="m_enrich-dates"/>
-                    </tei:measureGrp>
-                </xsl:for-each>
-            </xsl:when>
-            <!-- otherwise the measureGrp shall be dated with the publication date  -->
-            <xsl:otherwise>
-                <xsl:copy>
-                    <xsl:apply-templates select="@*" mode="m_enrich-dates"/>
-                    <xsl:attribute name="when" select="$v_date-publication"/>
-                    <xsl:attribute name="source" select="$v_id-source"/>
-                    <xsl:apply-templates select="node()" mode="m_enrich-dates"/>
-                </xsl:copy>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
-    
-    <!-- add location information -->
-    <xsl:template match="tei:measureGrp[not(@location)]" mode="m_enrich-locations">
-        <xsl:variable name="v_location">
-            <xsl:choose>
-                <!-- if the measureGrp has located measure children, the value of @location should be set to "NA" -->
-                <xsl:when test="count(descendant::tei:measure[@commodity='currency'][@location]) &gt; 1">
-                    <xsl:text>NA</xsl:text>
-                </xsl:when>
-                <!-- when there is only one located measure child, its @location value should also be applied to the parent -->
-                <xsl:when test="count(descendant::tei:measure[@commodity='currency'][@location]) = 1">
-                    <xsl:value-of select="descendant::tei:measure[@commodity='currency'][@location]"/>
-                </xsl:when>
-                <!-- otherwise pick the publication place of the source -->
-                <xsl:when test="ancestor::tss:reference/tss:characteristics/tss:characteristic[@name='publicationCountry']">
-                    <xsl:value-of select="normalize-space(ancestor::tss:reference/tss:characteristics/tss:characteristic[@name='publicationCountry'])"/>
-                </xsl:when>
-            </xsl:choose>
-        </xsl:variable>
-        <xsl:copy>
-            <xsl:if test="$p_debug = true()">
-                <xsl:message>
-                    <xsl:value-of select="."/>
-                </xsl:message>
-            </xsl:if>
-            <xsl:apply-templates select="@*" mode="m_enrich-locations"/>
-            <xsl:attribute name="location" select="$v_location"/>
-            <xsl:apply-templates select="node()" mode="m_enrich-locations"/>
-        </xsl:copy>
-    </xsl:template>
-    
-    <!-- add source information -->
-    <xsl:template match="tei:measureGrp[not(@source)]" mode="m_enrich-dates">
-        <xsl:variable name="v_id-source" select="ancestor::tss:reference/tss:characteristics/tss:characteristic[@name='UUID']"/>
-        <xsl:copy>
-            <xsl:attribute name="source" select="$v_id-source"/>
-            <xsl:apply-templates select="@* | node()" mode="m_enrich-dates"/>
-        </xsl:copy>
     </xsl:template>
 </xsl:stylesheet>
