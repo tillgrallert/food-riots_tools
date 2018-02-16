@@ -24,27 +24,27 @@
                   <html:br/># nawātij dimashq, prices of foodstuffs<html:br/>
                   <html:br/>type | price<html:br/>-|- <html:br/>
                   <tei:measureGrp when="1910-12-06" location="Damascus"><tei:measureGrp>
-                     <tei:measure commodity="wheat" unit="kile" quantity="1">best wheat</tei:measure> | <tei:measure commodity="currency" unit="ops" quantity="46">46</tei:measure>-<tei:measure commodity="currency" unit="ops" quantity="49">49</tei:measure>
+                     <tei:measure commodity="wheat" unit="madd" quantity="2">best wheat</tei:measure> | <tei:measure commodity="currency" unit="ops" quantity="46">46</tei:measure>-<tei:measure commodity="currency" unit="ops" quantity="49">49</tei:measure>
                   </tei:measureGrp>
                   <html:br/>
                   <tei:measureGrp>
-                     <tei:measure commodity="wheat" unit="kile" quantity="1">medium quality wheat </tei:measure> | <tei:measure commodity="currency" unit="ops" quantity="41">41</tei:measure>-<tei:measure commodity="currency" unit="ops" quantity="44">44</tei:measure>
+                     <tei:measure commodity="wheat" unit="ratl" quantity="10">medium quality wheat </tei:measure> | <tei:measure commodity="currency" unit="ops" quantity="41">41</tei:measure>-<tei:measure commodity="currency" unit="ops" quantity="44">44</tei:measure>
                   </tei:measureGrp>
                   <html:br/>
                   <tei:measureGrp>
-                     <tei:measure commodity="barley" unit="kile" quantity="1">barley</tei:measure> | <tei:measure commodity="currency" unit="ops" quantity="21">21</tei:measure> - <tei:measure commodity="currency" unit="ops" quantity="23">23</tei:measure>
+                     <tei:measure commodity="barley" unit="okka" quantity="15">barley</tei:measure> | <tei:measure commodity="currency" unit="ops" quantity="21">21</tei:measure> - <tei:measure commodity="currency" unit="ops" quantity="23">23</tei:measure>
                   </tei:measureGrp>
                   <html:br/>
                   <tei:measureGrp>
-                     <tei:measure commodity="chickpeas" unit="kile" quantity="1">chickpeas from the Jabal</tei:measure> | <tei:measure commodity="currency" unit="ops" quantity="47">47</tei:measure>-<tei:measure commodity="currency" unit="ops" quantity="54">54</tei:measure>
+                     <tei:measure commodity="chickpeas" unit="shunbul" quantity="1">chickpeas from the Jabal</tei:measure> | <tei:measure commodity="currency" unit="ops" quantity="47">47</tei:measure>-<tei:measure commodity="currency" unit="ops" quantity="54">54</tei:measure>
                   </tei:measureGrp>
                   <html:br/>
                   <tei:measureGrp>
-                     <tei:measure commodity="chickpeas" unit="kile" quantity="1">chickpeas from Ḥawrān</tei:measure> | <tei:measure commodity="currency" unit="ops" quantity="45">45</tei:measure>-<tei:measure commodity="currency" unit="ops" quantity="47">47</tei:measure>
+                     <tei:measure commodity="chickpeas" unit="okka" quantity="1">chickpeas from Ḥawrān</tei:measure> | <tei:measure commodity="currency" unit="ops" quantity="45">45</tei:measure>-<tei:measure commodity="currency" unit="ops" quantity="47">47</tei:measure>
                   </tei:measureGrp>
                   <html:br/>
                   <tei:measureGrp>
-                     <tei:measure commodity="lentils" unit="kile" quantity="1">lentils</tei:measure> | <tei:measure commodity="currency" unit="ops" quantity="30">30</tei:measure>-<tei:measure commodity="currency" unit="ops" quantity="32">32</tei:measure>
+                     <tei:measure commodity="lentils" unit="ratl" quantity="1">lentils</tei:measure> | <tei:measure commodity="currency" unit="ops" quantity="30">30</tei:measure>-<tei:measure commodity="currency" unit="ops" quantity="32">32</tei:measure>
                   </tei:measureGrp>
                   <html:br/>
                   <tei:measureGrp>
