@@ -55,6 +55,7 @@
     </xsl:variable>
     
     <xsl:template match="/">
+        
         <!-- one line for each normalized tei:measureGrp:
         1. column: should information on dates
         2. column: UUID of the source reference
@@ -64,7 +65,7 @@
                 <!-- commodity and unit are set -->
                 <xsl:when test="$p_commodity!='' and $p_unit!=''">
                     <xsl:result-document href="_output/measureGrp_{$p_commodity}-{$p_unit}-{ format-date(current-date(),'[Y0001]-[M01]-[D01]')}.xml" format="xml">
-                    <tei:div><xsl:for-each select="$v_data-source-regularized/descendant::tei:measureGrp[descendant::tei:measure[@commodity=$p_commodity][@unit=$p_unit]]">
+                    <tei:div><xsl:for-each select="$v_data-source-regularized/descendant::tei:measureGrp[tei:measure[@commodity=$p_commodity][@unit=$p_unit]]">
                         <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@year"/>
                         <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@month"/>
                         <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@day"/>
@@ -76,7 +77,7 @@
                 <!-- only commodity is set -->
                 <xsl:when test="$p_commodity!=''">
                     <xsl:result-document href="_output/measureGrp_{$p_commodity}-{ format-date(current-date(),'[Y0001]-[M01]-[D01]')}.xml" format="xml">
-                    <tei:div><xsl:for-each select="$v_data-source-regularized/descendant::tei:measureGrp[descendant::tei:measure[@commodity=$p_commodity]]">
+                    <tei:div><xsl:for-each select="$v_data-source-regularized/descendant::tei:measureGrp[tei:measure[@commodity=$p_commodity]]">
                         <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@year"/>
                         <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@month"/>
                         <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@day"/>
@@ -87,7 +88,7 @@
                 <!-- only unit is set  -->
                 <xsl:when test="$p_unit!=''">
                     <xsl:result-document href="_output/measureGrp_{$p_unit}-{ format-date(current-date(),'[Y0001]-[M01]-[D01]')}.xml" format="xml">
-                        <tei:div><xsl:for-each select="$v_data-source-regularized/descendant::tei:measureGrp[descendant::tei:measure[@unit=$p_unit]]">
+                        <tei:div><xsl:for-each select="$v_data-source-regularized/descendant::tei:measureGrp[tei:measure[@unit=$p_unit]]">
                             <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@year"/>
                             <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@month"/>
                             <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@day"/>
@@ -98,7 +99,7 @@
                 <!-- all prices -->
                 <xsl:otherwise>
                     <xsl:result-document href="_output/measureGrp-{ format-date(current-date(),'[Y0001]-[M01]-[D01]')}.xml" format="xml">
-                    <tei:div><xsl:for-each select="$v_data-source-regularized/descendant::tei:measureGrp">
+                    <tei:div><xsl:for-each select="$v_data-source-regularized/descendant::tei:measureGrp[tei:measure]">
                         <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@year"/>
                         <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@month"/>
                         <xsl:sort select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@day"/>
