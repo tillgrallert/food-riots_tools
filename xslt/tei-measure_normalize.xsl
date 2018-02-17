@@ -176,7 +176,7 @@
               <xsl:apply-templates select="@commodity | @unit" mode="m_normalize-quantity"/>
               <xsl:attribute name="quantity" select="@quantity * $p_regularization-factor"/>
               <xsl:if test="$p_regularization-factor!=1">
-                  <xsl:attribute name="type" select="'regularized'"/>
+                  <xsl:attribute name="change" select="'#regularized'"/>
                   <xsl:attribute name="quantityOrig" select="@quantity"/>
               </xsl:if>
               <xsl:apply-templates mode="m_normalize-quantity"/>
@@ -204,17 +204,16 @@
                 </xsl:variable>
                 <xsl:variable name="v_location" select="@location"/>
                 <xsl:variable name="v_source-unit" select="@unit"/>
-                <!-- check for the type of a measure, i.e. volume, weight, currency -->
-                <xsl:variable name="v_type" select="$p_measures/descendant-or-self::tei:measureGrp[tei:measure/@unit=$v_source-unit][1]/@type"/>
+                <!-- set target unit based on the type of a measure, i.e. volume, weight, currency. `@type` is generate by mode m_enrich -->
                 <xsl:variable name="v_target-unit">
                     <xsl:choose>
-                        <xsl:when test="$v_type = 'volume'">
+                        <xsl:when test="@type = 'volume'">
                             <xsl:text>kile</xsl:text>
                         </xsl:when>
-                        <xsl:when test="$v_type = 'weight'">
+                        <xsl:when test="@type = 'weight'">
                             <xsl:text>kg</xsl:text>
                         </xsl:when>
-                        <xsl:when test="$v_type = 'currency'">
+                        <xsl:when test="@type = 'currency'">
                             <xsl:text>ops</xsl:text>
                         </xsl:when>
                         <xsl:otherwise>
