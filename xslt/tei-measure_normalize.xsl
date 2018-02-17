@@ -169,9 +169,12 @@
           <xsl:copy>
               <!-- reproduce existing attributes -->
               <xsl:copy-of select="@*"/>
-              <xsl:attribute name="type" select="'regularized'"/>
               <xsl:apply-templates select="@commodity | @unit" mode="m_normalize-quantity"/>
               <xsl:attribute name="quantity" select="@quantity * $p_regularization-factor"/>
+              <xsl:if test="$p_regularization-factor!=1">
+                  <xsl:attribute name="type" select="'regularized'"/>
+                  <xsl:attribute name="quantityOrig" select="@quantity"/>
+              </xsl:if>
               <xsl:apply-templates mode="m_normalize-quantity"/>
           </xsl:copy>
     </xsl:template>
@@ -207,6 +210,9 @@
                         <xsl:when test="$v_type = 'weight'">
                             <xsl:text>kg</xsl:text>
                         </xsl:when>
+                        <xsl:when test="$v_type = 'currency'">
+                            <xsl:text>ops</xsl:text>
+                        </xsl:when>
                         <xsl:otherwise>
                             <xsl:value-of select="@unit"/>
                         </xsl:otherwise>
@@ -216,6 +222,7 @@
                 <xsl:attribute name="commodity" select="$v_commodity"/>
                 <xsl:attribute name="unit" select="$v_target-unit"/>
                 <xsl:if test="$v_source-unit!=$v_target-unit">
+                    <xsl:attribute name="type" select="'normalized'"/>
                     <xsl:attribute name="unitOrig" select="$v_source-unit"/>
                     <xsl:attribute name="quantityOrig" select="@quantity"/>
                 </xsl:if>
@@ -225,9 +232,9 @@
                     <!-- find a measureGrp that has children of both $v_unit and $v_normalization-target -->
                     <xsl:choose>
                         <xsl:when test="$p_measures/descendant-or-self::tei:measureGrp[tei:measure[@unit=$v_target-unit]][tei:measure[@unit=$v_source-unit]]">
-                            <xsl:variable name="v_m" select="$p_measures/descendant-or-self::tei:measureGrp[tei:measure[@unit=$v_target-unit]][tei:measure[@unit=$v_source-unit]][1]"/>
-                            <xsl:variable name="v_target-unit-quantity" select="$v_m/tei:measure[@unit=$v_target-unit]/@quantity"/>
-                            <xsl:variable name="v_source-unit-quantity" select="$v_m/tei:measure[@unit=$v_source-unit]/@quantity"/>
+                            <xsl:variable name="v_measureGrp" select="$p_measures/descendant-or-self::tei:measureGrp[tei:measure[@unit=$v_target-unit]][tei:measure[@unit=$v_source-unit]][1]"/>
+                            <xsl:variable name="v_target-unit-quantity" select="$v_measureGrp/tei:measure[@unit=$v_target-unit]/@quantity"/>
+                            <xsl:variable name="v_source-unit-quantity" select="$v_measureGrp/tei:measure[@unit=$v_source-unit]/@quantity"/>
                             <!-- use Dreisatz -->
                             <xsl:value-of select="@quantity * $v_source-unit-quantity div $v_target-unit-quantity"/>
                             <xsl:if test="$p_debug=true()">
