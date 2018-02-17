@@ -14,8 +14,8 @@
     <xsl:include href="tei-measure_normalize.xsl"/>
     <xsl:include href="tei-measureGrp_convert-to-csv.xsl"/>
     
-    <xsl:param name="p_commodity" select="'wheat'"/>
-    <xsl:param name="p_unit" select="'kile'"/>
+    <xsl:param name="p_commodity" select="''"/>
+    <xsl:param name="p_unit" select="''"/>
     <xsl:param name="p_debug" select="true()"/>
     
     <xsl:variable name="v_data-source">
@@ -88,7 +88,7 @@
                 <xsl:otherwise>
                     <xsl:result-document href="_output/prices-{ format-date(current-date(),'[Y0001]-[M01]-[D01]')}.csv">
                         <xsl:value-of select="$v_csv-head"/>
-                    <xsl:apply-templates select="$v_data-source-regularized/tei:measureGrp" mode="m_tei-to-csv">
+                    <xsl:apply-templates select="$v_data-source-regularized/descendant::tei:measureGrp" mode="m_tei-to-csv">
                         <xsl:sort select="@when"/>
                         <xsl:sort select="@location"/>
                     </xsl:apply-templates>
