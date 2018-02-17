@@ -137,6 +137,7 @@
     </xsl:template>
     <!-- add date and location information based on the nearest ancestor measureGrp -->
     <xsl:template match="tei:measure" mode="m_enrich">
+        <xsl:variable name="v_unit" select="@unit"/>
         <xsl:copy>
             <xsl:choose>
                 <xsl:when test="not(@when) and not(@location)">
@@ -150,6 +151,9 @@
                     <xsl:attribute name="location" select="ancestor::tei:measureGrp[1]/@location"/>
                 </xsl:when>
             </xsl:choose>
+            <!-- add a type attribute -->
+            <!-- check for the type of a measure, i.e. volume, weight, currency -->
+            <xsl:attribute name="type" select="$p_measures/descendant-or-self::tei:measureGrp[tei:measure/@unit=$v_unit][1]/@type"/>
             <xsl:apply-templates select="@* | node()" mode="m_enrich"/>
         </xsl:copy>
     </xsl:template>
@@ -221,8 +225,9 @@
                 <!-- add attributes -->
                 <xsl:attribute name="commodity" select="$v_commodity"/>
                 <xsl:attribute name="unit" select="$v_target-unit"/>
+<!--                <xsl:attribute name="type" select="$v_type"/>-->
                 <xsl:if test="$v_source-unit!=$v_target-unit">
-                    <xsl:attribute name="type" select="'normalized'"/>
+                    <xsl:attribute name="change" select="'#normalized'"/>
                     <xsl:attribute name="unitOrig" select="$v_source-unit"/>
                     <xsl:attribute name="quantityOrig" select="@quantity"/>
                 </xsl:if>
