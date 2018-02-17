@@ -69,6 +69,16 @@
             <tei:measure unit="okka" quantity="400"/>
             <tei:measure unit="qintar" quantity="1"/>
         </tei:measureGrp>
+        
+        <!-- currencies -->
+        <!-- Ottoman Empire  -->
+        <!-- even though the nominal value of £T1 remained Ps 100, the Ottoman empire established an official exchange rate of £T1= Ps 123 in May 1883 -->
+        <!-- the Ottoman Empire devaluated the mecidiye for the purpose of tax payments from Ps 20 to 19 in 1880 -->
+        <tei:measureGrp type="currency" subtype="Ottoman">
+            <tei:measure unit="lt" quantity="1"/>
+            <tei:measure unit="ops" quantity="100"/>
+            <tei:measure unit="mec" quantity="5"/>
+        </tei:measureGrp>
     </xsl:param>
     
 </xsl:stylesheet>
