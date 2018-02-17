@@ -49,7 +49,9 @@
         <xsl:text>"</xsl:text><xsl:value-of select="replace(normalize-space(.),$p_separator,$p_separator-escape)" disable-output-escaping="no"/><xsl:text>"</xsl:text><xsl:value-of select="$p_separator"/>
         <!-- data from the <tei:measure> children -->
         <xsl:apply-templates select="tei:measure[not(@commodity='currency')]" mode="m_tei-to-csv"/>
-        <xsl:apply-templates select="tei:measure[@commodity='currency']" mode="m_tei-to-csv"/>
+        <xsl:apply-templates select="tei:measure[@commodity='currency']" mode="m_tei-to-csv">
+            <xsl:sort select="@quantity"/>
+        </xsl:apply-templates>
         <xsl:value-of select="$v_new-line"/>
     </xsl:template>
     
