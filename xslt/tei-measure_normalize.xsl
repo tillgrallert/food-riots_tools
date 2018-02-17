@@ -180,7 +180,7 @@
     <xsl:template match="tei:measure" mode="m_normalize-unit">
             <xsl:copy>
                 <!-- reproduce existing attributes -->
-                <xsl:copy-of select="@*"/>
+                <xsl:apply-templates select="@*" mode="m_normalize-unit"/>
                 <!-- some commodity values should be normalized -->
                 <xsl:variable name="v_commodity">
                     <xsl:choose>
@@ -195,8 +195,8 @@
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
-                <xsl:variable name="v_source-unit" select="@unit"/>
                 <xsl:variable name="v_location" select="@location"/>
+                <xsl:variable name="v_source-unit" select="@unit"/>
                 <!-- check for the type of a measure, i.e. volume, weight, currency -->
                 <xsl:variable name="v_type" select="$p_measures/descendant-or-self::tei:measureGrp[tei:measure/@unit=$v_source-unit][1]/@type"/>
                 <xsl:variable name="v_target-unit">
@@ -215,6 +215,10 @@
                 <!-- add attributes -->
                 <xsl:attribute name="commodity" select="$v_commodity"/>
                 <xsl:attribute name="unit" select="$v_target-unit"/>
+                <xsl:if test="$v_source-unit!=$v_target-unit">
+                    <xsl:attribute name="unitOrig" select="$v_source-unit"/>
+                    <xsl:attribute name="quantityOrig" select="@quantity"/>
+                </xsl:if>
                 <!-- normalise quantity for @unit: one has to find the normalization factor for  $v_unit and the chosen $v_target-unit -->
                 <!-- one has to find the first tei:measureGrp wich a  tei:measure child whose @unit is $v_target-unit and whose @quantity is 1 -->
                 <xsl:attribute name="quantity">
