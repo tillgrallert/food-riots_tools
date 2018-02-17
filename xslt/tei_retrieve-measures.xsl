@@ -37,19 +37,19 @@
     <xsl:variable name="v_data-source-enriched-dates">
         <xsl:apply-templates select="$v_data-source" mode="m_enrich-dates"/>
     </xsl:variable>
-    <!-- enrich all measureGrp with location information -->
+    <!-- 2. enrich all measureGrp with location information -->
     <xsl:variable name="v_data-source-enriched-locations">
         <xsl:apply-templates select="$v_data-source-enriched-dates" mode="m_enrich-locations"/>
     </xsl:variable>
-    <!-- add date and location information to measure descendants -->
+    <!-- 3. add date and location information to measure descendants -->
     <xsl:variable name="v_data-source-enriched">
         <xsl:apply-templates select="$v_data-source-enriched-locations" mode="m_enrich"/>
     </xsl:variable>
-    <!-- 2. normalize all non-metrical values -->
+    <!-- 4. normalize all non-metrical values -->
     <xsl:variable name="v_data-source-normalized">
         <xsl:apply-templates select="$v_data-source-enriched" mode="m_normalize-unit"/>
     </xsl:variable>
-    <!-- 3. regularize everything to quantity = 1 for comparability of values -->
+    <!-- 5. regularize everything to quantity = 1 for comparability of values -->
     <xsl:variable name="v_data-source-regularized">
         <xsl:apply-templates select="$v_data-source-normalized" mode="m_normalize-quantity"/>
     </xsl:variable>
