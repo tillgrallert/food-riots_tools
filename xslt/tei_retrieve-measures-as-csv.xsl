@@ -16,7 +16,7 @@
     
     <xsl:param name="p_commodity" select="'wheat'"/>
     <xsl:param name="p_unit" select="'kile'"/>
-    <xsl:param name="p_debug" select="false()"/>
+    <xsl:param name="p_debug" select="true()"/>
     
     <xsl:variable name="v_data-source">
         <xsl:choose>
@@ -31,19 +31,28 @@
         </xsl:choose>
     </xsl:variable>
     
-    <xsl:variable name="v_data-source-normalized">
-        <xsl:apply-templates select="$v_data-source" mode="m_normalize-unit"/>
+    <!-- 1. enrich all measureGrp with date information -->
+    <xsl:variable name="v_data-source-enriched-dates">
+        <xsl:apply-templates select="$v_data-source" mode="m_enrich-dates"/>
     </xsl:variable>
+    <!-- 2. enrich all measureGrp with location information -->
+    <xsl:variable name="v_data-source-enriched-locations">
+        <xsl:apply-templates select="$v_data-source-enriched-dates" mode="m_enrich-locations"/>
+    </xsl:variable>
+    <!-- 3. add date and location information to measure descendants -->
+    <xsl:variable name="v_data-source-enriched">
+        <xsl:apply-templates select="$v_data-source-enriched-locations" mode="m_enrich"/>
+    </xsl:variable>
+    <!-- 4. normalize all non-metrical values -->
+    <xsl:variable name="v_data-source-normalized">
+        <xsl:apply-templates select="$v_data-source-enriched" mode="m_normalize-unit"/>
+    </xsl:variable>
+    <!-- 5. regularize everything to quantity = 1 for comparability of values -->
     <xsl:variable name="v_data-source-regularized">
         <xsl:apply-templates select="$v_data-source-normalized" mode="m_normalize-quantity"/>
     </xsl:variable>
     
     <xsl:template match="/">
-        <!-- one line for each normalized tei:measureGrp:
-        1. column: should information on dates
-        2. column: UUID of the source reference
-        3. column: full copy of the original data
-        4. column and following: normalized CSV data -->
             <xsl:choose>
                 <!-- commodity and unit are set -->
                 <xsl:when test="$p_commodity!='' and $p_unit!=''">
