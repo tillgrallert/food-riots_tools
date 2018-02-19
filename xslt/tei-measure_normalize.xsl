@@ -233,11 +233,14 @@
                         <xsl:variable name="v_measureGrp" select="$p_measures/descendant-or-self::tei:measureGrp[tei:measure[@unit=$v_target-unit]][tei:measure[@unit=$v_source-unit]][1]"/>
                         <xsl:variable name="v_target-unit-quantity" select="$v_measureGrp/tei:measure[@unit=$v_target-unit]/@quantity"/>
                         <xsl:variable name="v_source-unit-quantity" select="$v_measureGrp/tei:measure[@unit=$v_source-unit]/@quantity"/>
+                        <xsl:variable name="v_source-quantity" select="@quantity"/>
                         <!-- use Dreisatz / rule of three -->
-                        <xsl:value-of select="@quantity * $v_target-unit-quantity div $v_source-unit-quantity"/>
+                        <xsl:value-of select="$v_source-quantity *  $v_target-unit-quantity div $v_source-unit-quantity"/>
                         <xsl:if test="$p_debug=true()">
                             <xsl:message>
-                                <xsl:value-of select="concat(@quantity,'(',$v_target-unit,')')"/>
+                                <xsl:value-of select="$v_source-quantity *  $v_target-unit-quantity div $v_source-unit-quantity"/><xsl:value-of select="concat('(',$v_target-unit,')')"/>
+                                <xsl:text> = </xsl:text>
+                                <xsl:value-of select="concat($v_source-quantity,'(',$v_source-unit,')')"/>
                                 <xsl:text> * </xsl:text>
                                 <xsl:value-of select="$v_target-unit-quantity"/>
                                 <xsl:text> / </xsl:text>
