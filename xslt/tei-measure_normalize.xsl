@@ -49,6 +49,18 @@
     <xsl:template match="tei:measureGrp[not(@when)]" mode="m_enrich-dates">
         <xsl:variable name="v_date-publication">
             <xsl:choose>
+                <!-- If an original publication date is available, this should be used here  -->
+                <xsl:when test="ancestor::tss:reference/tss:dates/tss:date[@type='Original']/@day!=''">
+                    <xsl:value-of select="ancestor::tss:reference/tss:dates/tss:date[@type='Original']/@year"/>
+                    <xsl:text>-</xsl:text>
+                    <xsl:value-of select="format-number(ancestor::tss:reference/tss:dates/tss:date[@type='Original']/@month,'00')"/>
+                    <xsl:text>-</xsl:text>
+                    <xsl:value-of select="format-number(ancestor::tss:reference/tss:dates/tss:date[@type='Original']/@day,'00')"/>
+                </xsl:when>
+                <!-- otherwise use only publication year -->
+                <xsl:when test="ancestor::tss:reference/tss:dates/tss:date[@type='Original']/@year!=''">
+                    <xsl:value-of select="ancestor::tss:reference/tss:dates/tss:date[@type='Original']/@year"/>
+                </xsl:when>
                 <!-- check if full publication date is available -->
                 <xsl:when test="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@day!=''">
                     <xsl:value-of select="ancestor::tss:reference/tss:dates/tss:date[@type='Publication']/@year"/>
