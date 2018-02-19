@@ -79,6 +79,16 @@
             <tei:measure unit="ops" quantity="100"/>
             <tei:measure unit="mec" quantity="5"/>
         </tei:measureGrp>
+        
+        <!-- time -->
+        <tei:measureGrp type="time">
+            <tei:measure unit="year" quantity="525600"/>
+            <!-- the month is computed as 1/12 of a year of 365 days -->
+            <tei:measure unit="month" quantity="43800.00000048"/>
+            <tei:measure unit="day" quantity="1440"/>
+            <tei:measure unit="hour" quantity="60"/>
+            <tei:measure unit="min" quantity="1"/>
+        </tei:measureGrp>
     </xsl:param>
     
 </xsl:stylesheet>
