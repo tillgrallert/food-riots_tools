@@ -208,7 +208,7 @@
                         <xsl:text>ops</xsl:text>
                     </xsl:when>
                     <xsl:when test="@type = 'time'">
-                        <xsl:text>month</xsl:text>
+                        <xsl:text>day</xsl:text>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:value-of select="@unit"/>
