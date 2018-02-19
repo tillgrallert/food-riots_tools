@@ -280,10 +280,17 @@
               <xsl:copy-of select="@*"/>
               <xsl:apply-templates select="@commodity | @unit" mode="m_normalize-quantity"/>
               <xsl:attribute name="quantity" select="@quantity * $p_regularization-factor"/>
-              <xsl:if test="$p_regularization-factor!=1">
-                  <xsl:attribute name="change" select="'#regularized'"/>
-                  <xsl:attribute name="quantityOrig" select="@quantity"/>
-              </xsl:if>
+              <xsl:choose>
+                  <!-- if the unit had been normalized before the original quantity should not be changed -->
+                  <xsl:when test="$p_regularization-factor!=1 and @quantityOrig">
+                      <xsl:attribute name="change" select="'#regularized'"/>
+                  </xsl:when>
+                  <!-- otherwise the quantity was only changed now -->
+                  <xsl:when test="$p_regularization-factor!=1">
+                      <xsl:attribute name="change" select="'#regularized'"/>
+                      <xsl:attribute name="quantityOrig" select="@quantity"/>
+                  </xsl:when>
+              </xsl:choose>
               <xsl:apply-templates mode="m_normalize-quantity"/>
           </xsl:copy>
     </xsl:template>
