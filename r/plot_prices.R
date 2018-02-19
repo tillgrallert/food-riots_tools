@@ -42,7 +42,10 @@ v.Date.Start <- as.Date("1870-01-01")
 v.Date.Stop <- as.Date("1916-12-31")
 v.Prices.Wheat.Period <- funcPeriod(v.Prices.Wheat,v.Date.Start,v.Date.Stop) 
 v.Prices.Barley.Period <- funcPeriod(v.Prices.Barley,v.Date.Start,v.Date.Stop) 
-vFoodRiotsPeriod <- funcPeriod(vFoodRiots,v.Date.Start,v.Date.Stop) 
+vFoodRiotsPeriod <- funcPeriod(vFoodRiots,v.Date.Start,v.Date.Stop)
+
+# the list of wheat prices includes two very high data points for regions outside Bilād al-Shām, they should be filtered out
+v.Prices.Wheat.Period <- subset(v.Prices.Wheat.Period, quantity.2 < 120)
 
 # calculate means for periods
 ## annual means
@@ -79,13 +82,12 @@ v.Plot.Wheat.Scatter <- v.Plot.Base+
   # first layer: min prices
   geom_point(data = v.Prices.Wheat.Period, 
              aes(x = date, # select period: date, year, quarter, month
-                 y = quantity.3),
-             na.rm=TRUE, color="purple", size=2, pch=3)+
+                 y = quantity.2),
+             na.rm=TRUE, color="green", size=2, pch=3)+
   # second layer: max prices
   geom_point(data = v.Prices.Wheat.Period, 
-             aes(x=date, y=quantity.2),
-             na.rm=TRUE, 
-             size=2, pch=3, color="black")
+             aes(x=date, y=quantity.3),
+             na.rm=TRUE, size=2, pch=3, color="red")
 v.Plot.Wheat.Scatter
   
 
@@ -96,14 +98,21 @@ v.Plot.Wheat.Jitter <- v.Plot.Base+
        subtitle="based on announcements in newspapers", 
        #x="Date", 
        y="Prices (piaster/kile)") +
-  # first layer: all prices
-  geom_jitter(data = v.Prices.Wheat.Period, aes(x = date, # select period: date, year, quarter, month
-                                                y = quantity.3),
+  # first layer: min prices
+  geom_jitter(data = v.Prices.Wheat.Period, 
+              aes(x = date, # select period: date, year, quarter, month
+                  y = quantity.2),
+              na.rm=TRUE,width = 100, # width controls the jitter around the original position. High values are required for my data
+              size=1) +
+  # second layer: max prices
+  geom_jitter(data = v.Prices.Wheat.Period, 
+              aes(x = date, # select period: date, year, quarter, month
+                  y = quantity.3),
               na.rm=TRUE,width = 100, # width controls the jitter around the original position. High values are required for my data
               size=1) +
   # second layer: fitted line
   stat_smooth(data = v.Prices.Wheat.Period, aes(x = date, # select period: date, year, quarter, month
-                                                y = quantity.3),
+                                                y = quantity.2),
               colour="green",na.rm = TRUE,
               method="loess", # methods are "lm", "loess" ...
               se=F) # removes the range around the fitting
@@ -118,9 +127,9 @@ v.Plot.Wheat.Box <- v.Plot.Base+
   # layer: box plot prices, average of min and max prices
   #geom_boxplot(data = vWheatKilePeriod,aes(x=year,group=year,y=(quantity.2 + quantity.3) / 2), na.rm = T)+
   # layer: box plot min prices
-  geom_boxplot(data = v.Prices.Wheat.Period,aes(x=year,group=year,y=quantity.3), na.rm = T)
+  geom_boxplot(data = v.Prices.Wheat.Period,aes(x=year,group=year,y=quantity.2), na.rm = T)+
   # layer: box plot max prices
-  #geom_boxplot(data = vWheatKilePeriod,aes(x=year, group=year,y=quantity.3), na.rm = T, color="blue", width=50)+
+  geom_boxplot(data = v.Prices.Wheat.Period,aes(x=year, group=year,y=quantity.3), na.rm = T, color="blue", width=100)
   # layer: jitter plot
   #geom_jitter(data = vWheatKilePeriod,aes(date, quantity.2,colour = "price points"), size=1, na.rm=TRUE,width = 50)+ # width depends on the width of the entire plot
   # layer: line with all values
@@ -128,6 +137,19 @@ v.Plot.Wheat.Box <- v.Plot.Base+
   # layer: fitted line
   #stat_smooth(aes(date, quantity.2), na.rm = T,method="lm", se=T,color="blue")
 v.Plot.Wheat.Box
+
+v.Plot.Barley.Box <- v.Plot.Base+
+  # add labels
+  labs(title="Wheat prices and food riots in Bilad al-Sham", 
+       subtitle="minimum prices aggregated by year", 
+       y="Price (piaster/kile)") + # provides title, subtitle, x, y, caption
+  # layer: box plot prices, average of min and max prices
+  #geom_boxplot(data = vWheatKilePeriod,aes(x=year,group=year,y=(quantity.2 + quantity.3) / 2), na.rm = T)+
+  # layer: box plot min prices
+  geom_boxplot(data = v.Prices.Barley.Period,aes(x=year,group=year,y=quantity.2), na.rm = T)+
+  # layer: box plot max prices
+  geom_boxplot(data = v.Prices.Barley.Period,aes(x=year, group=year,y=quantity.3), na.rm = T, color="blue", width=100)
+v.Plot.Barley.Box
   
   
 ## plot with two time series
