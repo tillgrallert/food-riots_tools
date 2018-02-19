@@ -22,7 +22,6 @@
     
     <xsl:param name="p_separator" select="','"/>
     <xsl:param name="p_separator-escape" select="';'"/>
-    <xsl:param name="p_normalize" select="true()"/>
     <xsl:variable name="v_new-line" select="'&#x0A;'"/>
     
     <!-- currently this nested <tei:measureGrp>s -->
