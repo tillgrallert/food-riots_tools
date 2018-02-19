@@ -23,7 +23,8 @@
                   <tei:pb n="4"/> 
                   <html:br/># nawātij dimashq, prices of foodstuffs<html:br/>
                   <html:br/>type | price<html:br/>-|- <html:br/>
-                  <tei:measureGrp when="1910-12-06" location="Damascus"><tei:measureGrp>
+                  <tei:measureGrp when="1910-12-06" location="Damascus">
+                      <tei:measureGrp>
                      <tei:measure commodity="wheat" unit="madd" quantity="2">best wheat</tei:measure> | <tei:measure commodity="currency" unit="ops" quantity="46">46</tei:measure>-<tei:measure commodity="currency" unit="ops" quantity="49">49</tei:measure>
                   </tei:measureGrp>
                   <html:br/>
