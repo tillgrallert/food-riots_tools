@@ -76,10 +76,16 @@ v.Plot.Wheat.Scatter <- v.Plot.Base+
       subtitle="based on announcements in newspapers", 
        #x="Date", 
        y="Prices (piaster/kile)") +
-  # first layer: all prices
-  geom_point(data = v.Prices.Wheat.Period, aes(x = date, # select period: date, year, quarter, month
-                                               y = quantity.3),
-             na.rm=TRUE, color="purple", size=1, pch=3)
+  # first layer: min prices
+  geom_point(data = v.Prices.Wheat.Period, 
+             aes(x = date, # select period: date, year, quarter, month
+                 y = quantity.3),
+             na.rm=TRUE, color="purple", size=2, pch=3)+
+  # second layer: max prices
+  geom_point(data = v.Prices.Wheat.Period, 
+             aes(x=date, y=quantity.2),
+             na.rm=TRUE, 
+             size=2, pch=3, color="black")
 v.Plot.Wheat.Scatter
   
 
@@ -96,90 +102,23 @@ v.Plot.Wheat.Jitter <- v.Plot.Base+
               na.rm=TRUE,width = 100, # width controls the jitter around the original position. High values are required for my data
               size=1) +
   # second layer: fitted line
-  stat_smooth(colour="green",na.rm = TRUE,
+  stat_smooth(data = v.Prices.Wheat.Period, aes(x = date, # select period: date, year, quarter, month
+                                                y = quantity.3),
+              colour="green",na.rm = TRUE,
               method="loess", # methods are "lm", "loess" ...
-              se=F) + # removes the range around the fitting
+              se=F) # removes the range around the fitting
+v.Plot.Wheat.Jitter
   
-  
-plotJitterAll <- ggplot(vWheatKilePeriod, aes(date, # select period: date, year, quarter, month
-                                               quantity.2, quantity.3)) +
-  # add labels
-  labs(title="Wheat prices in Bilad al-Sham", 
-       # subtitle="based on announcements in newspapers", 
-       x="Date", 
-       y="Prices (piaster/kile)") + # provides title, subtitle, x, y, caption
-  # first layer: all prices
-  # geom_point(na.rm=TRUE, color="purple", size=1, pch=3) +
-  geom_jitter(na.rm=TRUE,width = 100, # width controls the jitter around the original position. High values are required for my data
-              size=1) +
-  # second layer: fitted line
-  stat_smooth(colour="green",na.rm = TRUE,
-              method="loess", # methods are "lm", "loess" ...
-              se=F) + # removes the range around the fitting
-  scale_x_date(breaks=date_breaks("5 years"), 
-               labels=date_format("%Y"),
-               limits=as.Date(c(vDateStart, vDateStop))) + # if plotting more than one graph, it is helpful to provide the same limits for each
-  theme_bw() # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
-plotJitterAll
-
-## Counts chart
-plotCountsAll <- ggplot(vWheatKilePeriod, aes(date, # select period: date, year, quarter, month
-                                              quantity.2, quantity.3)) +
-  # add labels
-  labs(title="Wheat prices in Bilad al-Sham", 
-       # subtitle="based on announcements in newspapers", 
-       x="Date", 
-       y="Prices (piaster/kile)") + # provides title, subtitle, x, y, caption
-  # first layer: all prices
-  # geom_point(na.rm=TRUE, color="purple", size=1, pch=3) +
-  geom_count(na.rm=T, show.legend = F) +
-  # second layer: fitted line
-  stat_smooth(colour="green",na.rm = T,
-              method="loess", # methods are "lm", "loess" ...
-              se=F) + # removes the range around the fitting
-  scale_x_date(breaks=date_breaks("5 years"), 
-               labels=date_format("%Y"),
-               limits=as.Date(c(vDateStart, vDateStop))) + # if plotting more than one graph, it is helpful to provide the same limits for each
-  theme_bw() # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
-plotCountsAll
-
-## plot averages per period
-plotLineAvgQuarterlyMin <- ggplot(vWheatKilePeriodQuarterlyMinPrice, 
-                               aes(quarter, # select period: date, year, quarter, month
-                                   quantity.2)) +
-  # add labels
-  labs(title="Wheat prices in Bilad al-Sham", 
-      subtitle="quarterly average minimum prices", 
-       x="Date", 
-       y="Prices (piaster/kile)") + # provides title, subtitle, x, y, caption
-  # first layer: all prices
-  # geom_point(na.rm=TRUE, color="purple", size=1, pch=3) +
-  geom_line(aes(y=quantity.2)) +
-  # second layer: fitted line
-  #stat_smooth(colour="green",na.rm = TRUE,method="loess", se=F) +
-  scale_x_date(breaks=date_breaks("2 years"), 
-               labels=date_format("%Y"),
-               limits=as.Date(c(vDateStart, vDateStop))) + # if plotting more than one graph, it is helpful to provide the same limits for each
-  theme(axis.text.x = element_text(angle = 45, vjust=0.5, size = 8))+  # rotate x axis text
-  theme_bw() # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
-plotLineAvgQuarterlyMin
-
 ## box plot
-plotBoxAnnualMin <- ggplot() +
+v.Plot.Wheat.Box <- v.Plot.Base+
   # add labels
   labs(title="Wheat prices and food riots in Bilad al-Sham", 
        subtitle="minimum prices aggregated by year", 
-       x="Date", 
        y="Price (piaster/kile)") + # provides title, subtitle, x, y, caption
-  # layer: vertical lines for bread riots
-  #geom_vline(data = vFoodRiotsPeriod,aes(xintercept = as.numeric(as.Date(date))),
-   #          size=1, color = "#981103", na.rm = T, linetype=2)+ # linetypes: 1=solid, 2=dashed, 
-  geom_segment(data = vFoodRiotsPeriod, aes(x = date, xend = date, y = 10, yend = 24, colour = "food riot"),
-               size = 1, show.legend = F, na.rm = T, linetype=1)+ # linetypes: 1=solid, 2=dashed, 
   # layer: box plot prices, average of min and max prices
   #geom_boxplot(data = vWheatKilePeriod,aes(x=year,group=year,y=(quantity.2 + quantity.3) / 2), na.rm = T)+
   # layer: box plot min prices
-  geom_boxplot(data = vWheatKilePeriod,aes(x=year,group=year,y=quantity.2), na.rm = T)+
+  geom_boxplot(data = v.Prices.Wheat.Period,aes(x=year,group=year,y=quantity.3), na.rm = T)
   # layer: box plot max prices
   #geom_boxplot(data = vWheatKilePeriod,aes(x=year, group=year,y=quantity.3), na.rm = T, color="blue", width=50)+
   # layer: jitter plot
@@ -187,34 +126,9 @@ plotBoxAnnualMin <- ggplot() +
   # layer: line with all values
   #geom_line(aes(date, quantity.2), na.rm=TRUE,color="red") +
   # layer: fitted line
-  #stat_smooth(aes(date, quantity.2), na.rm = T,method="lm", se=T,color="blue") +
-  scale_x_date(breaks=date_breaks("2 years"), 
-               labels=date_format("%Y"),
-               limits=as.Date(c(vDateStart, vDateStop))) + # if plotting more than one graph, it is helpful to provide the same limits for each
-  theme_bw()+ # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
-  theme(axis.text.x = element_text(angle = 45, vjust=0.5,hjust = 0.5, size = 8))  # rotate x axis text
-plotBoxAnnualMin
-
-plotBoxAnnualMax <- ggplot(vWheatKilePeriod) +
-  # add labels
-  labs(title="Wheat prices in Bilad al-Sham", 
-       #subtitle="quarterly average minimum prices", 
-       x="Date", 
-       y="Prices (piaster/kile)") + # provides title, subtitle, x, y, caption
-  # layer: box plot max prices
-  geom_boxplot(aes(x=year,
-                   group=year,
-                   y=quantity.3), na.rm = T)+
-  # layer: line with all values
-  #geom_line(aes(date, quantity.3), na.rm=TRUE,color="red") +
-  # layer: fitted line
-  #stat_smooth(aes(date, quantity.2), na.rm = T,method="lm", se=T,color="blue") +
-  scale_x_date(breaks=date_breaks("2 years"), 
-               labels=date_format("%Y"),
-               limits=as.Date(c(vDateStart, vDateStop))) + # if plotting more than one graph, it is helpful to provide the same limits for each
-  theme_bw()+ # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
-  theme(axis.text.x = element_text(angle = 45, vjust=0.5,hjust = 0.5, size = 8))  # rotate x axis text
-plotBoxAnnualMax
+  #stat_smooth(aes(date, quantity.2), na.rm = T,method="lm", se=T,color="blue")
+v.Plot.Wheat.Box
+  
   
 ## plot with two time series
 plotWheatKilePeriod2 <- ggplot(vWheatKilePeriod) +
