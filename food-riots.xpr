@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project version="17.0">
+<project version="19.1">
     <meta>
         <filters directoryPatterns="" filePatterns="" positiveFilePatterns="" showHiddenFiles="false"/>
         <options>
-            <serialized version="17.0" xml:space="preserve">
+            <serialized version="19.1" xml:space="preserve">
                 <serializableOrderedMap>
                     <entry>
                         <String>scenarios</String>
@@ -13,7 +13,7 @@
                                     <null/>
                                 </field>
                                 <field name="name">
-                                    <String>retrieve prices as csv</String>
+                                    <String>retrieve prices from measureGrp</String>
                                 </field>
                                 <field name="baseURL">
                                     <String></String>
@@ -31,7 +31,7 @@
                                     <String></String>
                                 </field>
                                 <field name="inputXSLURL">
-                                    <String>${pdu}/xslt/tei_retrieve-measures-as-csv.xsl</String>
+                                    <String>${pdu}/xslt/tei_retrieve-measures.xsl</String>
                                 </field>
                                 <field name="inputXMLURL">
                                     <String>${currentFileURL}</String>
@@ -109,6 +109,27 @@
                                                 <paramDescriptor>
                                                     <field name="localName">
                                                         <String>p_debug</String>
+                                                    </field>
+                                                    <field name="prefix">
+                                                        <null/>
+                                                    </field>
+                                                    <field name="namespace">
+                                                        <null/>
+                                                    </field>
+                                                </paramDescriptor>
+                                            </field>
+                                            <field name="value">
+                                                <String>false()</String>
+                                            </field>
+                                            <field name="hasXPathValue">
+                                                <Boolean>true</Boolean>
+                                            </field>
+                                        </transformationParameter>
+                                        <transformationParameter>
+                                            <field name="paramDescription">
+                                                <paramDescriptor>
+                                                    <field name="localName">
+                                                        <String>p_test</String>
                                                     </field>
                                                     <field name="prefix">
                                                         <null/>
