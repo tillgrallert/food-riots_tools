@@ -13,22 +13,27 @@
             <tei:measure unit="kile" quantity="1"/>
             <tei:measure unit="cift" quantity="1"/>
         </tei:measureGrp>
+        <!-- Acre -->
+        <tei:measureGrp type="volume" location="Acre">
+            <tei:measure unit="shunbul" quantity="1"/>
+            <tei:measure unit="kile" quantity="2.25"/>
+        </tei:measureGrp>
         <!-- Aleppo -->
         <tei:measureGrp type="volume" location="Aleppo">
             <tei:measure unit="shunbul" quantity="1"/>
             <tei:measure unit="madd" quantity="6"/>
             <tei:measure unit="kile" quantity="3"/>
         </tei:measureGrp>
+        <tei:measureGrp type="volume" location="Jerusalem">
+            <!-- don't know conversions of tabba yet. There is a source from 1878 that stated the weight of a ṭabba of wheat as 7 to 7.5 raṭl -->
+            <tei:measure unit="tabba" quantity="1"/>
+        </tei:measureGrp>
         <!-- Tripoli -->
         <tei:measureGrp type="volume" location="Tripoli">
             <tei:measure unit="shunbul" quantity="1"/>
             <tei:measure unit="kile" quantity="2.25"/>
         </tei:measureGrp>
-        <!-- Acre -->
-        <tei:measureGrp type="volume" location="Acre">
-            <tei:measure unit="shunbul" quantity="1"/>
-            <tei:measure unit="kile" quantity="2.25"/>
-        </tei:measureGrp>
+        
 
         <!-- weights -->
         <!-- metrical weights -->
