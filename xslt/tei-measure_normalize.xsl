@@ -50,6 +50,7 @@
         <xsl:variable name="v_date-publication">
             <xsl:choose>
                 <!-- If an original publication date is available, this should be used here  -->
+                <!-- NOTE: in the case of published diaries / journals this rule breaks the extraction of correct dates -->
                 <xsl:when test="ancestor::tss:reference/tss:dates/tss:date[@type='Original']/@day!=''">
                     <xsl:value-of select="ancestor::tss:reference/tss:dates/tss:date[@type='Original']/@year"/>
                     <xsl:text>-</xsl:text>
