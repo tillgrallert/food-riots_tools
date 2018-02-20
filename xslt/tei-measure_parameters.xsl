@@ -24,6 +24,22 @@
             <tei:measure unit="madd" quantity="6"/>
             <tei:measure unit="kile" quantity="3"/>
         </tei:measureGrp>
+        <!-- Damascus  -->
+        <tei:measureGrp type="volume" location="Damascus">
+            <!-- shunbul = 72 madd -->
+            <tei:measure unit="shunbul" quantity="0.013888889"/>
+            <!-- ghirāra = 12 madd -->
+            <tei:measure unit="ghirara" quantity="0.083333333"/>
+            <tei:measure unit="madd" quantity="1"/>
+            <tei:measure unit="kile" quantity="2"/>
+            <tei:measure unit="cift" quantity="2"/>
+        </tei:measureGrp>
+        <!-- Haifa -->
+        <tei:measureGrp type="volume" location="Haifa">
+            <!-- Haifa used the Istanbul kilesi -->
+            <tei:measure unit="kile" quantity="1"/>
+        </tei:measureGrp>
+        <!-- Jerusalem -->
         <tei:measureGrp type="volume" location="Jerusalem">
             <!-- don't know conversions of tabba yet. There is a source from 1878 that stated the weight of a ṭabba of wheat as 7 to 7.5 raṭl -->
             <tei:measure unit="tabba" quantity="1"/>
@@ -59,16 +75,23 @@
             <tei:measure unit="qintar" quantity="1"/>
         </tei:measureGrp>
         <tei:measureGrp type="weight" location="Damascus">
-            <tei:measure unit="okka" quantity="200"/>
-            <tei:measure unit="qintar" quantity="1"/>
+            <tei:measure unit="qintar" quantity="0.005"/>
+            <!-- wazna = 12.5 ratl -->
+            <tei:measure unit="wazna" quantity="6.25"/>
+            <tei:measure unit="ratl" quantity="0.5"/>
+            <tei:measure unit="okka" quantity="1"/>
+            <tei:measure unit="dirham" quantity="400"/>
+            <tei:measure unit="kg" quantity="1.282945"/>
         </tei:measureGrp>
         <tei:measureGrp type="weight" location="Antiochia">
             <tei:measure unit="okka" quantity="250"/>
             <tei:measure unit="qintar" quantity="1"/>
         </tei:measureGrp>
         <tei:measureGrp type="weight" location="Mosul">
-            <tei:measure unit="okka" quantity="40"/>
-            <tei:measure unit="qintar" quantity="1"/>
+            <tei:measure unit="wazna" quantity="0.096153846"/>
+            <tei:measure unit="qintar" quantity="0.025"/>
+            <tei:measure unit="okka" quantity="1"/>
+            <tei:measure unit="kg" quantity="1.282945"/>
         </tei:measureGrp>
         <tei:measureGrp type="weight" location="Haifa">
             <tei:measure unit="okka" quantity="400"/>
