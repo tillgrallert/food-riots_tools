@@ -45,7 +45,7 @@ v.Prices.Barley.Period <- funcPeriod(v.Prices.Barley,v.Date.Start,v.Date.Stop)
 vFoodRiotsPeriod <- funcPeriod(vFoodRiots,v.Date.Start,v.Date.Stop)
 
 # the list of wheat prices includes two very high data points for regions outside Bilād al-Shām, they should be filtered out
-v.Prices.Wheat.Period <- subset(v.Prices.Wheat.Period, quantity.2 < 120)
+v.Prices.Wheat.Period <- subset(v.Prices.Wheat.Period, quantity.2 < 200)
 
 # calculate means for periods
 ## annual means
