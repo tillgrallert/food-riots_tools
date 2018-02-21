@@ -25,24 +25,48 @@
             <tei:measure unit="kile" quantity="3"/>
         </tei:measureGrp>
         <!-- Damascus  -->
-        <tei:measureGrp type="volume" location="Damascus">
+        <tei:measureGrp type="volume" location="Damascus" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
             <!-- shunbul = 72 madd -->
             <tei:measure unit="shunbul" quantity="0.013888889"/>
             <!-- ghirāra = 12 madd -->
-            <tei:measure unit="ghirara" quantity="0.083333333"/>
+            <tei:measure unit="ghirara" quantity="0.083333333">ghirāra</tei:measure>
             <tei:measure unit="madd" quantity="1"/>
             <tei:measure unit="kile" quantity="2"/>
             <tei:measure unit="cift" quantity="2"/>
         </tei:measureGrp>
+        <!-- Gaza -->
+        <tei:measureGrp type="volume" location="Gaza" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
+            <!-- Gaza used the old Istanbul kilesi -->
+            <tei:measure unit="kile" quantity="10"/>
+            <tei:measure unit="tchinik" quantity="37"/>
+        </tei:measureGrp>
         <!-- Haifa -->
-        <tei:measureGrp type="volume" location="Haifa">
+        <tei:measureGrp type="volume" location="Haifa" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
             <!-- Haifa used the Istanbul kilesi -->
             <tei:measure unit="kile" quantity="1"/>
         </tei:measureGrp>
+        <!-- Istanbul -->
+        <tei:measureGrp type="volume" location="Istanbul" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
+            <tei:measure unit="kileNew" quantity="40"/>
+            <tei:measure unit="kileOld" quantity="36.8">Istanbul kilesi</tei:measure>
+            <tei:measure unit="l" quantity="1"/>
+        </tei:measureGrp>
+        <!-- Jaffa -->
+        <tei:measureGrp type="volume" location="Haifa" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
+            <!-- Jaffa used the old Istanbul kilesi -->
+            <tei:measure unit="kile" quantity="10"/>
+            <tei:measure unit="tchinik" quantity="37"/>
+        </tei:measureGrp>
         <!-- Jerusalem -->
-        <tei:measureGrp type="volume" location="Jerusalem">
+        <tei:measureGrp type="volume" location="Jerusalem" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
             <!-- don't know conversions of tabba yet. There is a source from 1878 that stated the weight of a ṭabba of wheat as 7 to 7.5 raṭl -->
-            <tei:measure unit="tabba" quantity="1"/>
+            <tei:measure unit="tabba" quantity="12"/>
+            <tei:measure unit="kile" quantity="10"/>
+        </tei:measureGrp>
+        <!-- Nablus -->
+        <tei:measureGrp type="volume" location="Nablus" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
+            <tei:measure unit="tabba" quantity="12"/>
+            <tei:measure unit="kile" quantity="10"/>
         </tei:measureGrp>
         <!-- Tripoli -->
         <tei:measureGrp type="volume" location="Tripoli">
@@ -70,11 +94,12 @@
                       1 qintār = 250 okka in Antiochia / 
                       1 qinṭār = 40 okka in Mosul 
                       1 qinṭar = 400 okka in Haifa -->
-        <tei:measureGrp type="weight" location="Istanbul">
-            <tei:measure unit="okka" quantity="44"/>
+        <tei:measureGrp type="weight" location="Antiochia">
+            <tei:measure unit="okka" quantity="250"/>
             <tei:measure unit="qintar" quantity="1"/>
         </tei:measureGrp>
-        <tei:measureGrp type="weight" location="Damascus">
+        <!-- Damascus  -->
+        <tei:measureGrp type="weight" location="Damascus" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
             <tei:measure unit="qintar" quantity="0.005"/>
             <!-- wazna = 12.5 ratl -->
             <tei:measure unit="wazna" quantity="6.25"/>
@@ -83,20 +108,60 @@
             <tei:measure unit="dirham" quantity="400"/>
             <tei:measure unit="kg" quantity="1.282945"/>
         </tei:measureGrp>
-        <tei:measureGrp type="weight" location="Antiochia">
-            <tei:measure unit="okka" quantity="250"/>
+        <!-- Gaza -->
+        <tei:measureGrp type="weight" location="Gaza" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
+            <tei:measure unit="ratl" quantity="1"/>
+            <tei:measure unit="okka" quantity="2.25"/>
+            <tei:measure unit="dirham" quantity="900"/>
+            <tei:measure unit="kg" quantity="2.88662625"/>
+        </tei:measureGrp>
+        <!-- Haifa -->
+        <tei:measureGrp type="weight" location="Haifa" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
+            <tei:measure unit="qintar" quantity="0.0025"/>
+            <tei:measure unit="ratl" quantity="0.5"/>
+            <tei:measure unit="okka" quantity="1"/>
+            <tei:measure unit="dirham" quantity="400"/>
+        </tei:measureGrp>
+        <!-- Istanbul -->
+        <tei:measureGrp type="weight" location="Istanbul">
+            <tei:measure unit="okka" quantity="44"/>
             <tei:measure unit="qintar" quantity="1"/>
         </tei:measureGrp>
-        <tei:measureGrp type="weight" location="Mosul">
+        <!-- Jaffa -->
+        <tei:measureGrp type="weight" location="Jaffa" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
+            <tei:measure unit="ratl" quantity="1"/>
+            <tei:measure unit="okka" quantity="2.25"/>
+            <tei:measure unit="dirham" quantity="900"/>
+            <tei:measure unit="kg" quantity="2.88662625"/>
+        </tei:measureGrp>
+        <!-- Jerusalem -->
+        <tei:measureGrp type="weight" location="Jerusalem" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
+            <tei:measure unit="ratl" quantity="1"/>
+            <tei:measure unit="okka" quantity="2.25"/>
+            <tei:measure unit="dirham" quantity="900"/>
+            <tei:measure unit="kg" quantity="2.88662625"/>
+        </tei:measureGrp>
+        
+        <tei:measureGrp type="weight" location="Mosul" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
             <tei:measure unit="wazna" quantity="0.096153846"/>
             <tei:measure unit="qintar" quantity="0.025"/>
             <tei:measure unit="okka" quantity="1"/>
             <tei:measure unit="kg" quantity="1.282945"/>
         </tei:measureGrp>
-        <tei:measureGrp type="weight" location="Haifa">
-            <tei:measure unit="okka" quantity="400"/>
-            <tei:measure unit="qintar" quantity="1"/>
+        <!-- weight of coins -->
+        <tei:measureGrp type="weight" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1844">
+            <tei:measure unit="lt" commodity="gold" quantity="1"/>
+            <tei:measure unit="gr" quantity="7.216"/>
         </tei:measureGrp>
+        <tei:measureGrp type="weight" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1844">
+            <tei:measure unit="ops" commodity="silver" quantity="1"/>
+            <tei:measure unit="gr" quantity="1.202"/>
+        </tei:measureGrp>
+        <tei:measureGrp type="weight" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1844">
+            <tei:measure unit="mec" commodity="silver" quantity="1"/>
+            <tei:measure unit="gr" quantity="24.055"/>
+        </tei:measureGrp>
+        
         
         <!-- currencies -->
         <!-- Ottoman Empire  -->
