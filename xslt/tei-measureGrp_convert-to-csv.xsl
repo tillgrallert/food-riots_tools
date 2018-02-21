@@ -22,7 +22,12 @@
     
     <xsl:param name="p_separator" select="','"/>
     <xsl:param name="p_separator-escape" select="';'"/>
+    <xsl:param name="p_quote-escape" select="'&quot;&quot;'"/>
     <xsl:variable name="v_new-line" select="'&#x0A;'"/>
+    
+    <xsl:template match="/">
+        <xsl:apply-templates select="descendant::tei:measureGrp" mode="m_tei-to-csv"/>
+    </xsl:template>
     
     <!-- currently this nested <tei:measureGrp>s -->
     <!-- one line for each normalized tei:measureGrp:
@@ -45,7 +50,7 @@
         <!-- source information -->
         <xsl:value-of select="@source"/><xsl:value-of select="$p_separator"/>
         <!-- full copy of the original data. Should be quoted -->
-        <xsl:text>"</xsl:text><xsl:value-of select="replace(normalize-space(.),$p_separator,$p_separator-escape)" disable-output-escaping="no"/><xsl:text>"</xsl:text><xsl:value-of select="$p_separator"/>
+        <xsl:text>"</xsl:text><xsl:value-of select="replace(replace(normalize-space(.),$p_separator,$p_separator-escape),'&quot;',$p_quote-escape)" disable-output-escaping="no"/><xsl:text>"</xsl:text><xsl:value-of select="$p_separator"/>
         <!-- data from the <tei:measure> children -->
         <xsl:apply-templates select="tei:measure[not(@commodity='currency')]" mode="m_tei-to-csv"/>
         <xsl:apply-templates select="tei:measure[@commodity='currency']" mode="m_tei-to-csv">
