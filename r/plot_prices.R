@@ -49,11 +49,15 @@ v.Prices.Wheat.Period <- subset(v.Prices.Wheat.Period, quantity.2 < 200)
 
 # calculate means for periods
 ## annual means
-vWheatKilePeriodAnnualMinPrice <- aggregate(quantity.2 ~ year, data=vWheatKilePeriod, mean)
-vWheatKilePeriodAnnualMaxPrice <- aggregate(quantity.3 ~ year, data=vWheatKilePeriod, mean)
+v.Prices.Wheat.Mean.Annual <- aggregate((quantity.2 + quantity.3)/2 ~ year, data=v.Prices.Wheat.Period, mean)
+#vWheatKilePeriodAnnualMinPrice <- aggregate(quantity.2 ~ year, data=vWheatKilePeriod, mean)
+#vWheatKilePeriodAnnualMaxPrice <- aggregate(quantity.3 ~ year, data=vWheatKilePeriod, mean)
 ## quarterly means
-vWheatKilePeriodQuarterlyMinPrice <- aggregate(quantity.2 ~ quarter, data=vWheatKilePeriod, mean)
-vWheatKilePeriodQuarterlyMaxPrice <- aggregate(quantity.3 ~ quarter, data=vWheatKilePeriod, mean)
+v.Prices.Wheat.Min.Quarterly <- aggregate(quantity.2 ~ quarter, data=v.Prices.Wheat.Period, mean)
+v.Prices.Wheat.Max.Quarterly <- aggregate(quantity.3 ~ quarter, data=v.Prices.Wheat.Period, mean)
+## merge the two data frames into one
+v.Prices.Wheat.Mean.Quarterly <- merge(v.Prices.Wheat.Min.Quarterly, v.Prices.Wheat.Max.Quarterly, by=c("quarter"))
+
 
 # plot
 ## base plot
@@ -89,6 +93,27 @@ v.Plot.Wheat.Scatter <- v.Plot.Base+
              aes(x=date, y=quantity.3),
              na.rm=TRUE, size=2, pch=3, color="red")
 v.Plot.Wheat.Scatter
+
+## quarterly averages
+
+v.Plot.Wheat.Quarterly.Mean.Scatter <- v.Plot.Base+
+  # add labels
+  labs(title="Wheat prices in Bilad al-Sham", 
+       subtitle="based on announcements in newspapers", 
+       #x="Date", 
+       y="Prices (piaster/kile)") +
+  # first layer: min prices
+  geom_line(data = v.Prices.Wheat.Min.Quarterly, 
+             aes(x = quarter, # select period: date, year, quarter, month
+                 y = quantity.2),
+             na.rm=TRUE, color="green", size=2, pch=3)+
+  # second layer: max prices
+  geom_line(data = v.Prices.Wheat.Max.Quarterly, 
+             aes(x=quarter, y=quantity.3),
+             na.rm=TRUE, size=2, pch=3, color="red")
+  # layer with connecting lines between min and max prices
+
+v.Plot.Wheat.Quarterly.Mean.Scatter
   
 
 ## Jitter plot
