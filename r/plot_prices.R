@@ -39,6 +39,7 @@ v.Prices$month.common <- as.Date(cut(v.Prices$date.common,breaks = "month"))
 # create a subset of rows based on conditions
 v.Prices.Wheat <- subset(v.Prices,commodity.1=="wheat" & unit.1=="kile" & commodity.2=="currency" & unit.2=="ops")
 v.Prices.Barley <- subset(v.Prices,commodity.1=="barley" & unit.1=="kile" & commodity.2=="currency" & unit.2=="ops")
+v.Prices.Bread <- subset(v.Prices,commodity.1=="bread" & unit.1=="kg" & commodity.2=="currency" & unit.2=="ops")
 
 # select rows
 ## select the first row (containing dates), and the rows containing prices in ops
@@ -49,6 +50,7 @@ v.Date.Start <- as.Date("1870-01-01")
 v.Date.Stop <- as.Date("1916-12-31")
 v.Prices.Wheat.Period <- funcPeriod(v.Prices.Wheat,v.Date.Start,v.Date.Stop) 
 v.Prices.Barley.Period <- funcPeriod(v.Prices.Barley,v.Date.Start,v.Date.Stop) 
+v.Prices.Bread.Period <- funcPeriod(v.Prices.Bread,v.Date.Start,v.Date.Stop) 
 vFoodRiotsPeriod <- funcPeriod(vFoodRiots,v.Date.Start,v.Date.Stop)
 
 # the list of wheat prices includes two very high data points for regions outside Bilād al-Shām, they should be filtered out
