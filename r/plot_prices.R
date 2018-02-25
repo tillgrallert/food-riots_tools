@@ -276,3 +276,18 @@ v.Plot.Wheat.Annual.Cycle.Box <- ggplot()+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 45, vjust=0.5,hjust = 0.5, size = 8))  # rotate x axis text
 v.Plot.Wheat.Annual.Cycle.Box
+
+v.Plot.Bread.Annual.Cycle.Box <- ggplot()+
+  # it would be important to know how many values are represented in each box
+  geom_boxplot(data = v.Prices.Bread.Period, 
+               aes(x = month.common, group = month.common, y = quantity.2),
+               na.rm=TRUE, color="black")+
+  geom_boxplot(data = v.Prices.Bread.Period, 
+               aes(x = month.common, group = month.common, y = quantity.3),
+               na.rm=TRUE, width = 10,  color="blue")+
+  stat_boxplot(geom ="errorbar")+
+  scale_x_date(breaks=date_breaks("1 month"), 
+               labels=date_format("%B")) + # %B full month names; $b abbreviated month
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 45, vjust=0.5,hjust = 0.5, size = 8))  # rotate x axis text
+v.Plot.Bread.Annual.Cycle.Box
