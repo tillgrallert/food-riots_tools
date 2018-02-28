@@ -209,6 +209,12 @@
             </xsl:variable>
             <xsl:variable name="v_location" select="@location"/>
             <xsl:variable name="v_source-unit" select="@unit"/>
+            <xsl:variable name="v_type" select="@type"/>
+            <xsl:if test="$p_debug = true()">
+                <xsl:message>
+                    <xsl:text>@type="</xsl:text><xsl:value-of select="$v_type"/><xsl:text>"</xsl:text>
+                </xsl:message>
+            </xsl:if>
             <!-- set target unit based on the type of a measure, i.e. volume, weight, currency. `@type` is generate by mode m_enrich -->
             <xsl:variable name="v_target-unit">
                 <xsl:choose>
