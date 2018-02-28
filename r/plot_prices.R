@@ -120,19 +120,37 @@ v.Plot.Wheat.Quarterly.Mean.Scatter <- v.Plot.Base+
              aes(x = quarter, # select period: date, year, quarter, month
                  y = quantity.2),
              na.rm=TRUE, size=2, pch=3)+
-  scale_color_gradient(low="darkkhaki", high="darkgreen")+
+  #scale_color_gradient(low="darkkhaki", high="darkgreen")+
   #geom_text(data = v.Prices.Wheat.Mean.Quarterly,aes(x = quarter, quantity.2, label=round(quantity.2)), size=3)+
   # second layer: max prices
   geom_point(data = v.Prices.Wheat.Mean.Quarterly, 
              aes(x=quarter, y=quantity.3),
-             na.rm=TRUE, size=2, pch=3, color="black")+
+             na.rm=TRUE, size=2, pch=3, color="black")
   # layer with connecting lines between min and max prices
-  geom_segment(data = v.Prices.Wheat.Mean.Quarterly, 
-               aes(x = quarter, xend = quarter, 
-                   y = quantity.2, yend = quantity.3),
-               size = 0.3, show.legend = F, na.rm = T, linetype=1) # linetypes: 1=solid, 2=dashed,
+  #geom_segment(data = v.Prices.Wheat.Mean.Quarterly, aes(x = quarter, xend = quarter, y = quantity.2, yend = quantity.3),size = 0.3, show.legend = F, na.rm = T, linetype=1) # linetypes: 1=solid, 2=dashed,
   
 v.Plot.Wheat.Quarterly.Mean.Scatter
+
+## monthly averages
+v.Plot.Wheat.Monthly.Mean.Scatter <- v.Plot.Base+
+  # add labels
+  labs(title="Wheat prices in Bilad al-Sham", 
+       subtitle="Quarterly averages of minimum and maximum prices based on announcements in newspapers", 
+       y="Prices (piaster/kile)") +
+  # first layer: min prices
+  geom_point(data = v.Prices.Wheat.Mean.Monthly, aes(x = month, y = quantity.2),
+             na.rm=TRUE, size=2, pch=3)+
+  geom_line(data = v.Prices.Wheat.Mean.Monthly, aes(x = month, y = quantity.2),
+             na.rm=TRUE, color="green")+
+  #geom_text(data = v.Prices.Wheat.Mean.Monthly,aes(x = month, quantity.2, label=round(quantity.2)), size=3)+
+  # second layer: max prices
+  geom_point(data = v.Prices.Wheat.Mean.Monthly, aes(x=month, y=quantity.3),
+             na.rm=TRUE, size=2, pch=3, color="black")+
+  geom_line(data = v.Prices.Wheat.Mean.Monthly, aes(x = month, y = quantity.3),
+          na.rm=TRUE, color="red")
+# layer with connecting lines between min and max prices
+#geom_segment(data = v.Prices.Wheat.Mean.Quarterly, aes(x = quarter, xend = quarter, y = quantity.2, yend = quantity.3),size = 0.3, show.legend = F, na.rm = T, linetype=1) # linetypes: 1=solid, 2=dashed,
+v.Plot.Wheat.Monthly.Mean.Scatter
   
 
 ## Jitter plot
@@ -269,6 +287,21 @@ v.Plot.Wheat.Annual.Cycle.Scatter <- ggplot()+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 45, vjust=0.5,hjust = 0.5, size = 8))  # rotate x axis text
 v.Plot.Wheat.Annual.Cycle.Scatter
+
+v.Plot.Wheat.Annual.Cycle.Line <- ggplot(data = v.Prices.Wheat.Period) + 
+  #geom_line(aes(x = date.common, y = quantity.2, group=factor(year(date)), colour=factor(year(date)))) + #the group function provides ways of generating plot per group and superimpose them onto each other
+  # one could also use the yday() function from the lubridate library
+  geom_line(aes(x = as.Date(yday(date), "1870-01-01"), y=quantity.2, colour=factor(year(date))))+
+  # add labels
+  labs(title="Wheat prices in Bilād al-Shām", 
+       # subtitle="based on announcements in newspapers", 
+       x="Month", 
+       y="Prices (piaster/kile)") + # provides title, subtitle, x, y, caption
+  scale_x_date(breaks=date_breaks("1 month"), 
+               labels=date_format("%b")) + # %B full month names; $b abbreviated month
+  theme_classic()+
+  theme(axis.text.x = element_text(angle = 45, vjust=0.5,hjust = 0.5, size = 8))  # rotate x axis text
+v.Plot.Wheat.Annual.Cycle.Line
 
 v.Plot.Wheat.Annual.Cycle.Box <- ggplot()+
   # it would be important to know how many values are represented in each box
