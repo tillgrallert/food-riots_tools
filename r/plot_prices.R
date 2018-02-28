@@ -67,6 +67,11 @@ v.Prices.Wheat.Min.Quarterly <- aggregate(quantity.2 ~ quarter, data=v.Prices.Wh
 v.Prices.Wheat.Max.Quarterly <- aggregate(quantity.3 ~ quarter, data=v.Prices.Wheat.Period, mean)
 ## merge the two data frames into one
 v.Prices.Wheat.Mean.Quarterly <- merge(v.Prices.Wheat.Min.Quarterly, v.Prices.Wheat.Max.Quarterly, by=c("quarter"), all=T)
+## monthly means
+v.Prices.Wheat.Min.Monthly <- aggregate(quantity.2 ~ month, data=v.Prices.Wheat.Period, mean)
+v.Prices.Wheat.Max.Monthly <- aggregate(quantity.3 ~ month, data=v.Prices.Wheat.Period, mean)
+## merge the two data frames into one
+v.Prices.Wheat.Mean.Monthly <- merge(v.Prices.Wheat.Min.Monthly, v.Prices.Wheat.Max.Monthly, by=c("month"), all=T)
 
 
 # plot
