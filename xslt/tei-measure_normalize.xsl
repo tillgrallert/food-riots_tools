@@ -13,6 +13,7 @@
     <xsl:include href="tei-measure_parameters.xsl"/>
     
     <xsl:param name="p_debug" select="false()"/>
+    <xsl:param name="p_normalize-by-location" select="false()"/>
 
     <!-- identity transform -->
     <xsl:template match="node() | @*" mode="m_enrich-dates">
@@ -231,7 +232,6 @@
             <!-- add attributes -->
             <xsl:attribute name="commodity" select="$v_commodity"/>
             <xsl:attribute name="unit" select="$v_target-unit"/>
-            <!--                <xsl:attribute name="type" select="$v_type"/>-->
             <xsl:if test="$v_source-unit!=$v_target-unit">
                 <xsl:attribute name="change" select="'#normalized'"/>
                 <xsl:attribute name="unitOrig" select="$v_source-unit"/>
