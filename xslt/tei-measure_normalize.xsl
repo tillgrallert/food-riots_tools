@@ -12,8 +12,8 @@
     
     <xsl:include href="tei-measure_parameters.xsl"/>
     
-    <xsl:param name="p_debug" select="false()"/>
-    <xsl:param name="p_normalize-by-location" select="false()"/>
+    <xsl:param name="p_debug" select="true()"/>
+    <xsl:param name="p_normalize-by-location" select="true()"/>
 
     <!-- identity transform -->
     <xsl:template match="node() | @*" mode="m_enrich-dates">
