@@ -13,7 +13,7 @@
     <xsl:include href="tei-measure_parameters.xsl"/>
     
     <xsl:param name="p_debug" select="true()"/>
-    <xsl:param name="p_normalize-by-location" select="true()"/>
+    <xsl:param name="p_normalize-by-location" select="false()"/>
 
     <!-- identity transform -->
     <xsl:template match="node() | @*" mode="m_enrich-dates">
