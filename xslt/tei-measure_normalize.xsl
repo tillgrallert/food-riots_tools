@@ -212,7 +212,7 @@
             <xsl:variable name="v_type" select="@type"/>
             <xsl:if test="$p_debug = true()">
                 <xsl:message>
-                    <xsl:text>@type="</xsl:text><xsl:value-of select="$v_type"/><xsl:text>"</xsl:text>
+                    <xsl:text>@type="</xsl:text><xsl:value-of select="$v_type"/><xsl:text>" @location="</xsl:text><xsl:value-of select="$v_location"/><xsl:text>"</xsl:text>
                 </xsl:message>
             </xsl:if>
             <!-- set target unit based on the type of a measure, i.e. volume, weight, currency. `@type` is generate by mode m_enrich -->
@@ -248,12 +248,30 @@
             <xsl:attribute name="quantity">
                 <!-- find a measureGrp that has children of both $v_unit and $v_normalization-target -->
                 <xsl:choose>
-                    <xsl:when test="$p_measures/descendant-or-self::tei:measureGrp[@type=$v_type][tei:measure[@unit=$v_target-unit]][tei:measure[@unit=$v_source-unit]]">
+                    <xsl:when test="$p_measures/descendant-or-self::tei:measureGrp[@type=$v_type][tei:measure[@unit=$v_target-unit][@quantity]][tei:measure[@unit=$v_source-unit][@quantity]]">
 <!--                        <xsl:variable name="v_measureGrp" select="$p_measures/descendant-or-self::tei:measureGrp[tei:measure[@unit=$v_target-unit]][tei:measure[@unit=$v_source-unit]][1]"/>-->
                         <xsl:variable name="v_measureGrp">
                             <xsl:choose>
-                                <xsl:when test="$p_normalize-by-location = true()">
+                                <xsl:when test="$p_normalize-by-location = true() and $v_location!=''">
                                     <!-- check if we have normalization values for a given locality, otherwise provide a fallback option -->
+                                    <xsl:choose>
+                                        <xsl:when test="$p_measures/descendant-or-self::tei:measureGrp[@type=$v_type][@location=$v_location][tei:measure[@unit=$v_target-unit][@quantity]][tei:measure[@unit=$v_source-unit][@quantity]]">
+                                            <xsl:if test="$p_debug=true()">
+                                                <xsl:message>
+                                                    <xsl:text>localized data is available for </xsl:text><xsl:value-of select="$v_location"/>
+                                                </xsl:message>
+                                            </xsl:if>
+                                            <xsl:copy-of select="$p_measures/descendant-or-self::tei:measureGrp[@type=$v_type][@location=$v_location][tei:measure[@unit=$v_target-unit][@quantity]][tei:measure[@unit=$v_source-unit][@quantity]][1]"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:if test="$p_debug=true()">
+                                                <xsl:message>
+                                                    <xsl:text>localized data is not available for </xsl:text><xsl:value-of select="$v_location"/>
+                                                </xsl:message>
+                                            </xsl:if>
+                                            <xsl:copy-of select="$p_measures/descendant-or-self::tei:measureGrp[@type=$v_type][tei:measure[@unit=$v_target-unit][@quantity]][tei:measure[@unit=$v_source-unit][@quantity]][1]"/>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <xsl:copy-of select="$p_measures/descendant-or-self::tei:measureGrp[@type=$v_type][tei:measure[@unit=$v_target-unit][@quantity]][tei:measure[@unit=$v_source-unit][@quantity]][1]"/>
