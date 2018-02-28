@@ -248,10 +248,20 @@
             <xsl:attribute name="quantity">
                 <!-- find a measureGrp that has children of both $v_unit and $v_normalization-target -->
                 <xsl:choose>
-                    <xsl:when test="$p_measures/descendant-or-self::tei:measureGrp[tei:measure[@unit=$v_target-unit]][tei:measure[@unit=$v_source-unit]]">
-                        <xsl:variable name="v_measureGrp" select="$p_measures/descendant-or-self::tei:measureGrp[tei:measure[@unit=$v_target-unit]][tei:measure[@unit=$v_source-unit]][1]"/>
-                        <xsl:variable name="v_target-unit-quantity" select="$v_measureGrp/tei:measure[@unit=$v_target-unit]/@quantity"/>
-                        <xsl:variable name="v_source-unit-quantity" select="$v_measureGrp/tei:measure[@unit=$v_source-unit]/@quantity"/>
+                    <xsl:when test="$p_measures/descendant-or-self::tei:measureGrp[@type=$v_type][tei:measure[@unit=$v_target-unit]][tei:measure[@unit=$v_source-unit]]">
+<!--                        <xsl:variable name="v_measureGrp" select="$p_measures/descendant-or-self::tei:measureGrp[tei:measure[@unit=$v_target-unit]][tei:measure[@unit=$v_source-unit]][1]"/>-->
+                        <xsl:variable name="v_measureGrp">
+                            <xsl:choose>
+                                <xsl:when test="$p_normalize-by-location = true()">
+                                    <!-- check if we have normalization values for a given locality, otherwise provide a fallback option -->
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:copy-of select="$p_measures/descendant-or-self::tei:measureGrp[@type=$v_type][tei:measure[@unit=$v_target-unit][@quantity]][tei:measure[@unit=$v_source-unit][@quantity]][1]"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:variable name="v_target-unit-quantity" select="$v_measureGrp/descendant::tei:measure[@unit=$v_target-unit]/@quantity"/>
+                        <xsl:variable name="v_source-unit-quantity" select="$v_measureGrp/descendant::tei:measure[@unit=$v_source-unit]/@quantity"/>
                         <xsl:variable name="v_source-quantity" select="@quantity"/>
                         <!-- use Dreisatz / rule of three -->
                         <xsl:value-of select="$v_source-quantity *  $v_target-unit-quantity div $v_source-unit-quantity"/>
