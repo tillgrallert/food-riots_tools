@@ -162,11 +162,13 @@
         <tei:measureGrp type="weight" location="Homs" source="CF40D65F-019A-421C-96F9-A0E5A413BAA5" when="1890">
             <tei:measure unit="ratl" quantity="1">One raṭl</tei:measure> 
             <tei:measure unit="okka" quantity="12">12 uqqiyya ḥomṣiyya</tei:measure>
-            <tei:measure unit="kg" quantity="1">3 kg</tei:measure>
+            <tei:measure unit="kg" quantity="3">3 kg</tei:measure>
         </tei:measureGrp>
         <!-- Hama -->
         <tei:measureGrp type="weight" location="Hama" source="CF40D65F-019A-421C-96F9-A0E5A413BAA5" when="1890">
-            <xsl:copy-of select="..//tei:measureGrp[@type='weight'][@location='Damascus']/tei:measure"/>
+<!--            <xsl:copy-of select="..//tei:measureGrp[@type='weight'][@location='Damascus']/tei:measure"/>-->
+            <tei:measure unit="ratl" quantity="0.5"/>
+            <tei:measure unit="kg" quantity="1.282945"/>
         </tei:measureGrp>
         <!-- Istanbul -->
         <tei:measureGrp type="weight" location="Istanbul">
