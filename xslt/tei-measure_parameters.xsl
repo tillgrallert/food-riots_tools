@@ -47,6 +47,10 @@
             <tei:measure unit="shunbul" quantity="1"/>
             <tei:measure unit="kile" quantity="2.25"/>
         </tei:measureGrp>
+        <tei:measureGrp type="volume" location="Acre" source="243D3AEC-773E-450D-A993-A1B8321A3B7D" when="1873">
+            <tei:measure unit="shunbul" quantity="1"/>
+            <tei:measure unit="kile" quantity="2.5"/>
+        </tei:measureGrp>
         <!-- Aleppo -->
         <tei:measureGrp type="volume" location="Aleppo">
             <tei:measure unit="shunbul" quantity="1"/>
@@ -55,7 +59,7 @@
         </tei:measureGrp>
         <tei:measureGrp type="volume" location="Aleppo" when="1860-02-29" source="226DCF23-CF34-4000-B441-B886E11607E5">
             <tei:measure unit="shunbul" quantity="1"/>
-            <tei:measure unit="kileOld" quantity="2.5">2.5 Istanbul kilesi</tei:measure>
+            <tei:measure unit="kile" quantity="2.5">2.5 Istanbul kilesi</tei:measure>
         </tei:measureGrp>
         <!-- Damascus  -->
         <tei:measureGrp type="volume" location="Damascus" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
@@ -108,6 +112,15 @@
         <tei:measureGrp type="volume" location="Tripoli">
             <tei:measure unit="shunbul" quantity="1"/>
             <tei:measure unit="kile" quantity="2.25"/>
+        </tei:measureGrp>
+        <tei:measureGrp type="volume" location="Tripoli" source="243D3AEC-773E-450D-A993-A1B8321A3B7D" when="1873">
+            <tei:measure unit="shunbul" quantity="1"/>
+            <tei:measure unit="kile" quantity="2.5"/>
+        </tei:measureGrp>
+        <!-- Syria / Bilād al-Shām -->
+        <tei:measureGrp type="volume" location="Syria" source="243D3AEC-773E-450D-A993-A1B8321A3B7D" when="1873">
+            <tei:measure unit="ghirara" quantity="1"/>
+            <tei:measure unit="kile" quantity="36"/>
         </tei:measureGrp>
         
 
@@ -196,6 +209,15 @@
             <tei:measure unit="okka" quantity="1"/>
             <tei:measure unit="kg" quantity="1.282945"/>
         </tei:measureGrp>
+        <!-- Syria / Bilād al-Shām -->
+        <tei:measureGrp type="weight" location="Syria" source="243D3AEC-773E-450D-A993-A1B8321A3B7D" when="1873">
+            <tei:measure unit="ratl" quantity="0.5"/>
+            <tei:measure unit="okka" quantity="1"/>
+            <tei:measure unit="dirham" quantity="400"/>
+            <!-- <tei:measure unit="kg" quantity="1.282945"/> -->
+        </tei:measureGrp>
+
+
         <!-- weight of coins -->
         <tei:measureGrp type="weight" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1844">
             <tei:measure unit="lt" commodity="gold" quantity="1"/>
