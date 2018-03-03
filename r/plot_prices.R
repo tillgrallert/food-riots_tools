@@ -56,6 +56,11 @@ v.Prices.Bread.Period <- funcPeriod(v.Prices.Bread,v.Date.Start,v.Date.Stop)
 vFoodRiotsPeriod <- funcPeriod(vFoodRiots,v.Date.Start,v.Date.Stop)
 
 # descriptive statistics
+mean(v.Prices.Wheat.Period$quantity.2, na.rm=T, trim = 0.1)
+median(v.Prices.Wheat.Period$quantity.2, na.rm=T)
+quantile(v.Prices.Wheat.Period$quantity.2, na.rm=T)
+sd(v.Prices.Wheat.Period$quantity.2, na.rm=T)
+
 # the list of wheat prices includes two very high data points for regions outside Bilād al-Shām, they should be filtered out
 v.Prices.Wheat.Period <- subset(v.Prices.Wheat.Period, quantity.2 < 200)
 
@@ -68,8 +73,8 @@ v.Prices.Wheat.Mean.Annual <- merge(
   aggregate(quantity.3 ~ year, data=v.Prices.Wheat.Period, FUN = mean), 
   by=c("year"), all=T)
 ## use the more powerful dplyr package
-v.Prices.Wheat.Grouped.Annual <- group_by(v.Prices.Wheat.Period, year)
-v.Prices.Wheat.Summary.Annual <- summarise(v.Prices.Wheat.Grouped.Annual, count=n(), 
+v.Prices.Wheat.Summary.Annual <- group_by(v.Prices.Wheat.Period, year) %>%
+  summarise(count=n(), 
                     mean.2=mean(quantity.2, na.rm = TRUE),
                     mean.3=mean(quantity.3, na.rm = TRUE),
                     median.2=median(quantity.2, na.rm = TRUE),
@@ -84,8 +89,9 @@ v.Prices.Wheat.Mean.Quarterly <- merge(
   aggregate(quantity.3 ~ quarter, data=v.Prices.Wheat.Period, FUN = mean),  
   by=c("quarter"), all=T)
 
-v.Prices.Wheat.Grouped.Quarterly <- group_by(v.Prices.Wheat.Period, quarter)
-v.Prices.Wheat.Summary.Quarterly <- summarise(v.Prices.Wheat.Grouped.Quarterly, count=n(), 
+v.Prices.Wheat.Summary.Quarterly <- v.Prices.Wheat.Period %>%
+  group_by(quarter) %>%
+  summarise(count=n(), 
                                            mean.2=mean(quantity.2, na.rm = TRUE),
                                            mean.3=mean(quantity.3, na.rm = TRUE),
                                            median.2=median(quantity.2, na.rm = TRUE),
@@ -142,19 +148,18 @@ v.Plot.Wheat.Quarterly.Mean.Scatter <- v.Plot.Base+
        subtitle="Quarterly averages of minimum and maximum prices based on announcements in newspapers", 
        y="Prices (piaster/kile)") +
   # first layer: min prices
-  geom_point(data = v.Prices.Wheat.Mean.Quarterly, 
-             aes(x = quarter, # select period: date, year, quarter, month
-                 y = quantity.2),
+  geom_point(data = v.Prices.Wheat.Summary.Quarterly, 
+             aes(x = quarter, y = mean.2),
              na.rm=TRUE, size=2, pch=3)+
   #scale_color_gradient(low="darkkhaki", high="darkgreen")+
   #geom_text(data = v.Prices.Wheat.Mean.Quarterly,aes(x = quarter, quantity.2, label=round(quantity.2)), size=3)+
   # second layer: max prices
-  geom_point(data = v.Prices.Wheat.Mean.Quarterly, 
-             aes(x=quarter, y=quantity.3),
-             na.rm=TRUE, size=2, pch=3, color="black")
+  geom_point(data = v.Prices.Wheat.Summary.Quarterly, 
+             aes(x = quarter, y = mean.3),
+             na.rm=TRUE, size=2, pch=3, color="black")+
   # layer with connecting lines between min and max prices
-  #geom_segment(data = v.Prices.Wheat.Mean.Quarterly, aes(x = quarter, xend = quarter, y = quantity.2, yend = quantity.3),size = 0.3, show.legend = F, na.rm = T, linetype=1) # linetypes: 1=solid, 2=dashed,
-  
+  geom_segment(data = v.Prices.Wheat.Summary.Quarterly, 
+               aes(x = quarter, xend = quarter, y = mean.2, yend = mean.3),size = 0.3, show.legend = F, na.rm = T, linetype=1) # linetypes: 1=solid, 2=dashed,
 v.Plot.Wheat.Quarterly.Mean.Scatter
 
 ## monthly averages
