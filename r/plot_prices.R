@@ -55,6 +55,7 @@ v.Prices.Barley.Period <- funcPeriod(v.Prices.Barley,v.Date.Start,v.Date.Stop)
 v.Prices.Bread.Period <- funcPeriod(v.Prices.Bread,v.Date.Start,v.Date.Stop) 
 vFoodRiotsPeriod <- funcPeriod(vFoodRiots,v.Date.Start,v.Date.Stop)
 
+# descriptive statistics
 # the list of wheat prices includes two very high data points for regions outside Bilād al-Shām, they should be filtered out
 v.Prices.Wheat.Period <- subset(v.Prices.Wheat.Period, quantity.2 < 200)
 
@@ -82,6 +83,16 @@ v.Prices.Wheat.Mean.Quarterly <- merge(
   aggregate(quantity.2 ~ quarter, data=v.Prices.Wheat.Period, FUN = mean),
   aggregate(quantity.3 ~ quarter, data=v.Prices.Wheat.Period, FUN = mean),  
   by=c("quarter"), all=T)
+
+v.Prices.Wheat.Grouped.Quarterly <- group_by(v.Prices.Wheat.Period, quarter)
+v.Prices.Wheat.Summary.Quarterly <- summarise(v.Prices.Wheat.Grouped.Quarterly, count=n(), 
+                                           mean.2=mean(quantity.2, na.rm = TRUE),
+                                           mean.3=mean(quantity.3, na.rm = TRUE),
+                                           median.2=median(quantity.2, na.rm = TRUE),
+                                           median.3=median(quantity.3, na.rm = TRUE),
+                                           sd.2=sd(quantity.2, na.rm = TRUE),
+                                           sd.3=sd(quantity.3, na.rm = TRUE)
+)
 ## data frame with monthly mean for min and max prices
 v.Prices.Wheat.Mean.Monthly <- merge(
   aggregate(quantity.2 ~ month, data=v.Prices.Wheat.Period, FUN = mean),
