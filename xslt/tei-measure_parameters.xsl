@@ -52,7 +52,7 @@
             <tei:measure unit="kile" quantity="2.5"/>
         </tei:measureGrp>
         <!-- Aleppo -->
-        <tei:measureGrp type="volume" location="Aleppo">
+        <tei:measureGrp type="volume" location="Aleppo" source="9DE8C694-F350-4485-8B29-DF93828B579C" when="1910-07-09">
             <tei:measure unit="shunbul" quantity="1"/>
             <tei:measure unit="madd" quantity="6"/>
             <tei:measure unit="kile" quantity="3"/>
