@@ -5,6 +5,7 @@ library(ggplot2)  # for creating graphs
 library(scales)   # to access breaks/formatting functions
 library(gridExtra) # for arranging plots
 library(plotly) # interactive plots based on ggplot
+library(dplyr) # data manipulation
 
 # function to create subsets for periods
 funcPeriod <- function(f,x,y){f[f$date >= x & f$date <= y,]}
@@ -36,7 +37,7 @@ v.Prices$week <- as.Date(cut(v.Prices$date,breaks = "week",
 v.Prices$date.common <- as.Date(paste0("2000-",format(v.Prices$date, "%j")), "%Y-%j")
 v.Prices$month.common <- as.Date(cut(v.Prices$date.common,breaks = "month"))
 
-# create a subset of rows based on conditions
+# create a subset of rows based on conditions; this can also be achieved with the filter() function from dplyr
 v.Prices.Wheat <- subset(v.Prices,commodity.1=="wheat" & unit.1=="kile" & commodity.2=="currency" & unit.2=="ops")
 v.Prices.Barley <- subset(v.Prices,commodity.1=="barley" & unit.1=="kile" & commodity.2=="currency" & unit.2=="ops")
 v.Prices.Bread <- subset(v.Prices,commodity.1=="bread" & unit.1=="kg" & commodity.2=="currency" & unit.2=="ops")
@@ -59,19 +60,33 @@ v.Prices.Wheat.Period <- subset(v.Prices.Wheat.Period, quantity.2 < 200)
 
 # calculate means for periods
 ## annual means
-v.Prices.Wheat.Mean.Annual <- aggregate((quantity.2 + quantity.3)/2 ~ year, data=v.Prices.Wheat.Period, mean)
-#vWheatKilePeriodAnnualMinPrice <- aggregate(quantity.2 ~ year, data=vWheatKilePeriod, mean)
-#vWheatKilePeriodAnnualMaxPrice <- aggregate(quantity.3 ~ year, data=vWheatKilePeriod, mean)
-## quarterly means
-v.Prices.Wheat.Min.Quarterly <- aggregate(quantity.2 ~ quarter, data=v.Prices.Wheat.Period, mean)
-v.Prices.Wheat.Max.Quarterly <- aggregate(quantity.3 ~ quarter, data=v.Prices.Wheat.Period, mean)
-## merge the two data frames into one
-v.Prices.Wheat.Mean.Quarterly <- merge(v.Prices.Wheat.Min.Quarterly, v.Prices.Wheat.Max.Quarterly, by=c("quarter"), all=T)
-## monthly means
-v.Prices.Wheat.Min.Monthly <- aggregate(quantity.2 ~ month, data=v.Prices.Wheat.Period, mean)
-v.Prices.Wheat.Max.Monthly <- aggregate(quantity.3 ~ month, data=v.Prices.Wheat.Period, mean)
-## merge the two data frames into one
-v.Prices.Wheat.Mean.Monthly <- merge(v.Prices.Wheat.Min.Monthly, v.Prices.Wheat.Max.Monthly, by=c("month"), all=T)
+#v.Prices.Wheat.Mean.Annual <- aggregate((quantity.2 + quantity.3)/2 ~ year, data=v.Prices.Wheat.Period, mean)
+## data frame with annual mean for min and max prices
+v.Prices.Wheat.Mean.Annual <- merge(
+  aggregate(quantity.2 ~ year, data=v.Prices.Wheat.Period, FUN = mean),
+  aggregate(quantity.3 ~ year, data=v.Prices.Wheat.Period, FUN = mean), 
+  by=c("year"), all=T)
+## use the more powerful dplyr package
+v.Prices.Wheat.Grouped.Annual <- group_by(v.Prices.Wheat.Period, year)
+v.Prices.Wheat.Summary.Annual <- summarise(v.Prices.Wheat.Grouped.Annual, count=n(), 
+                    mean.2=mean(quantity.2, na.rm = TRUE),
+                    mean.3=mean(quantity.3, na.rm = TRUE),
+                    median.2=median(quantity.2, na.rm = TRUE),
+                    median.3=median(quantity.3, na.rm = TRUE),
+                    sd.2=sd(quantity.2, na.rm = TRUE),
+                    sd.3=sd(quantity.3, na.rm = TRUE)
+                    )
+
+## data frame with quarterly mean for min and max prices
+v.Prices.Wheat.Mean.Quarterly <- merge(
+  aggregate(quantity.2 ~ quarter, data=v.Prices.Wheat.Period, FUN = mean),
+  aggregate(quantity.3 ~ quarter, data=v.Prices.Wheat.Period, FUN = mean),  
+  by=c("quarter"), all=T)
+## data frame with monthly mean for min and max prices
+v.Prices.Wheat.Mean.Monthly <- merge(
+  aggregate(quantity.2 ~ month, data=v.Prices.Wheat.Period, FUN = mean),
+  aggregate(quantity.3 ~ month, data=v.Prices.Wheat.Period, FUN = mean), 
+  by=c("month"), all=T)
 
 
 # plot
