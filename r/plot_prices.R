@@ -39,9 +39,17 @@ v.Prices$month.common <- as.Date(cut(v.Prices$date.common,breaks = "month"))
 
 # create a subset of rows based on conditions; this can also be achieved with the filter() function from dplyr
 v.Prices.Wheat <- subset(v.Prices,commodity.1=="wheat" & unit.1=="kile" & commodity.2=="currency" & unit.2=="ops")
+  # write result to file
+  write.table(v.Prices.Wheat, "csv/summary/prices_wheat-kile.csv" , row.names = F, quote = T , sep = ",")
 v.Prices.Barley <- subset(v.Prices,commodity.1=="barley" & unit.1=="kile" & commodity.2=="currency" & unit.2=="ops")
+  # write result to file
+  write.table(v.Prices.Barley, "csv/summary/prices_barley-kile.csv" , row.names = F, quote = T , sep = ",")
 v.Prices.Bread <- subset(v.Prices,commodity.1=="bread" & unit.1=="kg" & commodity.2=="currency" & unit.2=="ops")
-v.Prices.Newspapers <- subset(v.Prices,commodity.1=="newspaper" & commodity.2=="currency" & unit.2=="ops")
+  # write result to file
+  write.table(v.Prices.Bread, "csv/summary/prices_bread-kg.csv" , row.names = F, quote = T , sep = ",")
+v.Prices.Newspapers <- subset(v.Prices,commodity.1=="newspaper" & commodity.2=="currency")
+  # write result to file
+  write.table(v.Prices.Newspapers, "csv/summary/prices_newspapers.csv" , row.names = F, quote = T , sep = ",")
 
 # select rows
 ## select the first row (containing dates), and the rows containing prices in ops
@@ -73,38 +81,96 @@ v.Prices.Wheat.Mean.Annual <- merge(
   aggregate(quantity.3 ~ year, data=v.Prices.Wheat.Period, FUN = mean), 
   by=c("year"), all=T)
 ## use the more powerful dplyr package
-v.Prices.Wheat.Summary.Annual <- group_by(v.Prices.Wheat.Period, year) %>%
+v.Prices.Wheat.Summary.Annual <- v.Prices.Wheat %>%
+  group_by(year) %>%
   summarise(count=n(), 
-                    mean.2=mean(quantity.2, na.rm = TRUE),
-                    mean.3=mean(quantity.3, na.rm = TRUE),
-                    median.2=median(quantity.2, na.rm = TRUE),
-                    median.3=median(quantity.3, na.rm = TRUE),
-                    sd.2=sd(quantity.2, na.rm = TRUE),
-                    sd.3=sd(quantity.3, na.rm = TRUE)
-                    )
+            mean.2=mean(quantity.2, na.rm = TRUE),
+            mean.3=mean(quantity.3, na.rm = TRUE),
+            median.2=median(quantity.2, na.rm = TRUE),
+            median.3=median(quantity.3, na.rm = TRUE),
+            sd.2=sd(quantity.2, na.rm = TRUE),
+            sd.3=sd(quantity.3, na.rm = TRUE)
+  )
+  # write result to file
+  write.table(v.Prices.Wheat.Summary.Annual, "csv/summary/prices_wheat-summary-annual.csv" , row.names = F, quote = T , sep = ",")
 
 ## data frame with quarterly mean for min and max prices
 v.Prices.Wheat.Mean.Quarterly <- merge(
   aggregate(quantity.2 ~ quarter, data=v.Prices.Wheat.Period, FUN = mean),
   aggregate(quantity.3 ~ quarter, data=v.Prices.Wheat.Period, FUN = mean),  
   by=c("quarter"), all=T)
-
-v.Prices.Wheat.Summary.Quarterly <- v.Prices.Wheat.Period %>%
+v.Prices.Wheat.Summary.Quarterly <- v.Prices.Wheat %>%
   group_by(quarter) %>%
   summarise(count=n(), 
-                                           mean.2=mean(quantity.2, na.rm = TRUE),
-                                           mean.3=mean(quantity.3, na.rm = TRUE),
-                                           median.2=median(quantity.2, na.rm = TRUE),
-                                           median.3=median(quantity.3, na.rm = TRUE),
-                                           sd.2=sd(quantity.2, na.rm = TRUE),
-                                           sd.3=sd(quantity.3, na.rm = TRUE)
-)
+            mean.2=mean(quantity.2, na.rm = TRUE),
+            mean.3=mean(quantity.3, na.rm = TRUE),
+            median.2=median(quantity.2, na.rm = TRUE),
+            median.3=median(quantity.3, na.rm = TRUE),
+            sd.2=sd(quantity.2, na.rm = TRUE),
+            sd.3=sd(quantity.3, na.rm = TRUE)
+  )
+  # write result to file
+  write.table(v.Prices.Wheat.Summary.Quarterly, "csv/summary/prices_wheat-summary-quarterly.csv" , row.names = F, quote = T , sep = ",")
+
 ## data frame with monthly mean for min and max prices
 v.Prices.Wheat.Mean.Monthly <- merge(
   aggregate(quantity.2 ~ month, data=v.Prices.Wheat.Period, FUN = mean),
   aggregate(quantity.3 ~ month, data=v.Prices.Wheat.Period, FUN = mean), 
   by=c("month"), all=T)
+v.Prices.Wheat.Summary.Monthly <- v.Prices.Wheat %>%
+  group_by(month) %>%
+  summarise(count=n(), 
+            mean.2=mean(quantity.2, na.rm = TRUE),
+            mean.3=mean(quantity.3, na.rm = TRUE),
+            median.2=median(quantity.2, na.rm = TRUE),
+            median.3=median(quantity.3, na.rm = TRUE),
+            sd.2=sd(quantity.2, na.rm = TRUE),
+            sd.3=sd(quantity.3, na.rm = TRUE)
+            )
+  # write result to file
+  write.table(v.Prices.Wheat.Summary.Monthly, "csv/summary/prices_wheat-summary-monthly.csv" , row.names = F, quote = T , sep = ",")
 
+## annual means: Barley
+v.Prices.Barley.Summary.Annual <- v.Prices.Barley %>%
+  group_by(year) %>%
+  summarise(count=n(), 
+            mean.2=mean(quantity.2, na.rm = TRUE),
+            mean.3=mean(quantity.3, na.rm = TRUE),
+            median.2=median(quantity.2, na.rm = TRUE),
+            median.3=median(quantity.3, na.rm = TRUE),
+            sd.2=sd(quantity.2, na.rm = TRUE),
+            sd.3=sd(quantity.3, na.rm = TRUE)
+  )
+  # write result to file
+  write.table(v.Prices.Barley.Summary.Annual, "csv/summary/prices_barley-summary-annual.csv" , row.names = F, quote = T , sep = ",")
+
+## data frame with quarterly mean for min and max prices
+v.Prices.Barley.Summary.Quarterly <- v.Prices.Barley %>%
+  group_by(quarter) %>%
+  summarise(count=n(), 
+            mean.2=mean(quantity.2, na.rm = TRUE),
+            mean.3=mean(quantity.3, na.rm = TRUE),
+            median.2=median(quantity.2, na.rm = TRUE),
+            median.3=median(quantity.3, na.rm = TRUE),
+            sd.2=sd(quantity.2, na.rm = TRUE),
+            sd.3=sd(quantity.3, na.rm = TRUE)
+  )
+  # write result to file
+  write.table(v.Prices.Barley.Summary.Quarterly, "csv/summary/prices_barley-summary-quarterly.csv" , row.names = F, quote = T , sep = ",")
+
+## data frame with monthly mean for min and max prices
+v.Prices.Barley.Summary.Monthly <- v.Prices.Barley %>%
+  group_by(month) %>%
+  summarise(count=n(), 
+            mean.2=mean(quantity.2, na.rm = TRUE),
+            mean.3=mean(quantity.3, na.rm = TRUE),
+            median.2=median(quantity.2, na.rm = TRUE),
+            median.3=median(quantity.3, na.rm = TRUE),
+            sd.2=sd(quantity.2, na.rm = TRUE),
+            sd.3=sd(quantity.3, na.rm = TRUE)
+  )
+  # write result to file
+  write.table(v.Prices.Barley.Summary.Monthly, "csv/summary/prices_barley-summary-monthly.csv" , row.names = F, quote = T , sep = ",")
 
 # plot
 ## base plot
@@ -169,18 +235,24 @@ v.Plot.Wheat.Monthly.Mean.Scatter <- v.Plot.Base+
        subtitle="Quarterly averages of minimum and maximum prices based on announcements in newspapers", 
        y="Prices (piaster/kile)") +
   # first layer: min prices
-  geom_point(data = v.Prices.Wheat.Mean.Monthly, aes(x = month, y = quantity.2),
+  geom_point(data = v.Prices.Wheat.Summary.Monthly, 
+             aes(x = month, y = mean.2),
              na.rm=TRUE, size=2, pch=3)+
-  geom_line(data = v.Prices.Wheat.Mean.Monthly, aes(x = month, y = quantity.2),
+  geom_line(data = v.Prices.Wheat.Summary.Monthly, 
+            aes(x = month, y = mean.2),
              na.rm=TRUE, color="green")+
   #geom_text(data = v.Prices.Wheat.Mean.Monthly,aes(x = month, quantity.2, label=round(quantity.2)), size=3)+
   # second layer: max prices
-  geom_point(data = v.Prices.Wheat.Mean.Monthly, aes(x=month, y=quantity.3),
+  geom_point(data = v.Prices.Wheat.Summary.Monthly, 
+             aes(x = month, y = mean.3),
              na.rm=TRUE, size=2, pch=3, color="black")+
-  geom_line(data = v.Prices.Wheat.Mean.Monthly, aes(x = month, y = quantity.3),
-          na.rm=TRUE, color="red")
+  geom_line(data = v.Prices.Wheat.Summary.Monthly, 
+            aes(x = month, y = mean.3),
+          na.rm=TRUE, color="red")+
 # layer with connecting lines between min and max prices
-#geom_segment(data = v.Prices.Wheat.Mean.Quarterly, aes(x = quarter, xend = quarter, y = quantity.2, yend = quantity.3),size = 0.3, show.legend = F, na.rm = T, linetype=1) # linetypes: 1=solid, 2=dashed,
+geom_segment(data = v.Prices.Wheat.Summary.Monthly, 
+             aes(x = month, xend = month, y = mean.2, yend = mean.3),
+             size = 0.3, show.legend = F, na.rm = T, linetype=1) # linetypes: 1=solid, 2=dashed,
 v.Plot.Wheat.Monthly.Mean.Scatter
   
 
