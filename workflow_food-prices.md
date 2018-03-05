@@ -14,6 +14,12 @@ This file briefly describes the workflow to:
 2. extract, normalise and convert price information to CSV;
 3. plot the resulting dataset with R.
 
+There are two types of price information to be found in our sources: 
+
+1. quantitative information on the ratio of two commodities, one of which is a currency;
+2. qualitative information, such as "rising prices", "high prices", "falling prices", and "low prices" (etc.)
+
+# quantitative price information
 ## 1. mark-up
 
 I settled on the following TEI elements and attributes
@@ -24,9 +30,10 @@ I settled on the following TEI elements and attributes
         + The `@unit` then follows standard three-letter shorthand for currencies. 
             * Ottoman piasters shall be recorded as `@unit="ops"`
             * Ottoman beshlik coins are converted as Ps 2"20
-            * Ottoman pound / lira (£T) shall be recorded as `@unit="ltq"`
+            * Ottoman pound / lira (£T) shall be recorded as `@unit="ltq"`[^1]
         + the `@quantity` attribute has some restrictions as to its value and cannot contain the string 8-2-4 to signify, for instance, £ 8"2"4 or 8l 2s 4d. Yet it would be extremely tedious to encode all the fractions of non-metrical currencies as individual measures. I settled for on-the-spot conversion into decimal values, but this needs computing on the side of the encoder.
         + non metrical values can be recorded without `@quantity`
+    - to differentiate **taxes** from **prices**, the wrapping `<measureGrp>` must carry an `@type="tax"` attribute.
     - for **wages**, I suggest the same as for prices of commodities, but instead of, for instance, wheat, `@commodity="labor"` would be counted in `@unit="day"` or `@unit="month"`
 
     ~~~{.xml}
@@ -58,7 +65,7 @@ I settled on the following TEI elements and attributes
 
 All transcription and annotation of sources is done in Sente, which, albeit now discontinued, still runs without a glitch.
 
-Data can be extracted from Sente using either the built in XML export or my custom workflow published [here](https://www.github.com/tillgrallert/lossless-sente-export). The direct export has some glitches and data must be cleaned / pre-processed using [custom XSLT](https://www.github.com/tillgrallert/tss_tools).
+Data can be extracted from Sente using either the built-in XML export or my custom workflow published [here](https://www.github.com/tillgrallert/lossless-sente-export). The direct export has some glitches and data must be cleaned / pre-processed using [custom XSLT](https://www.github.com/tillgrallert/tss_tools).
 
 ## 3. extract and normalize price data 
 
@@ -66,7 +73,26 @@ Data can be extracted from Sente using either the built in XML export or my cust
 2. enrich every `<tei:measure>` with dates and locations based on information from ancestors `<tei:measureGrp>` and `<tss:reference>`
 3. normalize non-metrical measures
 4. regularize quantities to 1 
+5. safe output as xml and csv
 
 The XSLT stylesheet [`tei_retrieve-measures-as-csv.xsl`](xslt/tei_retrieve-measures-as-csv.xsl) can be run on any input XML. It will gather all `<measureGrp>` elements based on a number of selection criteria and outputs them as CSV sorted by date (either publication date of the source or the date recorded  `@when` attributes). With the help of [`tei-measure_normalize.xsl`](xslt/tei-measure_normalize.xsl) units are normalised as far as possible to allow for greater comparability across the dataset.
 
-## 4. Plot prices with R
+## 4. Statistics and plots with R
+
+There are two main plots of quantitative price data:
+
+1. plot all values or seasonal averages over the entire period
+2. plot all years over each other in order to see seasonal trends
+
+# qualitative price information
+
+## mark-up?
+## extract information?
+
+If the information is explicitly marked-up in Sente, export is simple and similar to that of quantitative information. Otherwise, one would need to run co-location analysis for pairs of words on the entire source corpus and record the result in some serialisation format. 
+
+## statistics and plots with R
+
+It would be important to plot qualitative information as well, namely mentions of "rising prices", "high prices", "falling prices", and "low prices" These mentions should be plotted on a temporal axis in order to identify potential clusters.
+
+[^1]: Unfortunately, I originally recorded £T as `@unit="lt"`. The normalizing code takes care of this ambiguity.
