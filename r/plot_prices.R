@@ -14,12 +14,12 @@ funcPeriod <- function(f,x,y){f[f$date >= x & f$date <= y,]}
 setwd("/BachCloud/BTSync/FormerDropbox/FoodRiots/food-riots_data") #Volumes/Dessau HD/
 
 # 1. read price data from csv, note that the first row is a date
-vFoodRiots <- read.csv("csv/events_food-riots.csv", header=TRUE, sep = ",", quote = "")
+v.FoodRiots <- read.csv("csv/events_food-riots.csv", header=TRUE, sep = ",", quote = "")
 v.Prices <- read.csv("csv/prices.csv", header=TRUE, sep = ",", quote = "")
 
 # fix date types
 ## convert date to Date class, note that dates supplied as years only will be turned into NA
-vFoodRiots$date <- as.Date(vFoodRiots$date)
+v.FoodRiots$date <- as.Date(v.FoodRiots$date)
 v.Prices$date <- as.Date(v.Prices$date)
 ## numeric
 #v.Prices$quantity.2 <- as.numeric(v.Prices$quantity.2)
@@ -61,7 +61,7 @@ v.Date.Stop <- as.Date("1916-12-31")
 v.Prices.Wheat.Period <- funcPeriod(v.Prices.Wheat,v.Date.Start,v.Date.Stop) 
 v.Prices.Barley.Period <- funcPeriod(v.Prices.Barley,v.Date.Start,v.Date.Stop) 
 v.Prices.Bread.Period <- funcPeriod(v.Prices.Bread,v.Date.Start,v.Date.Stop) 
-vFoodRiotsPeriod <- funcPeriod(vFoodRiots,v.Date.Start,v.Date.Stop)
+v.FoodRiots.Period <- funcPeriod(v.FoodRiots,v.Date.Start,v.Date.Stop)
 
 # descriptive statistics
 mean(v.Prices.Wheat.Period$quantity.2, na.rm=T, trim = 0.1)
@@ -178,7 +178,7 @@ v.Plot.Base <- ggplot() +
   # add labels
   labs(x="Date") +
   # layer: vertical lines for bread riots
-  geom_segment(data = vFoodRiotsPeriod, aes(x = date, xend = date, y = 10, yend = 24, colour = "food riot"),
+  geom_segment(data = v.FoodRiots.Period, aes(x = date, xend = date, y = 10, yend = 24, colour = "food riot"),
                size = 1, show.legend = F, na.rm = T, linetype=1)+ # linetypes: 1=solid, 2=dashed
   scale_x_date(breaks=date_breaks("2 years"), 
                labels=date_format("%Y"))+
@@ -327,7 +327,7 @@ plotWheatKilePeriod2 <- ggplot(vWheatKilePeriod) +
        x="Date", 
        y="Prices (piaster/kile)") + # provides title, subtitle, x, y, caption
   # layer: vertical lines for bread riots
-  geom_segment(data = vFoodRiotsPeriod, aes(x = date, xend = date, y = 10, yend = 24, colour = "food riot"),
+  geom_segment(data = v.FoodRiots.Period, aes(x = date, xend = date, y = 10, yend = 24, colour = "food riot"),
                size = 1, show.legend = F, na.rm = T, linetype=1)+ # linetypes: 1=solid, 2=dashed,
   # first layer: min prices
   geom_point(aes(x=date, y=quantity.2),
@@ -347,7 +347,7 @@ plotWheatKilePeriod2
 vDateStart <- as.Date("1908-01-01")
 vDateStop <- as.Date("1916-12-31")
 vWheatKilePeriod <- funcPeriod(vWheatKile,vDateStart,vDateStop) 
-vFoodRiotsPeriod <- funcPeriod(vFoodRiots,vDateStart,vDateStop) 
+v.FoodRiots.Period <- funcPeriod(v.FoodRiots,vDateStart,vDateStop) 
 
 plotWheatKilePeriod3 <- ggplot(vWheatKilePeriod) +
   # add labels
@@ -356,7 +356,7 @@ plotWheatKilePeriod3 <- ggplot(vWheatKilePeriod) +
        x="Date", 
        y="Prices (piaster/kile)") + # provides title, subtitle, x, y, caption
   # layer: vertical lines for bread riots
-  geom_segment(data = vFoodRiotsPeriod, aes(x = date, xend = date, y = 10, yend = 24, colour = "food riot"),
+  geom_segment(data = v.FoodRiots.Period, aes(x = date, xend = date, y = 10, yend = 24, colour = "food riot"),
                size = 1, show.legend = F, na.rm = T, linetype=1)+ # linetypes: 1=solid, 2=dashed, 
   # first layer: min prices
   geom_point(aes(x=date, y=quantity.2),
