@@ -97,6 +97,20 @@ There are two main plots of quantitative price data:
 # qualitative price information
 
 ## mark-up?
+
+For the time being, I settled on manually tagging each reference in Sente that includes qualitative price information with the following tags:
+
+- `prices: high`
+- `prices: rising`
+- `prices: stable`
+- `prices: falling`
+- `prices: low`
+- `prices: normal`
+
+These tags can be extracted, mapped to discrete integers, and written to a CSV file of the following structure
+
+date, location, source, tag, value
+
 ## extract information?
 
 If the information is explicitly marked-up in Sente, export is simple and similar to that of quantitative information. Otherwise, one would need to run co-location analysis for pairs of words on the entire source corpus and record the result in some serialisation format. 
