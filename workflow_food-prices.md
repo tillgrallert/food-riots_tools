@@ -61,6 +61,16 @@ I settled on the following TEI elements and attributes
 
 4. Since non-metrical measures varied between places and since source can record prices from more than one location, the location can be specified with a custom `@location` attribute on `<measureGrp>` and `<measure>` elements denoting the price. If all measures relate to the same place, the attributes go on the wrapping `<measureGrp>`. `@location` accepts simple toponyms.
 
+### open questions
+
+How to encode the following:
+
+>one of our compatriots reports that the price of wheat has been falling for the last two weeks and by some Ps 6 per kile. But the price of bread did not fall correspondingly. not even by a para. We inform the baladiyya about this issue
+
+or this:
+
+>we read in our last number that the price for a bushel of wheat rose by Ps 1. instead of falling it increased for another Ps 1. this is despite the rains, which should lower the prices
+
 ## 2. reference manager
 
 All transcription and annotation of sources is done in Sente, which, albeit now discontinued, still runs without a glitch.
