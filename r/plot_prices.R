@@ -39,12 +39,34 @@ v.Prices$month.common <- as.Date(cut(v.Prices$date.common,breaks = "month"))
 
 # create a subset of rows based on conditions; this can also be achieved with the filter() function from dplyr
 v.Prices.Wheat <- subset(v.Prices,commodity.1=="wheat" & unit.1=="kile" & commodity.2=="currency" & unit.2=="ops")
-  # write result to file
+  ## descriptive stats
+  # the computed arithmetic mean [mean(v.Prices.Wheat$quantity.2, na.rm=T, trim = 0.1)] based on the observed values
+  #is much too high, compared to the prices reported as "normal" in our sources. Thus, I use a fixed parameter value
+  v.Prices.Wheat.Mean <- 25
+  ## deviation from the mean
+  v.Prices.Wheat$dm.2 <- (v.Prices.Wheat$quantity.2 - v.Prices.Wheat.Mean)
+  v.Prices.Wheat$dm.3 <- (v.Prices.Wheat$quantity.3 - v.Prices.Wheat.Mean)
+  ## the same as percentages of mean
+  v.Prices.Wheat$dmp.2 <- (100 * v.Prices.Wheat$dm.2 / v.Prices.Wheat.Mean)
+  v.Prices.Wheat$dmp.3 <- (100 * v.Prices.Wheat$dm.3 / v.Prices.Wheat.Mean)
+  ## write result to file
   write.table(v.Prices.Wheat, "csv/summary/prices_wheat-kile.csv" , row.names = F, quote = T , sep = ",")
 v.Prices.Barley <- subset(v.Prices,commodity.1=="barley" & unit.1=="kile" & commodity.2=="currency" & unit.2=="ops")
+  ## deviation from the mean
+  v.Prices.Barley$dm.2 <- (v.Prices.Barley$quantity.2 - mean(v.Prices.Barley$quantity.2, na.rm=T, trim = 0.1))
+  v.Prices.Barley$dm.3 <- (v.Prices.Barley$quantity.3 - mean(v.Prices.Barley$quantity.3, na.rm=T, trim = 0.1))
+  ## the same as percentages of mean
+  v.Prices.Barley$dmp.2 <- (100 * v.Prices.Barley$dm.2 / mean(v.Prices.Barley$quantity.2, na.rm=T, trim = 0.1))
+  v.Prices.Barley$dmp.3 <- (100 * v.Prices.Barley$dm.3 / mean(v.Prices.Barley$quantity.3, na.rm=T, trim = 0.1))
   # write result to file
   write.table(v.Prices.Barley, "csv/summary/prices_barley-kile.csv" , row.names = F, quote = T , sep = ",")
 v.Prices.Bread <- subset(v.Prices,commodity.1=="bread" & unit.1=="kg" & commodity.2=="currency" & unit.2=="ops")
+  ## deviation from the mean
+  v.Prices.Bread$dm.2 <- (v.Prices.Bread$quantity.2 - mean(v.Prices.Bread$quantity.2, na.rm=T, trim = 0.1))
+  v.Prices.Bread$dm.3 <- (v.Prices.Bread$quantity.3 - mean(v.Prices.Bread$quantity.3, na.rm=T, trim = 0.1))
+  ## the same as percentages of mean
+  v.Prices.Bread$dmp.2 <- (100 * v.Prices.Bread$dm.2 / mean(v.Prices.Bread$quantity.2, na.rm=T, trim = 0.1))
+  v.Prices.Bread$dmp.3 <- (100 * v.Prices.Bread$dm.3 / mean(v.Prices.Bread$quantity.3, na.rm=T, trim = 0.1))
   # write result to file
   write.table(v.Prices.Bread, "csv/summary/prices_bread-kg.csv" , row.names = F, quote = T , sep = ",")
 v.Prices.Newspapers <- subset(v.Prices,commodity.1=="newspaper" & commodity.2=="currency")
@@ -54,23 +76,6 @@ v.Prices.Newspapers <- subset(v.Prices,commodity.1=="newspaper" & commodity.2=="
 # select rows
 ## select the first row (containing dates), and the rows containing prices in ops
 #vWheatKileSimple <- vWheatKile[,c("date","quantity.2","quantity.3")]
-
-# specify period
-v.Date.Start <- as.Date("1870-01-01")
-v.Date.Stop <- as.Date("1916-12-31")
-v.Prices.Wheat.Period <- funcPeriod(v.Prices.Wheat,v.Date.Start,v.Date.Stop) 
-v.Prices.Barley.Period <- funcPeriod(v.Prices.Barley,v.Date.Start,v.Date.Stop) 
-v.Prices.Bread.Period <- funcPeriod(v.Prices.Bread,v.Date.Start,v.Date.Stop) 
-v.FoodRiots.Period <- funcPeriod(v.FoodRiots,v.Date.Start,v.Date.Stop)
-
-# descriptive statistics
-mean(v.Prices.Wheat.Period$quantity.2, na.rm=T, trim = 0.1)
-median(v.Prices.Wheat.Period$quantity.2, na.rm=T)
-quantile(v.Prices.Wheat.Period$quantity.2, na.rm=T)
-sd(v.Prices.Wheat.Period$quantity.2, na.rm=T)
-
-# the list of wheat prices includes two very high data points for regions outside Bilād al-Shām, they should be filtered out
-v.Prices.Wheat.Period <- subset(v.Prices.Wheat.Period, quantity.2 < 200)
 
 # calculate means for periods
 ## annual means
@@ -171,6 +176,24 @@ v.Prices.Barley.Summary.Monthly <- v.Prices.Barley %>%
   )
   # write result to file
   write.table(v.Prices.Barley.Summary.Monthly, "csv/summary/prices_barley-summary-monthly.csv" , row.names = F, quote = T , sep = ",")
+  
+# specify period
+v.Date.Start <- as.Date("1870-01-01")
+v.Date.Stop <- as.Date("1916-12-31")
+v.Prices.Wheat.Period <- funcPeriod(v.Prices.Wheat,v.Date.Start,v.Date.Stop) 
+v.Prices.Barley.Period <- funcPeriod(v.Prices.Barley,v.Date.Start,v.Date.Stop) 
+v.Prices.Bread.Period <- funcPeriod(v.Prices.Bread,v.Date.Start,v.Date.Stop) 
+v.FoodRiots.Period <- funcPeriod(v.FoodRiots,v.Date.Start,v.Date.Stop)
+
+# descriptive statistics
+mean(v.Prices.Wheat.Period$quantity.2, na.rm=T, trim = 0.1)
+mean(v.Prices.Barley.Period$quantity.2, na.rm=T, trim = 0.1)
+median(v.Prices.Wheat.Period$quantity.2, na.rm=T)
+quantile(v.Prices.Wheat.Period$quantity.2, na.rm=T)
+sd(v.Prices.Wheat.Period$quantity.2, na.rm=T)
+
+# the list of wheat prices includes two very high data points for regions outside Bilād al-Shām, they should be filtered out
+v.Prices.Wheat.Period <- subset(v.Prices.Wheat.Period, quantity.2 < 200)
 
 # plot
 ## base plot
@@ -307,11 +330,9 @@ v.Plot.Wheat.Box
 
 v.Plot.Barley.Box <- v.Plot.Base+
   # add labels
-  labs(title="Wheat prices and food riots in Bilad al-Sham", 
+  labs(title="Barley prices and food riots in Bilad al-Sham", 
        subtitle="minimum prices aggregated by year", 
        y="Price (piaster/kile)") + # provides title, subtitle, x, y, caption
-  # layer: box plot prices, average of min and max prices
-  #geom_boxplot(data = vWheatKilePeriod,aes(x=year,group=year,y=(quantity.2 + quantity.3) / 2), na.rm = T)+
   # layer: box plot min prices
   geom_boxplot(data = v.Prices.Barley.Period,aes(x=year,group=year,y=quantity.2), na.rm = T)+
   # layer: box plot max prices
