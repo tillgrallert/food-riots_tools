@@ -14,8 +14,8 @@ funcPeriod <- function(f,x,y){f[f$date >= x & f$date <= y,]}
 setwd("/BachCloud/BTSync/FormerDropbox/FoodRiots/food-riots_data") #Volumes/Dessau HD/
 
 # 1. read price data from csv, note that the first row is a date
-v.FoodRiots <- read.csv("csv/events_food-riots.csv", header=TRUE, sep = ",", quote = "")
-v.Prices <- read.csv("csv/prices.csv", header=TRUE, sep = ",", quote = "")
+v.FoodRiots <- read.csv("csv/events_food-riots.csv", header=TRUE, sep = ",", quote = "\"")
+v.Prices <- read.csv("csv/prices.csv", header=TRUE, sep = ",", quote = "\"")
 
 # fix date types
 ## convert date to Date class, note that dates supplied as years only will be turned into NA
@@ -118,10 +118,6 @@ v.Prices.Wheat.Summary.Quarterly <- v.Prices.Wheat %>%
   write.table(v.Prices.Wheat.Summary.Quarterly, "csv/summary/prices_wheat-summary-quarterly.csv" , row.names = F, quote = T , sep = ",")
 
 ## data frame with monthly mean for min and max prices
-v.Prices.Wheat.Mean.Monthly <- merge(
-  aggregate(quantity.2 ~ month, data=v.Prices.Wheat.Period, FUN = mean),
-  aggregate(quantity.3 ~ month, data=v.Prices.Wheat.Period, FUN = mean), 
-  by=c("month"), all=T)
 v.Prices.Wheat.Summary.Monthly <- v.Prices.Wheat %>%
   group_by(month) %>%
   summarise(count=n(), 
@@ -134,6 +130,20 @@ v.Prices.Wheat.Summary.Monthly <- v.Prices.Wheat %>%
             )
   # write result to file
   write.table(v.Prices.Wheat.Summary.Monthly, "csv/summary/prices_wheat-summary-monthly.csv" , row.names = F, quote = T , sep = ",")
+
+## data frame with daily mean for min and max prices
+v.Prices.Wheat.Summary.Daily <- v.Prices.Wheat %>%
+	group_by(date) %>%
+	summarise(count=n(), 
+	          mean.2=mean(quantity.2, na.rm = TRUE),
+	          mean.3=mean(quantity.3, na.rm = TRUE),
+	          median.2=median(quantity.2, na.rm = TRUE),
+	          median.3=median(quantity.3, na.rm = TRUE),
+	          sd.2=sd(quantity.2, na.rm = TRUE),
+	          sd.3=sd(quantity.3, na.rm = TRUE)
+	)
+  # write result to file
+  write.table(v.Prices.Wheat.Summary.Daily, "csv/summary/prices_wheat-summary-daily.csv" , row.names = F, quote = T , sep = ",")
 
 ## annual means: Barley
 v.Prices.Barley.Summary.Annual <- v.Prices.Barley %>%
@@ -456,3 +466,24 @@ v.Plot.Bread.Annual.Cycle.Box <- ggplot()+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 45, vjust=0.5,hjust = 0.5, size = 8))  # rotate x axis text
 v.Plot.Bread.Annual.Cycle.Box
+
+v.Date.Start <- as.Date("1904-01-01")
+v.Date.Stop <- as.Date("1916-12-31")
+v.Prices.Wheat.Period <- funcPeriod(v.Prices.Wheat,v.Date.Start,v.Date.Stop) 
+v.Prices.Barley.Period <- funcPeriod(v.Prices.Barley,v.Date.Start,v.Date.Stop) 
+v.Prices.Bread.Period <- funcPeriod(v.Prices.Bread,v.Date.Start,v.Date.Stop) 
+v.FoodRiots.Period <- funcPeriod(v.FoodRiots,v.Date.Start,v.Date.Stop) 
+ggplot()+
+  # first layer: min prices of wheat
+  geom_line(data = v.Prices.Wheat.Period, 
+            aes(x = date,y = dmp.2),
+            na.rm=TRUE, color="black", linetype = 1)+
+  # second layer: min prices of barley
+  geom_line(data = v.Prices.Barley.Period, 
+            aes(x = date,y = dmp.2),
+            na.rm=TRUE, color="black", linetype = 2)+
+  # second layer: min prices of bread
+  geom_line(data = v.Prices.Bread.Period, 
+            aes(x = date,y = dmp.2),
+            na.rm=TRUE, color="black", linetype = 3)
+
