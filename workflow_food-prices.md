@@ -100,12 +100,12 @@ There are two main plots of quantitative price data:
 
 For the time being, I settled on manually tagging each reference in Sente that includes qualitative price information with the following tags:
 
-- `prices: high`
-- `prices: rising`
-- `prices: stable`
-- `prices: falling`
-- `prices: low`
-- `prices: normal`
+- `prices: high`: 1
+- `prices: rising`: 2
+- `prices: stable`: 3
+- `prices: falling`: 4
+- `prices: low`: 5
+- `prices: normal`: 6
 
 These tags can be extracted, mapped to discrete integers, and written to a CSV file of the following structure
 
