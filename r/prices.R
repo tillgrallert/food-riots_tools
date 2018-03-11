@@ -292,6 +292,33 @@ geom_segment(data = v.Prices.Wheat.Summary.Monthly,
              aes(x = month, xend = month, y = mean.2, yend = mean.3),
              size = 0.3, show.legend = F, na.rm = T, linetype=1) # linetypes: 1=solid, 2=dashed,
 v.Plot.Wheat.Monthly.Mean.Scatter
+
+## daily averages
+v.Plot.Wheat.Daily.Mean.Scatter <- v.Plot.Base+
+  # add labels
+  labs(title="Wheat prices in Bilad al-Sham", 
+       subtitle="Quarterly averages of minimum and maximum prices based on announcements in newspapers", 
+       y="Prices (piaster/kile)") +
+  # first layer: min prices
+  geom_point(data = v.Prices.Wheat.Daily.Period, 
+             aes(x = date, y = mean.2),
+             na.rm=TRUE, size=2, pch=3)+
+  geom_line(data = v.Prices.Wheat.Daily.Period, 
+            aes(x = date, y = mean.2),
+            na.rm=TRUE, color="green")+
+  #geom_text(data = v.Prices.Wheat.Summary.Daily,aes(x = month, quantity.2, label=round(quantity.2)), size=3)+
+  # second layer: max prices
+  geom_point(data = v.Prices.Wheat.Daily.Period, 
+             aes(x = date, y = mean.3),
+             na.rm=TRUE, size=2, pch=3, color="black")+
+  geom_line(data = v.Prices.Wheat.Daily.Period, 
+            aes(x = date, y = mean.3),
+            na.rm=TRUE, color="red")+
+  # layer with connecting lines between min and max prices
+  geom_segment(data = v.Prices.Wheat.Daily.Period, 
+               aes(x = date, xend = date, y = mean.2, yend = mean.3),
+               size = 0.3, show.legend = F, na.rm = T, linetype=1) # linetypes: 1=solid, 2=dashed,
+v.Plot.Wheat.Daily.Mean.Scatter
   
 
 ## Jitter plot
@@ -478,9 +505,11 @@ v.Prices.Wheat.Period <- funcPeriod(v.Prices.Wheat,v.Date.Start,v.Date.Stop)
 v.Prices.Barley.Period <- funcPeriod(v.Prices.Barley,v.Date.Start,v.Date.Stop) 
 v.Prices.Bread.Period <- funcPeriod(v.Prices.Bread,v.Date.Start,v.Date.Stop) 
 v.FoodRiots.Period <- funcPeriod(v.FoodRiots,v.Date.Start,v.Date.Stop) 
-ggplot()+
+
+# percentage of difference from the mean
+v.Plot.Base +
   # first layer: min prices of wheat
-  geom_line(data = v.Prices.Wheat.Period, 
+  geom_line(data = v.Prices.Wheat.Daily.Period, 
             aes(x = date,y = dmp.2),
             na.rm=TRUE, color="black", linetype = 1)+
   # second layer: min prices of barley
