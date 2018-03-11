@@ -142,6 +142,9 @@ v.Prices.Wheat.Summary.Daily <- v.Prices.Wheat %>%
 	          sd.2=sd(quantity.2, na.rm = TRUE),
 	          sd.3=sd(quantity.3, na.rm = TRUE)
 	)
+  ## difference from mean in per cent
+  v.Prices.Wheat.Summary.Daily$dmp.2 <- (100 * (v.Prices.Wheat.Summary.Daily$mean.2 - v.Prices.Wheat.Mean) / v.Prices.Wheat.Mean)
+  v.Prices.Wheat.Summary.Daily$dmp.3 <- (100 * (v.Prices.Wheat.Summary.Daily$mean.3 - v.Prices.Wheat.Mean) / v.Prices.Wheat.Mean)
   # write result to file
   write.table(v.Prices.Wheat.Summary.Daily, "csv/summary/prices_wheat-summary-daily.csv" , row.names = F, quote = T , sep = ",")
 
@@ -190,7 +193,8 @@ v.Prices.Barley.Summary.Monthly <- v.Prices.Barley %>%
 # specify period
 v.Date.Start <- as.Date("1870-01-01")
 v.Date.Stop <- as.Date("1916-12-31")
-v.Prices.Wheat.Period <- funcPeriod(v.Prices.Wheat,v.Date.Start,v.Date.Stop) 
+v.Prices.Wheat.Period <- funcPeriod(v.Prices.Wheat,v.Date.Start,v.Date.Stop)
+v.Prices.Wheat.Daily.Period <- funcPeriod(v.Prices.Wheat.Summary.Daily,v.Date.Start,v.Date.Stop)
 v.Prices.Barley.Period <- funcPeriod(v.Prices.Barley,v.Date.Start,v.Date.Stop) 
 v.Prices.Bread.Period <- funcPeriod(v.Prices.Bread,v.Date.Start,v.Date.Stop) 
 v.FoodRiots.Period <- funcPeriod(v.FoodRiots,v.Date.Start,v.Date.Stop)
@@ -204,6 +208,7 @@ sd(v.Prices.Wheat.Period$quantity.2, na.rm=T)
 
 # the list of wheat prices includes two very high data points for regions outside Bilād al-Shām, they should be filtered out
 v.Prices.Wheat.Period <- subset(v.Prices.Wheat.Period, quantity.2 < 200)
+v.Prices.Wheat.Daily.Period <- subset(v.Prices.Wheat.Daily.Period, mean.2 < 200)
 
 # plot
 ## base plot
