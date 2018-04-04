@@ -208,7 +208,17 @@
                 </xsl:choose>
             </xsl:variable>
             <xsl:variable name="v_location" select="@location"/>
-            <xsl:variable name="v_source-unit" select="@unit"/>
+            <!-- some unit values must be normalized due to variations in the mark-up of sources -->
+            <xsl:variable name="v_source-unit">
+                <xsl:choose>
+                    <xsl:when test="@unit = 'wazana'">
+                        <xsl:text>wazna</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="@unit"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
             <xsl:variable name="v_type" select="@type"/>
             <xsl:if test="$p_debug = true()">
                 <xsl:message>
