@@ -1,6 +1,7 @@
 # Remember it is good coding technique to add additional packages to the top of
 # your script 
 library(lubridate) # for working with dates
+library(anytime) # for parsing incomplete dates
 library(ggplot2)  # for creating graphs
 library(scales)   # to access breaks/formatting functions
 library(gridExtra) # for arranging plots
@@ -15,12 +16,12 @@ setwd("/BachCloud/BTSync/FormerDropbox/FoodRiots/food-riots_data") #Volumes/Dess
 
 # 1. read price data from csv, note that the first row is a date
 v.FoodRiots <- read.csv("csv/events_food-riots.csv", header=TRUE, sep = ",", quote = "\"")
-v.Prices <- read.csv("csv/prices.csv", header=TRUE, sep = ",", quote = "\"")
+v.Prices <- read.csv("csv/prices-2018-03-27.csv", header=TRUE, sep = ",", quote = "\"")
 
 # fix date types
 ## convert date to Date class, note that dates supplied as years only will be turned into NA
-v.FoodRiots$date <- as.Date(v.FoodRiots$date)
-v.Prices$date <- as.Date(v.Prices$date)
+v.FoodRiots$date <- anydate(v.FoodRiots$date)
+v.Prices$date <- anydate(v.Prices$date)
 ## numeric
 #v.Prices$quantity.2 <- as.numeric(v.Prices$quantity.2)
 #v.Prices$quantity.3 <- as.numeric(v.Prices$quantity.3)
@@ -191,7 +192,7 @@ v.Prices.Barley.Summary.Monthly <- v.Prices.Barley %>%
   write.table(v.Prices.Barley.Summary.Monthly, "csv/summary/prices_barley-summary-monthly.csv" , row.names = F, quote = T , sep = ",")
   
 # specify period
-v.Date.Start <- as.Date("1870-01-01")
+v.Date.Start <- as.Date("1855-01-01")
 v.Date.Stop <- as.Date("1916-12-31")
 v.Prices.Wheat.Period <- funcPeriod(v.Prices.Wheat,v.Date.Start,v.Date.Stop)
 v.Prices.Wheat.Daily.Period <- funcPeriod(v.Prices.Wheat.Summary.Daily,v.Date.Start,v.Date.Stop)
@@ -216,7 +217,7 @@ v.Plot.Base <- ggplot() +
   # add labels
   labs(x="Date") +
   # layer: vertical lines for bread riots
-  geom_segment(data = v.FoodRiots.Period, aes(x = date, xend = date, y = 10, yend = 24, colour = "food riot"),
+  geom_segment(data = v.FoodRiots.Period, aes(x = date, xend = date, y = 0, yend = 24, colour = "food riot"),
                size = 1, show.legend = F, na.rm = T, linetype=1)+ # linetypes: 1=solid, 2=dashed
   scale_x_date(breaks=date_breaks("2 years"), 
                labels=date_format("%Y"))+
@@ -224,8 +225,6 @@ v.Plot.Base <- ggplot() +
   theme_bw()+ # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
   theme(axis.text.x = element_text(angle = 45, vjust=0.5,hjust = 0.5, size = 8))  # rotate x axis text
 v.Plot.Base  
-  
-  
   
 ## plot all values
 v.Plot.Wheat.Scatter <- v.Plot.Base+
@@ -369,6 +368,43 @@ v.Plot.Wheat.Box <- v.Plot.Base+
   # layer: fitted line
   #stat_smooth(aes(date, quantity.2), na.rm = T,method="lm", se=T,color="blue")
 v.Plot.Wheat.Box
+
+v.Plot.Wheat.Box.Price.Trends <- v.Plot.Base +
+  # add labels
+  labs(title="Wheat prices and food riots in Bilad al-Sham", 
+       subtitle="minimum prices aggregated by year", 
+       y="Price (piaster/kile)") + # provides title, subtitle, x, y, caption
+  # layer: box plot prices, average of min and max prices
+  #geom_boxplot(data = vWheatKilePeriod,aes(x=year,group=year,y=(quantity.2 + quantity.3) / 2), na.rm = T)+
+  # layer: box plot min prices
+  geom_boxplot(data = v.Prices.Wheat.Period,aes(x=year,group=year,y=quantity.2), na.rm = T)+
+  ## add error bars
+  stat_boxplot(geom ='errorbar')+
+  # layer: box plot max prices
+  geom_boxplot(data = v.Prices.Wheat.Period,aes(x=year, group=year,y=quantity.3), na.rm = T, color="blue", width=100)+
+  # despite some visiual overlap, count charts are not the best solution to the data set 
+  # because only very few reports fall on the same day (and thus formally) overlap
+  # layer: falling prices
+  geom_point(data = filter(v.Prices.Trends.Period, tag=="prices: high"),
+             aes(x = date, y = 9, colour = tag),
+             pch=3)+
+  # layer: falling prices
+  geom_point(data = filter(v.Prices.Trends.Period, tag=="prices: rising"),
+             aes(x = date, y = 7, colour = tag),
+             pch=3)+
+  # layer: falling prices
+  geom_point(data = filter(v.Prices.Trends.Period, tag=="prices: normal"),
+             aes(x = date, y = 5, colour = tag),
+             pch=3)+
+  # layer: falling prices
+  geom_point(data = filter(v.Prices.Trends.Period, tag=="prices: falling"),
+             aes(x = date, y = 3, colour = tag),
+             pch=3)+
+  # layer: falling prices
+  geom_point(data = filter(v.Prices.Trends.Period, tag=="prices: low"),
+             aes(x = date, y = 1, colour = tag),
+             pch=3)
+v.Plot.Wheat.Box.Price.Trends
 
 v.Plot.Barley.Box <- v.Plot.Base+
   # add labels
