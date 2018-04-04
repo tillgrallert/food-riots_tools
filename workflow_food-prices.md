@@ -82,11 +82,11 @@ Data can be extracted from Sente using either the built-in XML export or my cust
 
 ## 3. extract and normalize price data 
 
-The XSLT stylesheet [`tei_retrieve-measures-as-csv.xsl`](xslt/tei_retrieve-measures-as-csv.xsl) can be run on any input XML. It will gather all `<measureGrp>` elements based on a number of selection criteria and outputs them as CSV sorted by date (either publication date of the source or the date recorded  `@when` attributes). With the help of [`tei-measure_normalize.xsl`](xslt/tei-measure_normalize.xsl) units are normalised as far as possible to allow for greater comparability across the dataset. The stylesheet performs the following steps:
+The XSLT stylesheet [`tei_retrieve-measures-as-csv.xsl`](xslt/tei_retrieve-measures-as-csv.xsl) can be run on any input XML. It will gather all `<measureGrp>` elements based on a number of selection criteria and outputs them as CSV sorted by date (either publication date of the source or the date recorded  `@when` attributes). With the help of [`tei-measure_normalize.xsl`](xslt/tei-measure_normalize.xsl) units are normalised as far as possible to allow for greater comparability across the dataset. The stylesheet performs the following steps using different modes:
 
 1. extract data: all `<tei:measureGrp>` are extracted from a folder containing one Sente XML file per source.
-2. enrich every `<tei:measure>` with dates and locations based on information from ancestors `<tei:measureGrp>` and `<tss:reference>`
-    + *to do*: in case `@when` provides information on a single year only, the stylesheet shall automatically add `@dur="P1Y"`
+2. enrich every `<tei:measure>` with dates and locations based on information from ancestors `<tei:measureGrp>` and `<tss:reference>`. These are performed by `@mode="m_enrich-dates"`, `@mode="m_enrich-locations"`, and `@mode="m_enrich"`
+    + in case `@when` provides information on a single year only, the stylesheet automatically adds `@dur="P1Y"`
 3. normalize non-metrical measures: this is done with a parameter file that records localised and dated information on conversion rates between different units.
 4. regularize all commodities that are not money to quantities of 1 
 5. safe output as xml and csv
