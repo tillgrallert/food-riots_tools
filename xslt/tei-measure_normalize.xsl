@@ -84,6 +84,12 @@
             <xsl:when test="count(descendant::tei:measure[@commodity='currency'][@when]) &gt; 1">
                 <xsl:for-each select="descendant::tei:measure[@commodity='currency'][@when]">
                     <tei:measureGrp type="split" source="{$v_id-source}" when="{@when}">
+                        <!-- check if a duration needs to be added -->
+                        <xsl:if test="not(@dur)">
+                            <xsl:call-template name="t_add-durations">
+                                <xsl:with-param name="p_when" select="@when"/>
+                            </xsl:call-template>
+                        </xsl:if>
                         <xsl:copy-of select="ancestor::tei:measureGrp/descendant::tei:measure[not(@commodity='currency')]"/>
                         <xsl:apply-templates select="." mode="m_enrich-dates"/>
                     </tei:measureGrp>
@@ -95,10 +101,36 @@
                     <xsl:apply-templates select="@*" mode="m_enrich-dates"/>
                     <xsl:attribute name="when" select="$v_date-publication"/>
                     <xsl:attribute name="source" select="$v_id-source"/>
+                    <!-- check if a duration needs to be added -->
+                    <xsl:if test="not(@dur)">
+                        <xsl:call-template name="t_add-durations">
+                            <xsl:with-param name="p_when" select="$v_date-publication"/>
+                        </xsl:call-template>
+                    </xsl:if>
                     <xsl:apply-templates select="node()" mode="m_enrich-dates"/>
                 </xsl:copy>
             </xsl:otherwise>
         </xsl:choose>
+    </xsl:template>
+    <xsl:template match="tei:measureGrp[@when]" mode="m_enrich-dates">
+        <xsl:copy>
+            <!-- check if a duration needs to be added -->
+            <xsl:if test="not(@dur)">
+                <xsl:call-template name="t_add-durations">
+                    <xsl:with-param name="p_when" select="@when"/>
+                </xsl:call-template>
+            </xsl:if>
+            <xsl:apply-templates select="@* | node()" mode="m_enrich-dates"/>
+        </xsl:copy>
+    </xsl:template>
+    
+    <xsl:template name="t_add-durations">
+        <xsl:param name="p_when"/>
+        <xsl:analyze-string select="$p_when" regex="^\d+$">
+            <xsl:matching-substring>
+                <xsl:attribute name="dur" select="'P1Y'"/>
+            </xsl:matching-substring>
+        </xsl:analyze-string>
     </xsl:template>
 
     <!-- add location information -->
@@ -142,7 +174,7 @@
         </xsl:choose>
     </xsl:template>
     
-    <!-- add source information -->
+    <!-- add source information and durations -->
     <xsl:template match="tei:measureGrp[not(@source)]" mode="m_enrich">
         <xsl:variable name="v_id-source" select="ancestor::tss:reference/tss:characteristics/tss:characteristic[@name='UUID']"/>
         <xsl:copy>
@@ -154,18 +186,15 @@
     <xsl:template match="tei:measure" mode="m_enrich">
         <xsl:variable name="v_unit" select="@unit"/>
         <xsl:copy>
-            <xsl:choose>
-                <xsl:when test="not(@when) and not(@location)">
+                <xsl:if test="not(@when)">
                     <xsl:attribute name="when" select="ancestor::tei:measureGrp[1]/@when"/>
+                </xsl:if>
+            <xsl:if test="not(@dur) and ancestor::tei:measureGrp[1]/@dur">
+                <xsl:attribute name="dur" select="ancestor::tei:measureGrp[1]/@dur"/>
+            </xsl:if>
+                <xsl:if test="not(@location)">
                     <xsl:attribute name="location" select="ancestor::tei:measureGrp[1]/@location"/>
-                </xsl:when>
-                <xsl:when test="not(@when)">
-                    <xsl:attribute name="when" select="ancestor::tei:measureGrp[1]/@when"/>
-                </xsl:when>
-                <xsl:when test="not(@location)">
-                    <xsl:attribute name="location" select="ancestor::tei:measureGrp[1]/@location"/>
-                </xsl:when>
-            </xsl:choose>
+                </xsl:if>
             <!-- add a type attribute -->
             <!-- check for the type of a measure, i.e. volume, weight, currency -->
             <xsl:attribute name="type">
