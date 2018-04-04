@@ -48,7 +48,8 @@ I settled on the following TEI elements and attributes
     </measureGrp>
     ~~~
 
-3. optionally `<measureGrp>` and `<measure>` elements denoting the price can be dated with the `@when` attribute. If all measures are dated to the same moment/period, the attributes go on the wrapping `<measureGrp>`
+3. *Temporal information*: The precision and duration of dates differs between sources; some provide information on a single date fixed in time, others provide similar punctual information but without it being fixed in time, yet others provide information on periods longer or shorter than a single day. 
+    + `@when`: For the first and the third scenario, `<measureGrp>` and `<measure>` elements denoting the price can be dated with the `@when` attribute. If all measures are dated to the same moment/period, the attributes go on the wrapping `<measureGrp>`
 
     ~~~{.xml}
     <tei:measureGrp when="1865-03-14">Yesterday, <tei:measure commodity="wheat" unit="kile" quantity="1">a kile of best wheat</tei:measure> was sold for <tei:measure commodity="currency" unit="ops" quantity="38">Ps 38</tei:measure> to <tei:measure commodity="currency" unit="ops" quantity="42">Ps 42</tei:measure></tei:measureGrp>
@@ -59,7 +60,9 @@ I settled on the following TEI elements and attributes
     Last week <tei:measureGrp>the price for <tei:measure commodity="wheat" unit="kile" quantity="1">a kile of best wheat</tei:measure> rose from <tei:measure commodity="currency" unit="ops" quantity="38" when="1863-03-20">Ps 38</tei:measure> to <tei:measure commodity="currency" unit="ops" quantity="42" when="1863-03-25">Ps 42</tei:measure></tei:measureGrp>
     ~~~
 
-4. Since non-metrical measures varied between places and since source can record prices from more than one location, the location can be specified with a custom `@location` attribute on `<measureGrp>` and `<measure>` elements denoting the price. If all measures relate to the same place, the attributes go on the wrapping `<measureGrp>`. `@location` accepts simple toponyms.
+    + `@dur`: in order to specify a duration, one can use the `@dur` attribute whith the datatype [`xs:duration`](https://docstore.mik.ua/orelly/xml/schema/ch16_01.htm#ch16-77046) / [`teidata.duration.w3c`](http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-teidata.duration.w3c.html).
+
+4. *Spatial information*: Since non-metrical measures varied between places and since source can record prices from more than one location, the location can be specified with a custom `@location` attribute on `<measureGrp>` and `<measure>` elements denoting the price. If all measures relate to the same place, the attributes go on the wrapping `<measureGrp>`. `@location` accepts simple toponyms.
 
 ### open questions
 
@@ -79,13 +82,14 @@ Data can be extracted from Sente using either the built-in XML export or my cust
 
 ## 3. extract and normalize price data 
 
-1. extract data
-2. enrich every `<tei:measure>` with dates and locations based on information from ancestors `<tei:measureGrp>` and `<tss:reference>`
-3. normalize non-metrical measures
-4. regularize quantities to 1 
-5. safe output as xml and csv
+The XSLT stylesheet [`tei_retrieve-measures-as-csv.xsl`](xslt/tei_retrieve-measures-as-csv.xsl) can be run on any input XML. It will gather all `<measureGrp>` elements based on a number of selection criteria and outputs them as CSV sorted by date (either publication date of the source or the date recorded  `@when` attributes). With the help of [`tei-measure_normalize.xsl`](xslt/tei-measure_normalize.xsl) units are normalised as far as possible to allow for greater comparability across the dataset. The stylesheet performs the following steps:
 
-The XSLT stylesheet [`tei_retrieve-measures-as-csv.xsl`](xslt/tei_retrieve-measures-as-csv.xsl) can be run on any input XML. It will gather all `<measureGrp>` elements based on a number of selection criteria and outputs them as CSV sorted by date (either publication date of the source or the date recorded  `@when` attributes). With the help of [`tei-measure_normalize.xsl`](xslt/tei-measure_normalize.xsl) units are normalised as far as possible to allow for greater comparability across the dataset.
+1. extract data: all `<tei:measureGrp>` are extracted from a folder containing one Sente XML file per source.
+2. enrich every `<tei:measure>` with dates and locations based on information from ancestors `<tei:measureGrp>` and `<tss:reference>`
+    + *to do*: in case `@when` provides information on a single year only, the stylesheet shall automatically add `@dur="P1Y"`
+3. normalize non-metrical measures: this is done with a parameter file that records localised and dated information on conversion rates between different units.
+4. regularize all commodities that are not money to quantities of 1 
+5. safe output as xml and csv
 
 ## 4. Statistics and plots with R
 
@@ -93,6 +97,9 @@ There are two main plots of quantitative price data:
 
 1. plot all values or seasonal averages over the entire period
 2. plot all years over each other in order to see seasonal trends
+
+- *to do*:
+    + add some weighing mechanism based on the information in `@dur`
 
 # qualitative price information
 
