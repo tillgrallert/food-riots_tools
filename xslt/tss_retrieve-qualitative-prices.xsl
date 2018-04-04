@@ -24,7 +24,7 @@
             <!-- run on full sample: the source collection does contain double entries of information (one reference for an archival file and one for each consituent letters). The summary files must be excluded to not significantly distort the sample -->
             <xsl:otherwise>
                 <xsl:copy-of
-                    select="collection('/Volumes/Dessau HD/BachUni/BachBibliothek/GitHub/Sente/tss_data/BachSources?select=*.TSS.xml')[not(descendant::tss:publicationType[@name = 'Archival File' or @name = 'Archival Material'])][descendant::tei:measureGrp]"
+                    select="collection('/Volumes/Dessau HD/BachUni/BachBibliothek/GitHub/Sente/tss_data/BachSources?select=*.TSS.xml')[not(descendant::tss:publicationType[@name = 'Archival File' or @name = 'Archival Material'])]"
                 />
             </xsl:otherwise>
         </xsl:choose>
