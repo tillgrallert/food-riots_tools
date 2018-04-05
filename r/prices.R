@@ -17,11 +17,16 @@ setwd("/BachCloud/BTSync/FormerDropbox/FoodRiots/food-riots_data") #Volumes/Dess
 # 1. read price data from csv, note that the first row is a date
 v.FoodRiots <- read.csv("csv/events_food-riots.csv", header=TRUE, sep = ",", quote = "\"")
 v.Prices <- read.csv("csv/prices-2018-03-27.csv", header=TRUE, sep = ",", quote = "\"")
+v.Prices.Trends <- read.csv("csv/qualitative-prices.csv", header=TRUE, sep = ",", quote = "\"")
+
+# add daily data based on the 'duration' column
 
 # fix date types
-## convert date to Date class, note that dates supplied as years only will be turned into NA
+## convert date to Date class, note that dates supplied as years only will be turned into NA if one uses as.date()
+## anydate() converts dates from Y0001 to Y0001-M01-D01
 v.FoodRiots$date <- anydate(v.FoodRiots$date)
 v.Prices$date <- anydate(v.Prices$date)
+v.Prices.Trends$date <- anydate(v.Prices.Trends$date)
 ## numeric
 #v.Prices$quantity.2 <- as.numeric(v.Prices$quantity.2)
 #v.Prices$quantity.3 <- as.numeric(v.Prices$quantity.3)
@@ -101,10 +106,6 @@ v.Prices.Wheat.Summary.Annual <- v.Prices.Wheat %>%
   write.table(v.Prices.Wheat.Summary.Annual, "csv/summary/prices_wheat-summary-annual.csv" , row.names = F, quote = T , sep = ",")
 
 ## data frame with quarterly mean for min and max prices
-v.Prices.Wheat.Mean.Quarterly <- merge(
-  aggregate(quantity.2 ~ quarter, data=v.Prices.Wheat.Period, FUN = mean),
-  aggregate(quantity.3 ~ quarter, data=v.Prices.Wheat.Period, FUN = mean),  
-  by=c("quarter"), all=T)
 v.Prices.Wheat.Summary.Quarterly <- v.Prices.Wheat %>%
   group_by(quarter) %>%
   summarise(count=n(), 
@@ -192,12 +193,13 @@ v.Prices.Barley.Summary.Monthly <- v.Prices.Barley %>%
   write.table(v.Prices.Barley.Summary.Monthly, "csv/summary/prices_barley-summary-monthly.csv" , row.names = F, quote = T , sep = ",")
   
 # specify period
-v.Date.Start <- as.Date("1855-01-01")
+v.Date.Start <- as.Date("1908-01-01")
 v.Date.Stop <- as.Date("1916-12-31")
 v.Prices.Wheat.Period <- funcPeriod(v.Prices.Wheat,v.Date.Start,v.Date.Stop)
 v.Prices.Wheat.Daily.Period <- funcPeriod(v.Prices.Wheat.Summary.Daily,v.Date.Start,v.Date.Stop)
 v.Prices.Barley.Period <- funcPeriod(v.Prices.Barley,v.Date.Start,v.Date.Stop) 
 v.Prices.Bread.Period <- funcPeriod(v.Prices.Bread,v.Date.Start,v.Date.Stop) 
+v.Prices.Trends.Period <- funcPeriod(v.Prices.Trends,v.Date.Start,v.Date.Stop)
 v.FoodRiots.Period <- funcPeriod(v.FoodRiots,v.Date.Start,v.Date.Stop)
 
 # descriptive statistics
@@ -296,7 +298,7 @@ v.Plot.Wheat.Monthly.Mean.Scatter
 v.Plot.Wheat.Daily.Mean.Scatter <- v.Plot.Base+
   # add labels
   labs(title="Wheat prices in Bilad al-Sham", 
-       subtitle="Quarterly averages of minimum and maximum prices based on announcements in newspapers", 
+       subtitle="Daily averages of minimum and maximum prices based on announcements in newspapers", 
        y="Prices (piaster/kile)") +
   # first layer: min prices
   geom_point(data = v.Prices.Wheat.Daily.Period, 
@@ -368,6 +370,15 @@ v.Plot.Wheat.Box <- v.Plot.Base+
   # layer: fitted line
   #stat_smooth(aes(date, quantity.2), na.rm = T,method="lm", se=T,color="blue")
 v.Plot.Wheat.Box
+
+## box plot plus price trends, re-rest the period
+# specify period
+v.Date.Start <- as.Date("1900-01-01")
+v.Date.Stop <- as.Date("1916-12-31")
+v.Prices.Wheat.Period <- funcPeriod(v.Prices.Wheat,v.Date.Start,v.Date.Stop)
+v.Prices.Wheat.Daily.Period <- funcPeriod(v.Prices.Wheat.Summary.Daily,v.Date.Start,v.Date.Stop)
+v.Prices.Trends.Period <- funcPeriod(v.Prices.Trends,v.Date.Start,v.Date.Stop)
+v.FoodRiots.Period <- funcPeriod(v.FoodRiots,v.Date.Start,v.Date.Stop)
 
 v.Plot.Wheat.Box.Price.Trends <- v.Plot.Base +
   # add labels
