@@ -398,23 +398,27 @@ v.Plot.Wheat.Box.Price.Trends <- v.Plot.Base +
   # layer: falling prices
   geom_point(data = filter(v.Prices.Trends.Period, tag=="prices: high"),
              aes(x = date, y = 9, colour = tag),
-             pch=3)+
+             fill = "#871020",
+             shape=21, size=4, alpha = 0.3)+
   # layer: falling prices
   geom_point(data = filter(v.Prices.Trends.Period, tag=="prices: rising"),
-             aes(x = date, y = 7, colour = tag),
-             pch=3)+
+             aes(x = date, y = 7, colour = tag), 
+             fill = "#F7240C",
+             shape=21, size=4, alpha = 0.3)+
   # layer: falling prices
   geom_point(data = filter(v.Prices.Trends.Period, tag=="prices: normal"),
              aes(x = date, y = 5, colour = tag),
-             pch=3)+
+             shape=21, size=4, alpha = 0.3)+
   # layer: falling prices
   geom_point(data = filter(v.Prices.Trends.Period, tag=="prices: falling"),
              aes(x = date, y = 3, colour = tag),
-             pch=3)+
+             fill = "#91F200",
+             shape=21, size=4, alpha = 0.3)+
   # layer: falling prices
   geom_point(data = filter(v.Prices.Trends.Period, tag=="prices: low"),
              aes(x = date, y = 1, colour = tag),
-             pch=3)
+             fill = "#1B8500",
+             shape=21, size=4, alpha = 0.3)
 v.Plot.Wheat.Box.Price.Trends
 
 v.Plot.Barley.Box <- v.Plot.Base+
@@ -442,7 +446,7 @@ plotWheatKilePeriod2 <- ggplot(vWheatKilePeriod) +
   # first layer: min prices
   geom_point(aes(x=date, y=quantity.2),
              na.rm=TRUE,
-             size=2, pch=1, color="black")  +
+             size=2, shape=21, color="black")  +
   # second layer: max prices
   geom_point(aes(x=date, y=quantity.3),
              na.rm=TRUE, 
