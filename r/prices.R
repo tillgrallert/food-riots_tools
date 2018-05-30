@@ -269,10 +269,14 @@ layer.Wheat.Price.Max.Daily.Scatter <- c(geom_point(data = data.Prices.Wheat.Dai
 layer.Wheat.Price.Max.Daily.Line <- c(geom_line(data = data.Prices.Wheat.Daily.Period, 
                                                 aes(x = date, y = mean.price.max),
                                                 na.rm=TRUE, color="red"))
-## box plot of minimum prices, aggregated by year
-layer.Wheat.Price.Min.Box <- c(geom_boxplot(data = data.Prices.Wheat.Period,aes(x=year,group=year,y=price.min), na.rm = T))
+## box plot of minimum prices, aggregated by year.
+layer.Wheat.Price.Min.Box <- c(geom_boxplot(data = data.Prices.Wheat.Period,
+                                            aes(x = year %m+% months(6), # add six months to move box to center of the year
+                                                group=year,y=price.min), na.rm = T))
 ## box plot of maximum prices, aggregated by year
-layer.Wheat.Price.Max.Box <- c(geom_boxplot(data = data.Prices.Wheat.Period,aes(x=year, group=year,y=price.max), na.rm = T, color="blue", width=100))
+layer.Wheat.Price.Max.Box <- c(geom_boxplot(data = data.Prices.Wheat.Period,
+                                            aes(x = year %m+% months(6), # add six months to move box to center of the year
+                                                group=year,y=price.max), na.rm = T, color="blue", width=100))
 ## qualitative data prices
 size.Dot <- 15
 alpha.Dot <- 0.3
@@ -304,6 +308,8 @@ plot.Base +
   #layer.Trend.Normal +
   layer.Trend.Falling +
   #layer.Trend.Low +
+  layer.Wheat.Price.Min.Daily.Line +
+  layer.Wheat.Price.Min.Daily.Scatter +
   labs(title="Wheat prices in Bilad al-Sham")
 
 # combine layers into plots
