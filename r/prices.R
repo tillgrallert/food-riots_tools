@@ -238,6 +238,8 @@ plot.Base <- ggplot() +
   theme(axis.text.x = element_text(angle = 45, vjust=0.5,hjust = 0.5, size = 8))  # rotate x axis text
 
 # layers
+labels.Wheat <- c(labs(title="Wheat prices in Bilad al-Sham",
+                             y="Prices (piaster/kile)"))
 ## vertical lines for bread riots
 layer.Events.FoodRiots <- c(geom_segment(data = data.Events.FoodRiots.Period, aes(x = date, xend = date, y = 0, yend = 24, colour = "food riot"),
                size = 1, show.legend = F, na.rm = T, linetype=1)) # linetypes: 1=solid, 2=dashed)
@@ -267,16 +269,51 @@ layer.Wheat.Price.Max.Daily.Scatter <- c(geom_point(data = data.Prices.Wheat.Dai
 layer.Wheat.Price.Max.Daily.Line <- c(geom_line(data = data.Prices.Wheat.Daily.Period, 
                                                 aes(x = date, y = mean.price.max),
                                                 na.rm=TRUE, color="red"))
+## box plot of minimum prices, aggregated by year
+layer.Wheat.Price.Min.Box <- c(geom_boxplot(data = data.Prices.Wheat.Period,aes(x=year,group=year,y=price.min), na.rm = T))
+## box plot of maximum prices, aggregated by year
+layer.Wheat.Price.Max.Box <- c(geom_boxplot(data = data.Prices.Wheat.Period,aes(x=year, group=year,y=price.max), na.rm = T, color="blue", width=100))
+## qualitative data prices
+size.Dot <- 15
+alpha.Dot <- 0.3
+layer.Trend.High <- c(geom_point(data = filter(data.Prices.Trends.Period, tag=="prices: high"),
+                                 aes(x = date, y = size.Dot / 5 * 10, fill = tag),
+                                 #fill = "#871020",
+                                 shape=21, size=size.Dot, alpha = alpha.Dot))
+layer.Trend.Rising <- c(geom_point(data = filter(data.Prices.Trends.Period, tag=="prices: rising"),
+                                   aes(x = date, y = size.Dot / 5 * 8, fill = tag), 
+                                   #fill = "#F7240C",
+                                   shape=21, size=size.Dot, alpha = alpha.Dot))
+layer.Trend.Normal <- c(geom_point(data = filter(data.Prices.Trends.Period, tag=="prices: normal"),
+                                   aes(x = date, y = size.Dot / 5 * 6, fill = tag),
+                                   shape=21, size=size.Dot, alpha = alpha.Dot))
+layer.Trend.Falling <- c(geom_point(data = filter(data.Prices.Trends.Period, tag=="prices: falling"),
+                                    aes(x = date, y = size.Dot / 5 * 4, fill = tag),
+                                    #fill = "#91F200",
+                                    shape=21, size=size.Dot, alpha = alpha.Dot))
+layer.Trend.Low <- c(geom_point(data = filter(data.Prices.Trends.Period, tag=="prices: low"),
+                                aes(x = date, y = size.Dot / 5 * 2, fill = tag),
+                                #fill = "#1B8500",
+                                shape=21, size=size.Dot, alpha = alpha.Dot))
 
+plot.Base + 
+  layer.Wheat.Price.Min.Box +
+  layer.Events.FoodRiots +
+  layer.Trend.High + 
+  layer.Trend.Rising +
+  #layer.Trend.Normal +
+  layer.Trend.Falling +
+  #layer.Trend.Low +
+  labs(title="Wheat prices in Bilad al-Sham")
 
 # combine layers into plots
 ## plot all values
 plot.Wheat.Scatter <- plot.Base + 
+  #labels.Wheat +
   layer.Events.FoodRiots +
   # add labels
   labs(title="Wheat prices in Bilad al-Sham", 
-      subtitle="based on announcements in newspapers", 
-       #x="Date", 
+       subtitle="based on announcements in newspapers", 
        y="Prices (piaster/kile)") +
   layer.Wheat.Price.Min.Scatter +
   layer.Wheat.Price.Max.Scatter
@@ -285,6 +322,7 @@ plot.Wheat.Scatter
 
 ## daily averages
 plot.Wheat.Daily.Mean.Scatter <- plot.Base +
+  #labels.Wheat +
   layer.Events.FoodRiots +
   # add labels
   labs(title="Wheat prices in Bilad al-Sham", 
@@ -303,6 +341,30 @@ plot.Wheat.Daily.Mean.Scatter <- plot.Base +
 #             size = 0.3, show.legend = F, na.rm = T, linetype=1) # linetypes: 1=solid, 2=dashed,
 plot.Wheat.Daily.Mean.Scatter
 
+## box plot
+plot.Wheat.Box <- plot.Base +
+  # add labels
+  labs(title="Wheat prices and food riots in Bilad al-Sham", 
+       subtitle="minimum prices aggregated by year", 
+       y="Price (piaster/kile)") + # provides title, subtitle, x, y, caption
+  # layer: box plot prices, average of min and max prices
+  #geom_boxplot(data = vWheatKilePeriod,aes(x=year,group=year,y=(price.min + price.max) / 2), na.rm = T)+
+  layer.Wheat.Price.Min.Box +
+  ## add error bars
+  stat_boxplot(geom ='errorbar')+
+  layer.Wheat.Price.Max.Box +
+  layer.Events.FoodRiots
+# layer: jitter plot
+#geom_jitter(data = vWheatKilePeriod,aes(date, price.min,colour = "price points"), size=1, na.rm=TRUE,width = 50)+ # width depends on the width of the entire plot
+# layer: line with all values
+#geom_line(aes(date, price.min), na.rm=TRUE,color="red") +
+# layer: fitted line
+#stat_smooth(aes(date, price.min), na.rm = T,method="lm", se=T,color="blue")
+plot.Wheat.Box
+
+
+
+# unused plots
 ## quarterly averages
 plot.Wheat.Quarterly.Mean.Scatter <- plot.Base +
   layer.Events.FoodRiots +
@@ -382,29 +444,8 @@ plot.Wheat.Jitter <- plot.Base+
               se=F) # removes the range around the fitting
 plot.Wheat.Jitter
   
-## box plot
-plot.Wheat.Box <- plot.Base+
-  # add labels
-  labs(title="Wheat prices and food riots in Bilad al-Sham", 
-       subtitle="minimum prices aggregated by year", 
-       y="Price (piaster/kile)") + # provides title, subtitle, x, y, caption
-  # layer: box plot prices, average of min and max prices
-  #geom_boxplot(data = vWheatKilePeriod,aes(x=year,group=year,y=(price.min + price.max) / 2), na.rm = T)+
-  # layer: box plot min prices
-  geom_boxplot(data = data.Prices.Wheat.Period,aes(x=year,group=year,y=price.min), na.rm = T)+
-  ## add error bars
-  stat_boxplot(geom ='errorbar')+
-  # layer: box plot max prices
-  geom_boxplot(data = data.Prices.Wheat.Period,aes(x=year, group=year,y=price.max), na.rm = T, color="blue", width=100)
-  # layer: jitter plot
-  #geom_jitter(data = vWheatKilePeriod,aes(date, price.min,colour = "price points"), size=1, na.rm=TRUE,width = 50)+ # width depends on the width of the entire plot
-  # layer: line with all values
-  #geom_line(aes(date, price.min), na.rm=TRUE,color="red") +
-  # layer: fitted line
-  #stat_smooth(aes(date, price.min), na.rm = T,method="lm", se=T,color="blue")
-plot.Wheat.Box
 
-## box plot plus price trends, re-rest the period
+## box plot plus price trends, reset the period
 # specify period
 v.Date.Start <- as.Date("1900-01-01")
 v.Date.Stop <- as.Date("1916-12-31")
