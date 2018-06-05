@@ -390,21 +390,32 @@ plot.Barley.Box <- plot.Base +
 plot.Barley.Box
 
 # explore annual cycles
-
-  
 plot.Wheat.Annual.Cycle.Box <- plot.Base.Annual +
   # it would be important to know how many values are represented in each box
   geom_boxplot(data = data.Prices.Wheat.Period, 
-               aes(x = month.common, group = month.common, y = price.min),
-               na.rm=TRUE, color="black")+
+               aes(x = month.common, group = month.common, y = price.min, colour = "price.min"),
+               na.rm=TRUE) +
   geom_boxplot(data = data.Prices.Wheat.Period, 
-               aes(x = month.common, group = month.common, y = price.max),
-               na.rm=TRUE, width = 10,  color="blue")+
+               aes(x = month.common, group = month.common, y = price.max, colour = "price.max"),
+               na.rm=TRUE, width = 10) + 
   stat_boxplot(geom ="errorbar") +
   labs(title = paste("Wheat prices in Bilād al-Shām","between",date.Start, "and", date.Stop),
        subtitle = "Annual cycle aggregated by month",
-       y ="Price (piaster/kile)")
+       y ="Price (piaster/kile)") +
+  # change legend and colours
+  scale_colour_manual(values=c("blue", "black"), 
+                      name="Prices",
+                      breaks=c("price.min", "price.max"),
+                      labels=c("minimal", "maximal")) +
+  theme(legend.position="right", legend.box = "vertical")
 plot.Wheat.Annual.Cycle.Box
+
+# to do: add number of observations for each month
+# add legends to the plot
+plot.Base.Annual +
+  # it would be important to know how many values are represented in each box
+  
+  
 
 plot.Bread.Annual.Cycle.Box <- plot.Base.Annual +
   # it would be important to know how many values are represented in each box
