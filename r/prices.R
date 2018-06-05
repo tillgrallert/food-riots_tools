@@ -245,6 +245,7 @@ labels.Wheat <- c(labs(title="Wheat prices in Bilad al-Sham",
 layer.Events.FoodRiots <- c(geom_segment(data = data.Events.FoodRiots.Period, 
   aes(x = date, xend = date, y = 0, yend = 24, colour = type),
   size = 1, show.legend = T, na.rm = T, linetype=1)) # linetypes: 1=solid, 2=dashed)
+# Wheat prices
 ## scater plot of minimum prices
 layer.Wheat.Price.Min.Scatter <- c(geom_point(data = data.Prices.Wheat.Period, 
   aes(x = date, # select period: date, year, quarter, month
@@ -254,7 +255,6 @@ layer.Wheat.Price.Min.Scatter <- c(geom_point(data = data.Prices.Wheat.Period,
 layer.Wheat.Price.Max.Scatter <- c(geom_point(data = data.Prices.Wheat.Period, 
   aes(x=date, y=price.max),
   na.rm=TRUE, size=2, pch=3, color="red"))
-
 ## scatter plot of daily average minimum prices
 layer.Wheat.Price.Min.Daily.Scatter <- c(geom_point(data = data.Prices.Wheat.Daily.Period, 
   aes(x = date, y = mean.price.min),
@@ -279,7 +279,16 @@ layer.Wheat.Price.Min.Box <- c(geom_boxplot(data = data.Prices.Wheat.Period,
 layer.Wheat.Price.Max.Box <- c(geom_boxplot(data = data.Prices.Wheat.Period,
   aes(x = year %m+% months(6), # add six months to move box to center of the year
     group=year,y=price.max), na.rm = T, color="blue", width=100))
-## qualitative data prices
+# Barley prices
+## box plot of minimum prices, aggregated by year.
+layer.Barley.Price.Min.Box <- c(geom_boxplot(data = data.Prices.Barley.Period,
+  aes(x = year %m+% months(6), # add six months to move box to center of the year
+    group=year,y=price.min), na.rm = T))
+## box plot of maximum prices, aggregated by year
+layer.Barley.Price.Max.Box <- c(geom_boxplot(data = data.Prices.Barley.Period,
+  aes(x = year %m+% months(6), # add six months to move box to center of the year
+    group=year,y=price.max), na.rm = T, color="blue", width=100))
+# qualitative data: prices
 size.Dot <- 10
 alpha.Dot <- 0.3
 layer.Trend.High <- c(geom_point(data = filter(data.Prices.Trends.Period, tag=="prices: high"),
@@ -464,55 +473,6 @@ plot.Wheat.Jitter <- plot.Base+
 plot.Wheat.Jitter
   
 
-## box plot plus price trends, reset the period
-# specify period
-v.Date.Start <- as.Date("1900-01-01")
-v.Date.Stop <- as.Date("1916-12-31")
-data.Prices.Wheat.Period <- funcPeriod(data.Prices.Wheat,v.Date.Start,v.Date.Stop)
-data.Prices.Wheat.Daily.Period <- funcPeriod(data.Prices.Wheat.Summary.Daily,v.Date.Start,v.Date.Stop)
-data.Prices.Trends.Period <- funcPeriod(data.Prices.Trends,v.Date.Start,v.Date.Stop)
-data.Events.FoodRiots.Period <- funcPeriod(data.Events.FoodRiots,v.Date.Start,v.Date.Stop)
-
-plot.Wheat.Box.Price.Trends <- plot.Base +
-  # add labels
-  labs(title="Wheat prices and food riots in Bilad al-Sham", 
-       subtitle="minimum prices aggregated by year", 
-       y="Price (piaster/kile)") + # provides title, subtitle, x, y, caption
-  # layer: box plot prices, average of min and max prices
-  #geom_boxplot(data = vWheatKilePeriod,aes(x=year,group=year,y=(price.min + price.max) / 2), na.rm = T)+
-  # layer: box plot min prices
-  geom_boxplot(data = data.Prices.Wheat.Period,aes(x=year,group=year,y=price.min), na.rm = T)+
-  ## add error bars
-  stat_boxplot(geom ='errorbar')+
-  # layer: box plot max prices
-  geom_boxplot(data = data.Prices.Wheat.Period,aes(x=year, group=year,y=price.max), na.rm = T, color="blue", width=100)+
-  # despite some visiual overlap, count charts are not the best solution to the data set 
-  # because only very few reports fall on the same day (and thus formally) overlap
-  # layer: falling prices
-  geom_point(data = filter(data.Prices.Trends.Period, tag=="prices: high"),
-             aes(x = date, y = 9, colour = tag),
-             fill = "#871020",
-             shape=21, size=4, alpha = 0.3)+
-  # layer: falling prices
-  geom_point(data = filter(data.Prices.Trends.Period, tag=="prices: rising"),
-             aes(x = date, y = 7, colour = tag), 
-             fill = "#F7240C",
-             shape=21, size=4, alpha = 0.3)+
-  # layer: falling prices
-  geom_point(data = filter(data.Prices.Trends.Period, tag=="prices: normal"),
-             aes(x = date, y = 5, colour = tag),
-             shape=21, size=4, alpha = 0.3)+
-  # layer: falling prices
-  geom_point(data = filter(data.Prices.Trends.Period, tag=="prices: falling"),
-             aes(x = date, y = 3, colour = tag),
-             fill = "#91F200",
-             shape=21, size=4, alpha = 0.3)+
-  # layer: falling prices
-  geom_point(data = filter(data.Prices.Trends.Period, tag=="prices: low"),
-             aes(x = date, y = 1, colour = tag),
-             fill = "#1B8500",
-             shape=21, size=4, alpha = 0.3)
-plot.Wheat.Box.Price.Trends
 
 plot.Barley.Box <- plot.Base+
   # add labels
