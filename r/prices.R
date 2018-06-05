@@ -8,6 +8,8 @@ library(anytime) # for parsing incomplete dates
 library(scales)   # to access breaks/formatting functions
 library(gridExtra) # for arranging plots
 library(plotly) # interactive plots based on ggplot
+# enable unicode
+Sys.setlocale("LC_ALL", "en_US.UTF-8")
 
 # set a working directory
 setwd("/BachCloud/BTSync/FormerDropbox/FoodRiots/food-riots_data") #Volumes/Dessau HD/
@@ -33,15 +35,12 @@ data.Prices.Trends$date <- anydate(data.Prices.Trends$date)
 ## use cut() to generate summary stats for time periods
 ## create variables of the year, quarter week and month of each observation:
 data.Prices <- data.Prices %>%
-  dplyr::mutate(year = as.Date(cut(data.Prices$date, breaks = "year")),
-                quarter = as.Date(cut(data.Prices$date,breaks = "quarter")),
-                month = as.Date(cut(data.Prices$date,breaks = "month")),
-                week = as.Date(cut(data.Prices$date,breaks = "week",
-                                                start.on.monday = TRUE))) # allows to change weekly break point to Sunday)
-
-## add a column that sets all month/day combinations to the same year
-data.Prices$date.common <- as.Date(paste0("2000-",format(data.Prices$date, "%j")), "%Y-%j")
-data.Prices$month.common <- as.Date(cut(data.Prices$date.common,breaks = "month"))
+  dplyr::mutate(year = as.Date(cut(data.Prices$date, breaks = "year")), # first day of the year
+                quarter = as.Date(cut(data.Prices$date,breaks = "quarter")), # first day of the quarter
+                month = as.Date(cut(data.Prices$date,breaks = "month")), # first day of the month
+                week = as.Date(cut(data.Prices$date,breaks = "week", start.on.monday = TRUE)), # first day of the week; allows to change weekly break point to Sunday
+                date.common = as.Date(paste0("2000-",format(data.Prices$date, "%j")), "%Y-%j")) %>% # add a column that sets all month/day combinations to the same year
+  dplyr::mutate(month.common = as.Date(cut(data.Prices$date.common,breaks = "month"))) # add a column that sets all month/day combinations to first day of the month
 
 # filter data and rename columns
 data.Prices <- data.Prices %>%
@@ -58,13 +57,14 @@ data.Prices.Wheat <- subset(data.Prices,commodity=="wheat" & unit=="kile")
   ## descriptive stats
   # the computed arithmetic mean [mean(data.Prices.Wheat$price.min, na.rm=T, trim = 0.1)] based on the observed values
   #is much too high, compared to the prices reported as "normal" in our sources. Thus, I use a fixed parameter value
-  data.Prices.Wheat.Mean <- 25
+data.Prices.Wheat.Mean <- 25
+data.Prices.Wheat <- data.Prices.Wheat %>%
   ## deviation from the mean
-  data.Prices.Wheat$dm.2 <- (data.Prices.Wheat$price.min - data.Prices.Wheat.Mean)
-  data.Prices.Wheat$dm.3 <- (data.Prices.Wheat$price.max - data.Prices.Wheat.Mean)
+  dplyr::mutate(dm.2 = (data.Prices.Wheat$price.min - data.Prices.Wheat.Mean),
+                dm.3 = (data.Prices.Wheat$price.max - data.Prices.Wheat.Mean)) %>%
   ## the same as percentages of mean
-  data.Prices.Wheat$dmp.2 <- (100 * data.Prices.Wheat$dm.2 / data.Prices.Wheat.Mean)
-  data.Prices.Wheat$dmp.3 <- (100 * data.Prices.Wheat$dm.3 / data.Prices.Wheat.Mean)
+  dplyr::mutate(dmp.2 = 100 * data.Prices.Wheat$dm.2 / data.Prices.Wheat.Mean,
+                dmp.3 = 100 * data.Prices.Wheat$dm.3 / data.Prices.Wheat.Mean)
   ## write result to file
   write.table(data.Prices.Wheat, "csv/summary/prices_wheat-kile.csv" , row.names = F, quote = T , sep = ",")
 data.Prices.Barley <- subset(data.Prices,commodity=="barley" & unit=="kile")
