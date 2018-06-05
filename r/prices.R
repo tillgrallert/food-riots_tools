@@ -282,21 +282,21 @@ layer.Wheat.Price.Max.Daily.Line <- c(geom_line(data = data.Prices.Wheat.Daily.P
 ## box plot of minimum prices, aggregated by year.
 layer.Wheat.Price.Min.Box <- c(geom_boxplot(data = data.Prices.Wheat.Period,
   aes(x = year %m+% months(6), # add six months to move box to center of the year
-    group=year,y=price.min), na.rm = T))
+    group = year,y = price.min, colour = "price.min"), na.rm = T))
 ## box plot of maximum prices, aggregated by year
 layer.Wheat.Price.Max.Box <- c(geom_boxplot(data = data.Prices.Wheat.Period,
   aes(x = year %m+% months(6), # add six months to move box to center of the year
-    group=year,y=price.max), na.rm = T, color="blue", width=100))
+    group = year,y = price.max, colour = "price.max"), na.rm = T, width=100))
 
 # Barley prices
 ## box plot of minimum prices, aggregated by year.
 layer.Barley.Price.Min.Box <- c(geom_boxplot(data = data.Prices.Barley.Period,
   aes(x = year %m+% months(6), # add six months to move box to center of the year
-    group=year,y=price.min), na.rm = T))
+    group = year,y = price.min, colour = "price.min"), na.rm = T))
 ## box plot of maximum prices, aggregated by year
 layer.Barley.Price.Max.Box <- c(geom_boxplot(data = data.Prices.Barley.Period,
   aes(x = year %m+% months(6), # add six months to move box to center of the year
-    group=year,y=price.max), na.rm = T, color="blue", width=100))
+    group = year,y = price.max, colour = "price.max"), na.rm = T, width=100))
 
 # qualitative data: prices
 size.Dot <- 10
@@ -368,7 +368,13 @@ plot.Wheat.Box <- plot.Base +
   ## add error bars
   stat_boxplot(geom ='errorbar')+
   layer.Wheat.Price.Max.Box +
-  layer.Events.FoodRiots
+  layer.Events.FoodRiots +
+  # change legend and colours
+  scale_colour_manual(values=c("red", "blue", "black"), 
+                      name="Prices",
+                      breaks=c("price.min", "price.max"),
+                      labels=c("minimal", "maximal")) +
+  theme(legend.position="right", legend.box = "vertical")
 # layer: jitter plot
 #geom_jitter(data = vWheatKilePeriod,aes(date, price.min,colour = "price points"), size=1, na.rm=TRUE,width = 50)+ # width depends on the width of the entire plot
 # layer: line with all values
@@ -386,7 +392,13 @@ plot.Barley.Box <- plot.Base +
   ## add error bars
   stat_boxplot(geom ='errorbar')+
   layer.Barley.Price.Max.Box +
-  layer.Events.FoodRiots
+  layer.Events.FoodRiots +
+  # change legend and colours
+  scale_colour_manual(values=c("red", "blue", "black"), 
+                      name="Prices",
+                      breaks=c("price.min", "price.max"),
+                      labels=c("minimal", "maximal")) +
+  theme(legend.position="right", legend.box = "vertical")
 plot.Barley.Box
 
 # explore annual cycles
@@ -409,26 +421,26 @@ plot.Wheat.Annual.Cycle.Box <- plot.Base.Annual +
                       labels=c("minimal", "maximal")) +
   theme(legend.position="right", legend.box = "vertical")
 plot.Wheat.Annual.Cycle.Box
-
-# to do: add number of observations for each month
-# add legends to the plot
-plot.Base.Annual +
-  # it would be important to know how many values are represented in each box
-  
   
 
 plot.Bread.Annual.Cycle.Box <- plot.Base.Annual +
   # it would be important to know how many values are represented in each box
   geom_boxplot(data = data.Prices.Bread.Period, 
-               aes(x = month.common, group = month.common, y = price.min),
-               na.rm=TRUE, color="black")+
+               aes(x = month.common, group = month.common, y = price.min, colour = "price.min"),
+               na.rm=TRUE)+
   geom_boxplot(data = data.Prices.Bread.Period, 
-               aes(x = month.common, group = month.common, y = price.max),
-               na.rm=TRUE, width = 10,  color="blue")+
+               aes(x = month.common, group = month.common, y = price.max, colour = "price.max"),
+               na.rm=TRUE, width = 10)+
   stat_boxplot(geom ="errorbar") +
   labs(title = paste("Bread prices in Bilād al-Shām","between",date.Start, "and", date.Stop),
        subtitle = "Annual cycle aggregated by month",
-       y ="Price (piaster/raṭl)")
+       y ="Price (piaster/raṭl)")+
+  # change legend and colours
+  scale_colour_manual(values=c("blue", "black"), 
+                      name="Prices",
+                      breaks=c("price.min", "price.max"),
+                      labels=c("minimal", "maximal")) +
+  theme(legend.position="right", legend.box = "vertical")
 plot.Bread.Annual.Cycle.Box
 
 ## plot of qualitative trend data
