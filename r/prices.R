@@ -237,6 +237,14 @@ plot.Base <- ggplot() +
                #limits=as.Date(c(v.Date.Start, v.Date.Stop))) + # if plotting more than one graph, it is helpful to provide the same limits for each
   theme_bw()+ # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
   theme(axis.text.x = element_text(angle = 45, vjust=0.5,hjust = 0.5, size = 8))  # rotate x axis text
+## base plot for annual cycles
+plot.Base.Annual <- ggplot() +
+  labs(x = "",
+       caption = "Till Grallert, CC BY-SA 4.0") +
+  scale_x_date(breaks=date_breaks("1 month"), 
+               labels=date_format("%B")) + # %B full month names; $b abbreviated month
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 45, vjust=0.5,hjust = 0.5, size = 8))  # rotate x axis text
 
 # layers
 labels.Wheat <- c(labs(title="Wheat prices in Bilad al-Sham",
@@ -279,6 +287,7 @@ layer.Wheat.Price.Min.Box <- c(geom_boxplot(data = data.Prices.Wheat.Period,
 layer.Wheat.Price.Max.Box <- c(geom_boxplot(data = data.Prices.Wheat.Period,
   aes(x = year %m+% months(6), # add six months to move box to center of the year
     group=year,y=price.max), na.rm = T, color="blue", width=100))
+
 # Barley prices
 ## box plot of minimum prices, aggregated by year.
 layer.Barley.Price.Min.Box <- c(geom_boxplot(data = data.Prices.Barley.Period,
@@ -288,6 +297,7 @@ layer.Barley.Price.Min.Box <- c(geom_boxplot(data = data.Prices.Barley.Period,
 layer.Barley.Price.Max.Box <- c(geom_boxplot(data = data.Prices.Barley.Period,
   aes(x = year %m+% months(6), # add six months to move box to center of the year
     group=year,y=price.max), na.rm = T, color="blue", width=100))
+
 # qualitative data: prices
 size.Dot <- 10
 alpha.Dot <- 0.3
@@ -367,7 +377,50 @@ plot.Wheat.Box <- plot.Base +
 #stat_smooth(aes(date, price.min), na.rm = T,method="lm", se=T,color="blue")
 plot.Wheat.Box
 
-## plot of trend data
+plot.Barley.Box <- plot.Base +
+  # add labels
+  labs(title = paste("Barley prices in Bilād al-Shām","between",date.Start, "and", date.Stop),
+       subtitle="Minimum and maximum prices aggregated by year", 
+       y="Price (piaster/kile)") + # provides title, subtitle, x, y, caption
+  layer.Barley.Price.Min.Box +
+  ## add error bars
+  stat_boxplot(geom ='errorbar')+
+  layer.Barley.Price.Max.Box +
+  layer.Events.FoodRiots
+plot.Barley.Box
+
+# explore annual cycles
+
+  
+plot.Wheat.Annual.Cycle.Box <- plot.Base.Annual +
+  # it would be important to know how many values are represented in each box
+  geom_boxplot(data = data.Prices.Wheat.Period, 
+               aes(x = month.common, group = month.common, y = price.min),
+               na.rm=TRUE, color="black")+
+  geom_boxplot(data = data.Prices.Wheat.Period, 
+               aes(x = month.common, group = month.common, y = price.max),
+               na.rm=TRUE, width = 10,  color="blue")+
+  stat_boxplot(geom ="errorbar") +
+  labs(title = paste("Wheat prices in Bilād al-Shām","between",date.Start, "and", date.Stop),
+       subtitle = "Annual cycle aggregated by month",
+       y ="Price (piaster/kile)")
+plot.Wheat.Annual.Cycle.Box
+
+plot.Bread.Annual.Cycle.Box <- plot.Base.Annual +
+  # it would be important to know how many values are represented in each box
+  geom_boxplot(data = data.Prices.Bread.Period, 
+               aes(x = month.common, group = month.common, y = price.min),
+               na.rm=TRUE, color="black")+
+  geom_boxplot(data = data.Prices.Bread.Period, 
+               aes(x = month.common, group = month.common, y = price.max),
+               na.rm=TRUE, width = 10,  color="blue")+
+  stat_boxplot(geom ="errorbar") +
+  labs(title = paste("Bread prices in Bilād al-Shām","between",date.Start, "and", date.Stop),
+       subtitle = "Annual cycle aggregated by month",
+       y ="Price (piaster/raṭl)")
+plot.Bread.Annual.Cycle.Box
+
+## plot of qualitative trend data
 plot.Trends <- plot.Base + 
   layer.Events.FoodRiots +
   layer.Trend.High + 
@@ -471,76 +524,7 @@ plot.Wheat.Jitter <- plot.Base+
               method="loess", # methods are "lm", "loess" ...
               se=F) # removes the range around the fitting
 plot.Wheat.Jitter
-  
 
-
-plot.Barley.Box <- plot.Base+
-  # add labels
-  labs(title="Barley prices and food riots in Bilad al-Sham", 
-       subtitle="minimum prices aggregated by year", 
-       y="Price (piaster/kile)") + # provides title, subtitle, x, y, caption
-  # layer: box plot min prices
-  geom_boxplot(data = data.Prices.Barley.Period,aes(x=year,group=year,y=price.min), na.rm = T)+
-  # layer: box plot max prices
-  geom_boxplot(data = data.Prices.Barley.Period,aes(x=year, group=year,y=price.max), na.rm = T, color="blue", width=100)
-plot.Barley.Box
-  
-  
-## plot with two time series
-plotWheatKilePeriod2 <- ggplot(vWheatKilePeriod) +
-  # add labels
-  labs(title="Wheat prices in Bilad al-Sham", 
-       # subtitle="based on announcements in newspapers", 
-       x="Date", 
-       y="Prices (piaster/kile)") + # provides title, subtitle, x, y, caption
-  # layer: vertical lines for bread riots
-  geom_segment(data = data.Events.FoodRiots.Period, aes(x = date, xend = date, y = 10, yend = 24, colour = "food riot"),
-               size = 1, show.legend = F, na.rm = T, linetype=1)+ # linetypes: 1=solid, 2=dashed,
-  # first layer: min prices
-  geom_point(aes(x=date, y=price.min),
-             na.rm=TRUE,
-             size=2, shape=21, color="black")  +
-  # second layer: max prices
-  geom_point(aes(x=date, y=price.max),
-             na.rm=TRUE, 
-             size=2, pch=3, color="black") +
-  scale_x_date(breaks=date_breaks("2 years"), 
-               labels=date_format("%Y"),
-               limits=as.Date(c(vDateStart, vDateStop))) + # if plotting more than one graph, it is helpful to provide the same limits for each
-  theme_bw()+ # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
-  theme(axis.text.x = element_text(angle = 45, vjust=0.5,hjust = 0.5, size = 8))  # rotate x axis text
-plotWheatKilePeriod2
-
-vDateStart <- as.Date("1908-01-01")
-vDateStop <- as.Date("1916-12-31")
-vWheatKilePeriod <- funcPeriod(vWheatKile,vDateStart,vDateStop) 
-data.Events.FoodRiots.Period <- funcPeriod(data.Events.FoodRiots,vDateStart,vDateStop) 
-
-plotWheatKilePeriod3 <- ggplot(vWheatKilePeriod) +
-  # add labels
-  labs(title="Wheat prices in Bilad al-Sham", 
-       # subtitle="based on announcements in newspapers", 
-       x="Date", 
-       y="Prices (piaster/kile)") + # provides title, subtitle, x, y, caption
-  # layer: vertical lines for bread riots
-  geom_segment(data = data.Events.FoodRiots.Period, aes(x = date, xend = date, y = 10, yend = 24, colour = "food riot"),
-               size = 1, show.legend = F, na.rm = T, linetype=1)+ # linetypes: 1=solid, 2=dashed, 
-  # first layer: min prices
-  geom_point(aes(x=date, y=price.min),
-             na.rm=TRUE,
-             size=2, pch=3, color="black")  +
-  # second layer: max prices
-  geom_point(aes(x=date, y=price.max),
-             na.rm=TRUE, 
-             size=2, pch=3, color="black") +
-  # layer with connecting lines between min and max prices
-  geom_segment(aes(x = date, xend = date, y = price.min, yend = price.max), show.legend = F, na.rm = T, linetype=1, color = "black")+ # linetypes: 1=solid, 2=dashed, 
-  scale_x_date(breaks=date_breaks("2 years"), 
-               labels=date_format("%Y"),
-               limits=as.Date(c(vDateStart, vDateStop))) + # if plotting more than one graph, it is helpful to provide the same limits for each
-  theme_bw()+ # make the themeblack-and-white rather than grey (do this before font changes, or it overridesthem)
-  theme(axis.text.x = element_text(angle = 45, vjust=0.5,hjust = 0.5, size = 8))  # rotate x axis text
-plotWheatKilePeriod3
 
 
 # plot day of the year / explore seasonality
@@ -573,42 +557,8 @@ plot.Wheat.Annual.Cycle.Line <- ggplot(data = data.Prices.Wheat.Period) +
   theme(axis.text.x = element_text(angle = 45, vjust=0.5,hjust = 0.5, size = 8))  # rotate x axis text
 plot.Wheat.Annual.Cycle.Line
 
-plot.Wheat.Annual.Cycle.Box <- ggplot()+
-  # it would be important to know how many values are represented in each box
-  geom_boxplot(data = data.Prices.Wheat.Period, 
-             aes(x = month.common, group = month.common, y = price.min),
-             na.rm=TRUE, color="black")+
-  geom_boxplot(data = data.Prices.Wheat.Period, 
-               aes(x = month.common, group = month.common, y = price.max),
-               na.rm=TRUE, width = 10,  color="blue")+
-  stat_boxplot(geom ="errorbar")+
-  scale_x_date(breaks=date_breaks("1 month"), 
-               labels=date_format("%B")) + # %B full month names; $b abbreviated month
-  theme_bw()+
-  theme(axis.text.x = element_text(angle = 45, vjust=0.5,hjust = 0.5, size = 8))  # rotate x axis text
-plot.Wheat.Annual.Cycle.Box
 
-plot.Bread.Annual.Cycle.Box <- ggplot()+
-  # it would be important to know how many values are represented in each box
-  geom_boxplot(data = data.Prices.Bread.Period, 
-               aes(x = month.common, group = month.common, y = price.min),
-               na.rm=TRUE, color="black")+
-  geom_boxplot(data = data.Prices.Bread.Period, 
-               aes(x = month.common, group = month.common, y = price.max),
-               na.rm=TRUE, width = 10,  color="blue")+
-  stat_boxplot(geom ="errorbar")+
-  scale_x_date(breaks=date_breaks("1 month"), 
-               labels=date_format("%B")) + # %B full month names; $b abbreviated month
-  theme_bw()+
-  theme(axis.text.x = element_text(angle = 45, vjust=0.5,hjust = 0.5, size = 8))  # rotate x axis text
-plot.Bread.Annual.Cycle.Box
 
-v.Date.Start <- as.Date("1904-01-01")
-v.Date.Stop <- as.Date("1916-12-31")
-data.Prices.Wheat.Period <- funcPeriod(data.Prices.Wheat,v.Date.Start,v.Date.Stop) 
-data.Prices.Barley.Period <- funcPeriod(data.Prices.Barley,v.Date.Start,v.Date.Stop) 
-data.Prices.Bread.Period <- funcPeriod(data.Prices.Bread,v.Date.Start,v.Date.Stop) 
-data.Events.FoodRiots.Period <- funcPeriod(data.Events.FoodRiots,v.Date.Start,v.Date.Stop) 
 
 # percentage of difference from the mean
 plot.Base +
