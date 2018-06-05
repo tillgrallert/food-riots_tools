@@ -126,9 +126,9 @@ There are two main plots of quantitative price data:
 
     ![Box plot of wheat prices](https://github.com/tillgrallert/food-riots_data/raw/master/plots/rplot_prices-wheat-1874-1916_box-plot.png)
 
-2. plot all years over each other in order to see seasonal trends (spoiler: there are none in the data)
+2. plot all years over each other in order to see seasonal trends 
 
-    ![seasonal fluctuation of wheat prices](https://github.com/tillgrallert/food-riots_data/raw/master/plots/rplot_prices-wheat-1875-1916_annual-cycle-line.png)
+    ![seasonal fluctuation of wheat prices](https://github.com/tillgrallert/food-riots_data/raw/master/plots/rplot_prices-wheat-1874-1916_annual-cycle-box.png)
 
 - *to do*:
     + add some weighing mechanism based on the information in `@dur`
