@@ -37,7 +37,9 @@ I settled on the following TEI elements and attributes
     - for **wages**, I suggest the same as for prices of commodities, but instead of, for instance, wheat, `@commodity="labor"` would be counted in `@unit="day"` or `@unit="month"`
 
     ```xml
-    Imagine, someone bought <measureGrp><measure commodity="wheat" quantity="2" unit="kile">two kile of wheat</measure> at the price of <measure commodity="currency" quantity="3" unit="ops">Ps 3</measure></measureGrp>.
+    Imagine, someone bought <measureGrp><measure commodity="wheat" quantity="2" unit="kile">
+    two kile of wheat</measure> at the price of <measure commodity="currency" quantity="3" 
+    unit="ops">Ps 3</measure></measureGrp>.
     ```
 
     ```xml
