@@ -2,6 +2,7 @@
 # your script 
 library(tidyverse) # load the tidyverse, which includes dplyr and ggplot2
 #library(dplyr) # data manipulation
+library(tidyr)
 library(lubridate) # for working with dates
 library(anytime) # for parsing incomplete dates
 #library(ggplot2)  # for creating graphs
@@ -16,6 +17,7 @@ setwd("/BachCloud/BTSync/FormerDropbox/FoodRiots/food-riots_data") #Volumes/Dess
 
 # 1. read price data from csv, note that the first row is a date
 data.Events.FoodRiots <- read.csv("csv/events_food-riots.csv", header=TRUE, sep = ",", quote = "\"")
+data.Events.FoodRiots <- read.csv("csv/events_food-riots.csv", header=TRUE, sep = ";", quote = "\"")
 data.Prices <- read.csv("csv/prices-2018-03-27.csv", header=TRUE, sep = ",", quote = "\"")
 data.Prices.Trends <- read.csv("csv/qualitative-prices.csv", header=TRUE, sep = ",", quote = "\"")
 
@@ -41,6 +43,14 @@ data.Prices <- data.Prices %>%
                 week = as.Date(cut(data.Prices$date,breaks = "week", start.on.monday = TRUE)), # first day of the week; allows to change weekly break point to Sunday
                 date.common = as.Date(paste0("2000-",format(data.Prices$date, "%j")), "%Y-%j")) %>% # add a column that sets all month/day combinations to the same year
   dplyr::mutate(month.common = as.Date(cut(data.Prices$date.common,breaks = "month"))) # add a column that sets all month/day combinations to first day of the month
+
+data.Events.FoodRiots <- data.Events.FoodRiots %>%
+  dplyr::mutate(date.common = as.Date(paste0("2000-",format(data.Events.FoodRiots$date, "%j")), "%Y-%j")) %>% # add a column that sets all month/day combinations to the same year
+  # separate lat and long for publication place
+  tidyr::separate(location.coordinates, c("lat", "long"),sep = ", ", extra = "drop") %>%
+  # change data type for coordinates to numeric
+  dplyr::mutate(lat = as.numeric(lat), 
+         long = as.numeric(long))
 
 # filter data and rename columns
 data.Prices <- data.Prices %>%
