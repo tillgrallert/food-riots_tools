@@ -40,7 +40,8 @@ data.Prices <- data.Prices %>%
                 quarter = as.Date(cut(data.Prices$date,breaks = "quarter")), # first day of the quarter
                 month = as.Date(cut(data.Prices$date,breaks = "month")), # first day of the month
                 week = as.Date(cut(data.Prices$date,breaks = "week", start.on.monday = TRUE)), # first day of the week; allows to change weekly break point to Sunday
-                date.common = as.Date(paste0("2000-",format(data.Prices$date, "%j")), "%Y-%j")) %>% # add a column that sets all month/day combinations to the same year
+                date.common = as.Date(paste0("2000-",format(data.Prices$date, "%j")), "%Y-%j")) # add a column that sets all month/day combinations to the same year
+data.Prices <- data.Prices %>%  
   dplyr::mutate(month.common = as.Date(cut(data.Prices$date.common,breaks = "month"))) # add a column that sets all month/day combinations to first day of the month
 
 data.Events.FoodRiots <- data.Events.FoodRiots %>%
@@ -70,7 +71,8 @@ data.Prices.Wheat.Mean <- 25
 data.Prices.Wheat <- data.Prices.Wheat %>%
   ## deviation from the mean
   dplyr::mutate(dm.2 = (data.Prices.Wheat$price.min - data.Prices.Wheat.Mean),
-                dm.3 = (data.Prices.Wheat$price.max - data.Prices.Wheat.Mean)) %>%
+                dm.3 = (data.Prices.Wheat$price.max - data.Prices.Wheat.Mean))
+data.Prices.Wheat <- data.Prices.Wheat %>%
   ## the same as percentages of mean
   dplyr::mutate(dmp.2 = 100 * data.Prices.Wheat$dm.2 / data.Prices.Wheat.Mean,
                 dmp.3 = 100 * data.Prices.Wheat$dm.3 / data.Prices.Wheat.Mean)
@@ -412,7 +414,10 @@ plot.Wheat.Annual.Cycle.Box <- plot.Base.Annual +
   stat_boxplot(geom ="errorbar") +
   labs(title = paste("Wheat prices in Bilād al-Shām","between",date.Start, "and", date.Stop),
        subtitle = "Annual cycle aggregated by month",
-       y ="Price (piaster/kile)")
+       y ="Price (piaster/kile)") +
+  geom_segment(data = data.Events.FoodRiots.Period, 
+               aes(x = date.common, xend = date.common, y = 0, yend = 24, colour = type),
+               size = 1, show.legend = T, na.rm = T, linetype=1)
 plot.Wheat.Annual.Cycle.Box
 
 plot.Bread.Annual.Cycle.Box <- plot.Base.Annual +
