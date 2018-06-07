@@ -364,7 +364,7 @@ plot.Wheat.Daily.Mean.Scatter <- plot.Base +
   # add labels
   labs(title = paste("Wheat prices in Bilād al-Shām","between",date.Start, "and", date.Stop), 
        subtitle= "Daily averages of minimum and maximum prices", 
-       y = "Prices (piaster/kile)") +
+       y = "Prices (piaster/kile)")
 plot.Wheat.Daily.Mean.Scatter
 
 ## box plot
@@ -381,7 +381,7 @@ plot.Wheat.Box <- plot.Base +
   layer.Wheat.Price.Max.Box +
   layer.Events.FoodRiots +
   # change legend and colours
-  scale_colour_manual(values=c("red", "blue", "black"), 
+  scale_colour_manual(values=c("red", "blue", "black"),
                       name="Prices",
                       breaks=c("price.min", "price.max"),
                       labels=c("minimal", "maximal")) +
@@ -448,7 +448,7 @@ plot.Bread.Annual.Cycle.Box <- plot.Base.Annual +
   stat_boxplot(geom ="errorbar") +
   labs(title = paste("Bread prices in Bilād al-Shām","between",date.Start, "and", date.Stop),
        subtitle = "Annual cycle aggregated by month",
-       y ="Price (piaster/raṭl)")+
+       y ="Price (piaster/raṭl)") +
   # change legend and colours
   scale_colour_manual(values=c("blue", "black"), 
                       name="Prices",
