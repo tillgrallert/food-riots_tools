@@ -62,6 +62,13 @@ data.Events.FoodRiots <- data.Events.FoodRiots %>%
          long = as.numeric(long))
 
 # filter data and rename columns
+## exchange rates
+data.Exchange <- data.Prices %>%
+  dplyr::filter(commodity.1=="currency" & commodity.2=="currency") %>% # filter for rows containing exchange rates
+  dplyr::select(-commodity.1, -commodity.2, -commodity.3) # delete redundant rows
+
+
+## other prices
 data.Prices <- data.Prices %>%
   dplyr::filter(commodity.2=="currency" & unit.2=="ops") %>% # filter for rows containing prices in Ottoman Piasters only
   dplyr::rename(commodity = commodity.1,
