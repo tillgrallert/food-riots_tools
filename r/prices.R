@@ -86,30 +86,35 @@ data.Prices.Wheat <- subset(data.Prices,commodity=="wheat" & unit=="kile")
 data.Prices.Wheat.Mean <- 25
 data.Prices.Wheat <- data.Prices.Wheat %>%
   ## deviation from the mean
-  dplyr::mutate(dm.2 = (data.Prices.Wheat$price.min - data.Prices.Wheat.Mean),
-                dm.3 = (data.Prices.Wheat$price.max - data.Prices.Wheat.Mean))
-data.Prices.Wheat <- data.Prices.Wheat %>%
+  dplyr::mutate(dm.min = (price.min - mean(price.min, na.rm=T, trim = 0.1)),
+                dm.max = (price.min - mean(price.max, na.rm=T, trim = 0.1)),
+                dm.avg = (price.min - mean(price.avg, na.rm=T, trim = 0.1))) %>%
   ## the same as percentages of mean
-  dplyr::mutate(dmp.2 = 100 * data.Prices.Wheat$dm.2 / data.Prices.Wheat.Mean,
-                dmp.3 = 100 * data.Prices.Wheat$dm.3 / data.Prices.Wheat.Mean)
+  dplyr::mutate(dmp.min = 100 * dm.min / mean(price.min, na.rm=T, trim = 0.1),
+                dmp.max = 100 * dm.min / mean(price.max, na.rm=T, trim = 0.1),
+                dmp.avg = 100 * dm.min / mean(price.avg, na.rm=T, trim = 0.1))
   ## write result to file
   write.table(data.Prices.Wheat, "csv/summary/prices_wheat-kile.csv" , row.names = F, quote = T , sep = ",")
-data.Prices.Barley <- subset(data.Prices,commodity=="barley" & unit=="kile")
+data.Prices.Barley <- subset(data.Prices,commodity=="barley" & unit=="kile")%>%
   ## deviation from the mean
-  data.Prices.Barley$dm.2 <- (data.Prices.Barley$price.min - mean(data.Prices.Barley$price.min, na.rm=T, trim = 0.1))
-  data.Prices.Barley$dm.3 <- (data.Prices.Barley$price.max - mean(data.Prices.Barley$price.max, na.rm=T, trim = 0.1))
+  dplyr::mutate(dm.min = (price.min - mean(price.min, na.rm=T, trim = 0.1)),
+                dm.max = (price.min - mean(price.max, na.rm=T, trim = 0.1)),
+                dm.avg = (price.min - mean(price.avg, na.rm=T, trim = 0.1))) %>%
   ## the same as percentages of mean
-  data.Prices.Barley$dmp.2 <- (100 * data.Prices.Barley$dm.2 / mean(data.Prices.Barley$price.min, na.rm=T, trim = 0.1))
-  data.Prices.Barley$dmp.3 <- (100 * data.Prices.Barley$dm.3 / mean(data.Prices.Barley$price.max, na.rm=T, trim = 0.1))
+  dplyr::mutate(dmp.min = 100 * dm.min / mean(price.min, na.rm=T, trim = 0.1),
+                dmp.max = 100 * dm.min / mean(price.max, na.rm=T, trim = 0.1),
+                dmp.avg = 100 * dm.min / mean(price.avg, na.rm=T, trim = 0.1))
   # write result to file
   write.table(data.Prices.Barley, "csv/summary/prices_barley-kile.csv" , row.names = F, quote = T , sep = ",")
-data.Prices.Bread <- subset(data.Prices,commodity=="bread" & unit=="kg")
+data.Prices.Bread <- subset(data.Prices,commodity=="bread" & unit=="kg")%>%
   ## deviation from the mean
-  data.Prices.Bread$dm.2 <- (data.Prices.Bread$price.min - mean(data.Prices.Bread$price.min, na.rm=T, trim = 0.1))
-  data.Prices.Bread$dm.3 <- (data.Prices.Bread$price.max - mean(data.Prices.Bread$price.max, na.rm=T, trim = 0.1))
+  dplyr::mutate(dm.min = (price.min - mean(price.min, na.rm=T, trim = 0.1)),
+                dm.max = (price.min - mean(price.max, na.rm=T, trim = 0.1)),
+                dm.avg = (price.min - mean(price.avg, na.rm=T, trim = 0.1))) %>%
   ## the same as percentages of mean
-  data.Prices.Bread$dmp.2 <- (100 * data.Prices.Bread$dm.2 / mean(data.Prices.Bread$price.min, na.rm=T, trim = 0.1))
-  data.Prices.Bread$dmp.3 <- (100 * data.Prices.Bread$dm.3 / mean(data.Prices.Bread$price.max, na.rm=T, trim = 0.1))
+  dplyr::mutate(dmp.min = 100 * dm.min / mean(price.min, na.rm=T, trim = 0.1),
+                dmp.max = 100 * dm.min / mean(price.max, na.rm=T, trim = 0.1),
+                dmp.avg = 100 * dm.min / mean(price.avg, na.rm=T, trim = 0.1))
   # write result to file
   write.table(data.Prices.Bread, "csv/summary/prices_bread-kg.csv" , row.names = F, quote = T , sep = ",")
 data.Prices.Newspapers <- subset(data.Prices,commodity=="newspaper")
@@ -130,10 +135,10 @@ data.Prices.Wheat.Summary.Annual <- data.Prices.Wheat %>%
   summarise(count=n(), 
             mean.price.min = mean(price.min, na.rm = TRUE),
             mean.price.max = mean(price.max, na.rm = TRUE),
-            median.2 = median(price.min, na.rm = TRUE),
-            median.3 = median(price.max, na.rm = TRUE),
-            sd.2 = sd(price.min, na.rm = TRUE),
-            sd.3 = sd(price.max, na.rm = TRUE)
+            median.min = median(price.min, na.rm = TRUE),
+            median.max = median(price.max, na.rm = TRUE),
+            sd.min = sd(price.min, na.rm = TRUE),
+            sd.max = sd(price.max, na.rm = TRUE)
   )
   # write result to file
   write.table(data.Prices.Wheat.Summary.Annual, "csv/summary/prices_wheat-summary-annual.csv" , row.names = F, quote = T , sep = ",")
@@ -144,10 +149,10 @@ data.Prices.Wheat.Summary.Quarterly <- data.Prices.Wheat %>%
   summarise(count=n(), 
             mean.price.min=mean(price.min, na.rm = TRUE),
             mean.price.max=mean(price.max, na.rm = TRUE),
-            median.2=median(price.min, na.rm = TRUE),
-            median.3=median(price.max, na.rm = TRUE),
-            sd.2=sd(price.min, na.rm = TRUE),
-            sd.3=sd(price.max, na.rm = TRUE)
+            median.min=median(price.min, na.rm = TRUE),
+            median.max=median(price.max, na.rm = TRUE),
+            sd.min=sd(price.min, na.rm = TRUE),
+            sd.max=sd(price.max, na.rm = TRUE)
   )
   # write result to file
   write.table(data.Prices.Wheat.Summary.Quarterly, "csv/summary/prices_wheat-summary-quarterly.csv" , row.names = F, quote = T , sep = ",")
@@ -158,10 +163,10 @@ data.Prices.Wheat.Summary.Monthly <- data.Prices.Wheat %>%
   summarise(count=n(), 
             mean.price.min=mean(price.min, na.rm = TRUE),
             mean.price.max=mean(price.max, na.rm = TRUE),
-            median.2=median(price.min, na.rm = TRUE),
-            median.3=median(price.max, na.rm = TRUE),
-            sd.2=sd(price.min, na.rm = TRUE),
-            sd.3=sd(price.max, na.rm = TRUE)
+            median.min=median(price.min, na.rm = TRUE),
+            median.max=median(price.max, na.rm = TRUE),
+            sd.min=sd(price.min, na.rm = TRUE),
+            sd.max=sd(price.max, na.rm = TRUE)
             )
   # write result to file
   write.table(data.Prices.Wheat.Summary.Monthly, "csv/summary/prices_wheat-summary-monthly.csv" , row.names = F, quote = T , sep = ",")
@@ -192,10 +197,10 @@ data.Prices.Barley.Summary.Annual <- data.Prices.Barley %>%
   summarise(count=n(), 
             mean.price.min=mean(price.min, na.rm = TRUE),
             mean.price.max=mean(price.max, na.rm = TRUE),
-            median.2=median(price.min, na.rm = TRUE),
-            median.3=median(price.max, na.rm = TRUE),
-            sd.2=sd(price.min, na.rm = TRUE),
-            sd.3=sd(price.max, na.rm = TRUE)
+            median.min=median(price.min, na.rm = TRUE),
+            median.max=median(price.max, na.rm = TRUE),
+            sd.min=sd(price.min, na.rm = TRUE),
+            sd.max=sd(price.max, na.rm = TRUE)
   )
   # write result to file
   write.table(data.Prices.Barley.Summary.Annual, "csv/summary/prices_barley-summary-annual.csv" , row.names = F, quote = T , sep = ",")
@@ -206,10 +211,10 @@ data.Prices.Barley.Summary.Quarterly <- data.Prices.Barley %>%
   summarise(count=n(), 
             mean.price.min=mean(price.min, na.rm = TRUE),
             mean.price.max=mean(price.max, na.rm = TRUE),
-            median.2=median(price.min, na.rm = TRUE),
-            median.3=median(price.max, na.rm = TRUE),
-            sd.2=sd(price.min, na.rm = TRUE),
-            sd.3=sd(price.max, na.rm = TRUE)
+            median.min=median(price.min, na.rm = TRUE),
+            median.max=median(price.max, na.rm = TRUE),
+            sd.min=sd(price.min, na.rm = TRUE),
+            sd.max=sd(price.max, na.rm = TRUE)
   )
   # write result to file
   write.table(data.Prices.Barley.Summary.Quarterly, "csv/summary/prices_barley-summary-quarterly.csv" , row.names = F, quote = T , sep = ",")
@@ -220,10 +225,10 @@ data.Prices.Barley.Summary.Monthly <- data.Prices.Barley %>%
   summarise(count=n(), 
             mean.price.min=mean(price.min, na.rm = TRUE),
             mean.price.max=mean(price.max, na.rm = TRUE),
-            median.2=median(price.min, na.rm = TRUE),
-            median.3=median(price.max, na.rm = TRUE),
-            sd.2=sd(price.min, na.rm = TRUE),
-            sd.3=sd(price.max, na.rm = TRUE)
+            median.min=median(price.min, na.rm = TRUE),
+            median.max=median(price.max, na.rm = TRUE),
+            sd.min=sd(price.min, na.rm = TRUE),
+            sd.max=sd(price.max, na.rm = TRUE)
   )
   # write result to file
   write.table(data.Prices.Barley.Summary.Monthly, "csv/summary/prices_barley-summary-monthly.csv" , row.names = F, quote = T , sep = ",")
