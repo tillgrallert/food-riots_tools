@@ -34,6 +34,7 @@ I settled on the following TEI elements and attributes
         + the `@quantity` attribute has some restrictions as to its value and cannot contain the string 8-2-4 to signify, for instance, £ 8"2"4 or 8l 2s 4d. Yet it would be extremely tedious to encode all the fractions of non-metrical currencies as individual measures. I settled for on-the-spot conversion into decimal values, but this needs computing on the side of the encoder.
         + non metrical values can be recorded without `@quantity`
     - to differentiate **taxes** from **prices**, the wrapping `<measureGrp>` must carry an `@type="tax"` attribute.
+    - to differentiate **observed prices** from those **set by the authorities**, the wrapping `<measureGrp>` must carry an `@type="official"` attribute.
     - for **wages**, I suggest the same as for prices of commodities, but instead of, for instance, wheat, `@commodity="labor"` would be counted in `@unit="day"` or `@unit="month"`
 
     ```xml
