@@ -547,6 +547,26 @@ plot.Wheat.Box.Trends <- plot.Wheat.Box +
   layer.Trend.Low
 plot.Wheat.Box.Trends
 
+# percentage of difference from the mean
+plot.Food.Deviance <- plot.Base +
+  # first layer: min prices of wheat
+  #geom_line(data = data.Prices.Wheat.Daily.Period, aes(x = date,y = dmp.2), na.rm=TRUE, color="black", linetype = 1) +
+  geom_line(data = data.Prices.Wheat.Daily.Period, 
+            aes(x = date,y = 100 * (mean.price.min -  mean(data.Prices.Wheat$price.min, na.rm=T, trim = 0.1)) /  mean(data.Prices.Wheat$price.min, na.rm=T, trim = 0.1)),
+            na.rm=TRUE, color="black", linetype = 1) +
+  # second layer: min prices of barley
+  geom_line(data = data.Prices.Barley.Period, 
+            aes(x = date,y = dmp.2),
+            na.rm=TRUE, color="black", linetype = 2) +
+  # second layer: min prices of bread
+  geom_line(data = data.Prices.Bread.Period, 
+            aes(x = date,y = dmp.2),
+            na.rm=TRUE, color="black", linetype = 3) +
+  layer.Events.FoodRiots +
+  labs(title=paste("Food prices in Bilād al-Shām","between",date.Start, "and", date.Stop),
+       subtitle="Wheat, barley and bread prices", 
+       y="Deviation from mean in per cent")
+plot.Food.Deviance
 
 
 # unused plots
@@ -660,29 +680,3 @@ plot.Wheat.Annual.Cycle.Line <- ggplot(data = data.Prices.Wheat.Period) +
   theme_classic()+
   theme(axis.text.x = element_text(angle = 45, vjust=0.5,hjust = 0.5, size = 8))  # rotate x axis text
 plot.Wheat.Annual.Cycle.Line
-
-
-
-
-# percentage of difference from the mean
-plot.Base +
-  # first layer: min prices of wheat
-  #geom_line(data = data.Prices.Wheat.Daily.Period, aes(x = date,y = dmp.2), na.rm=TRUE, color="black", linetype = 1) +
-  geom_line(data = data.Prices.Wheat.Daily.Period, 
-            aes(x = date,y = 100 * (mean.price.min -  mean(data.Prices.Wheat$price.min, na.rm=T, trim = 0.1)) /  mean(data.Prices.Wheat$price.min, na.rm=T, trim = 0.1)),
-            na.rm=TRUE, color="black", linetype = 1) +
-  # second layer: min prices of barley
-  geom_line(data = data.Prices.Barley.Period, 
-            aes(x = date,y = dmp.2),
-            na.rm=TRUE, color="black", linetype = 2) +
-  # second layer: min prices of bread
-  geom_line(data = data.Prices.Bread.Period, 
-            aes(x = date,y = dmp.2),
-            na.rm=TRUE, color="black", linetype = 3) +
-  layer.Events.FoodRiots +
-  labs(title="Food prices in Bilād al-Shām", 
-       subtitle="Wheat, barley and bread prices", 
-       y="Deviation from mean in per cent")
-
-v.Prices.Wheat.Mean = mean(data.Prices.Wheat$price.min, na.rm=T, trim = 0.1)
- 
