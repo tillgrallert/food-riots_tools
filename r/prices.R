@@ -1,11 +1,8 @@
 # Remember it is good coding technique to add additional packages to the top of
 # your script 
-library(tidyverse) # load the tidyverse, which includes dplyr and ggplot2
-#library(dplyr) # data manipulation
-library(tidyr)
+library(tidyverse) # load the tidyverse, which includes dplyr, tidyr and ggplot2
 library(lubridate) # for working with dates
 library(anytime) # for parsing incomplete dates
-#library(ggplot2)  # for creating graphs
 library(scales)   # to access breaks/formatting functions
 library(gridExtra) # for arranging plots
 library(plotly) # interactive plots based on ggplot
@@ -87,34 +84,34 @@ data.Prices.Wheat.Mean <- 25
 data.Prices.Wheat <- data.Prices.Wheat %>%
   ## deviation from the mean
   dplyr::mutate(dm.min = (price.min - mean(price.min, na.rm=T, trim = 0.1)),
-                dm.max = (price.min - mean(price.max, na.rm=T, trim = 0.1)),
-                dm.avg = (price.min - mean(price.avg, na.rm=T, trim = 0.1))) %>%
+                dm.max = (price.max - mean(price.max, na.rm=T, trim = 0.1)),
+                dm.avg = (price.avg - mean(price.avg, na.rm=T, trim = 0.1))) %>%
   ## the same as percentages of mean
   dplyr::mutate(dmp.min = 100 * dm.min / mean(price.min, na.rm=T, trim = 0.1),
-                dmp.max = 100 * dm.min / mean(price.max, na.rm=T, trim = 0.1),
-                dmp.avg = 100 * dm.min / mean(price.avg, na.rm=T, trim = 0.1))
+                dmp.max = 100 * dm.max / mean(price.max, na.rm=T, trim = 0.1),
+                dmp.avg = 100 * dm.avg / mean(price.avg, na.rm=T, trim = 0.1))
   ## write result to file
   write.table(data.Prices.Wheat, "csv/summary/prices_wheat-kile.csv" , row.names = F, quote = T , sep = ",")
 data.Prices.Barley <- subset(data.Prices,commodity=="barley" & unit=="kile")%>%
   ## deviation from the mean
   dplyr::mutate(dm.min = (price.min - mean(price.min, na.rm=T, trim = 0.1)),
-                dm.max = (price.min - mean(price.max, na.rm=T, trim = 0.1)),
-                dm.avg = (price.min - mean(price.avg, na.rm=T, trim = 0.1))) %>%
+                dm.max = (price.max - mean(price.max, na.rm=T, trim = 0.1)),
+                dm.avg = (price.avg - mean(price.avg, na.rm=T, trim = 0.1))) %>%
   ## the same as percentages of mean
   dplyr::mutate(dmp.min = 100 * dm.min / mean(price.min, na.rm=T, trim = 0.1),
-                dmp.max = 100 * dm.min / mean(price.max, na.rm=T, trim = 0.1),
-                dmp.avg = 100 * dm.min / mean(price.avg, na.rm=T, trim = 0.1))
+                dmp.max = 100 * dm.max / mean(price.max, na.rm=T, trim = 0.1),
+                dmp.avg = 100 * dm.avg / mean(price.avg, na.rm=T, trim = 0.1))
   # write result to file
   write.table(data.Prices.Barley, "csv/summary/prices_barley-kile.csv" , row.names = F, quote = T , sep = ",")
 data.Prices.Bread <- subset(data.Prices,commodity=="bread" & unit=="kg")%>%
   ## deviation from the mean
   dplyr::mutate(dm.min = (price.min - mean(price.min, na.rm=T, trim = 0.1)),
-                dm.max = (price.min - mean(price.max, na.rm=T, trim = 0.1)),
-                dm.avg = (price.min - mean(price.avg, na.rm=T, trim = 0.1))) %>%
+                dm.max = (price.max - mean(price.max, na.rm=T, trim = 0.1)),
+                dm.avg = (price.avg - mean(price.avg, na.rm=T, trim = 0.1))) %>%
   ## the same as percentages of mean
   dplyr::mutate(dmp.min = 100 * dm.min / mean(price.min, na.rm=T, trim = 0.1),
-                dmp.max = 100 * dm.min / mean(price.max, na.rm=T, trim = 0.1),
-                dmp.avg = 100 * dm.min / mean(price.avg, na.rm=T, trim = 0.1))
+                dmp.max = 100 * dm.max / mean(price.max, na.rm=T, trim = 0.1),
+                dmp.avg = 100 * dm.avg / mean(price.avg, na.rm=T, trim = 0.1))
   # write result to file
   write.table(data.Prices.Bread, "csv/summary/prices_bread-kg.csv" , row.names = F, quote = T , sep = ",")
 data.Prices.Newspapers <- subset(data.Prices,commodity=="newspaper")
@@ -184,10 +181,13 @@ data.Prices.Wheat.Summary.Daily <- data.Prices.Wheat %>%
 	          sd.min = sd(price.min, na.rm = TRUE),
 	          sd.max = sd(price.max, na.rm = TRUE),
 	          sd.avg = sd(price.avg, na.rm = TRUE)
-	)
+	) %>%
   ## difference from mean in per cent
-  data.Prices.Wheat.Summary.Daily$dmp.2 <- (100 * (data.Prices.Wheat.Summary.Daily$mean.price.min - data.Prices.Wheat.Mean) / data.Prices.Wheat.Mean)
-  data.Prices.Wheat.Summary.Daily$dmp.3 <- (100 * (data.Prices.Wheat.Summary.Daily$mean.price.max - data.Prices.Wheat.Mean) / data.Prices.Wheat.Mean)
+  dplyr::mutate(dmp.min = 100 * (mean.price.min - mean(mean.price.min, na.rm=T, trim = 0.1)) / mean(mean.price.min, na.rm=T, trim = 0.1),
+                dmp.max = 100 * (mean.price.max - mean(mean.price.max, na.rm=T, trim = 0.1)) / mean(mean.price.max, na.rm=T, trim = 0.1),
+                dmp.avg = 100 * (mean.price.avg - mean(mean.price.avg, na.rm=T, trim = 0.1)) / mean(mean.price.avg, na.rm=T, trim = 0.1))
+  #data.Prices.Wheat.Summary.Daily$dmp.2 <- (100 * (data.Prices.Wheat.Summary.Daily$mean.price.min - data.Prices.Wheat.Mean) / data.Prices.Wheat.Mean)
+  #data.Prices.Wheat.Summary.Daily$dmp.3 <- (100 * (data.Prices.Wheat.Summary.Daily$mean.price.max - data.Prices.Wheat.Mean) / data.Prices.Wheat.Mean)
   # write result to file
   write.table(data.Prices.Wheat.Summary.Daily, "csv/summary/prices_wheat-summary-daily.csv" , row.names = F, quote = T , sep = ",")
 
