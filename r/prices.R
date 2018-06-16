@@ -643,7 +643,7 @@ plot.Trends <- plot.Base +
 plot.Trends
 
 ggsave(filename = paste("plots/rplot_prices-food-", period.String ,"_trends.png", sep = ""), 
-       plot = plot.Wheat.Scatter,
+       plot = plot.Trends,
        units = units.Plot , height = height.Plot, width = width.Plot, dpi = dpi.Plot)
 
 ## box plot plus trend data
