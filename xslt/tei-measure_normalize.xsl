@@ -276,6 +276,7 @@
             </xsl:variable>
             <!-- add attributes -->
             <xsl:attribute name="commodity" select="$v_commodity"/>
+            <!-- beware: this even changes the unit if there is insufficient data for the actual conversion of quantities, resulting in errneous output that is formally correct -->
             <xsl:attribute name="unit" select="$v_target-unit"/>
             <xsl:if test="$v_source-unit!=$v_target-unit">
                 <xsl:attribute name="change" select="'#normalized'"/>

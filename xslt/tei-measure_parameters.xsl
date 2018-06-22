@@ -7,6 +7,7 @@
     
     <xsl:param name="p_measures">
         <!-- establish the type of measures encountered in @unit -->
+        <!-- NOTE: do not currently (2018-06-22) record @unit values for currencies for which there are no conversion rates later in this file -->
         <tei:measureGrp type="volume">
             <tei:measure unit="shunbul"/>
             <tei:measure unit="madd"/>
@@ -32,8 +33,8 @@
             <tei:measure unit="lt"/>
             <tei:measure unit="ltq"/>
             <tei:measure unit="mec"/>
-            <tei:measure unit="gpb"/>
-            <tei:measure unit="frc"/>
+            <!--<tei:measure unit="gbp"/>
+            <tei:measure unit="frc"/>-->
         </tei:measureGrp>
         <!-- volumes -->
         <!-- fallback -->
