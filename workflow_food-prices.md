@@ -33,8 +33,9 @@ I settled on the following TEI elements and attributes
             * Ottoman pound / lira (£T) shall be recorded as `@unit="ltq"`[^1]
         + the `@quantity` attribute has some restrictions as to its value and cannot contain the string 8-2-4 to signify, for instance, £ 8"2"4 or 8l 2s 4d. Yet it would be extremely tedious to encode all the fractions of non-metrical currencies as individual measures. I settled for on-the-spot conversion into decimal values, but this needs computing on the side of the encoder.
         + non metrical values can be recorded without `@quantity`
-    - to differentiate **taxes** from **prices**, the wrapping `<measureGrp>` must carry an `@type="tax"` attribute.
-    - to differentiate **observed prices** from those **set by the authorities**, the wrapping `<measureGrp>` must carry an `@type="official"` attribute.
+        - to differentiate **taxes** from **prices**, the wrapping `<measureGrp>` must carry an `@type="tax"` attribute.
+        - to differentiate **observed prices** from those **set by the authorities**, the wrapping `<measureGrp>` must carry an `@type="official"` attribute.
+        - [*NOTE*]: There is a difference between abstract currencies (for lack of a better word) and concrete denominations. 
     - for **wages**, I suggest the same as for prices of commodities, but instead of, for instance, wheat, `@commodity="labor"` would be counted in `@unit="day"` or `@unit="month"`
 
     ```xml
@@ -111,6 +112,8 @@ The XSLT stylesheet [`tei_retrieve-measures-as-csv.xsl`](xslt/tei_retrieve-measu
         <tei:measure unit="kile" quantity="2.5"/>
     </tei:measureGrp>
     ```
+
+    [*NOTE*]: this step also includes a normalization of various denominations of a currency, such as Ottoman *mecidiye*, *ġurūş*, *līra*, into a single denomination (piaster or "ops" in the Ottoman case). It is important that the stylesheets in question do not attempt to normalize denominations across currencies, without information on exchange rates (the final output of this conversion can be used as a basis for looking up exchange rates, so they should not be touched in this step).
 
 4. regularize all commodities that are not money to quantities of 1 
 5. safe output as xml and csv
