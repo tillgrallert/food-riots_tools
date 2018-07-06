@@ -13,7 +13,8 @@ Sys.setlocale("LC_ALL", "en_US.UTF-8")
 setwd("/BachCloud/BTSync/FormerDropbox/FoodRiots/food-riots_data") #Volumes/Dessau HD/
 
 # 1. read price data from csv, note that the first row is a date
-data.Events.FoodRiots <- read.csv("csv/events_food-riots.csv", header=TRUE, sep = ";", quote = "\"")
+#data.Events.FoodRiots <- read.csv("csv/events_food-riots.csv", header=TRUE, sep = ";", quote = "\"")
+data.Events <- read.csv("csv/events.csv", header=TRUE, sep = ";", quote = "\"")
 data.Prices <- read.csv("csv/prices-2018-03-27.csv", header=TRUE, sep = ",", quote = "\"")
 data.Prices.Trends <- read.csv("csv/qualitative-prices.csv", header=TRUE, sep = ",", quote = "\"")
 
@@ -22,7 +23,7 @@ data.Prices.Trends <- read.csv("csv/qualitative-prices.csv", header=TRUE, sep = 
 # fix date types
 ## convert date to Date class, note that dates supplied as years only will be turned into NA if one uses as.date()
 ## anydate() converts dates from Y0001 to Y0001-M01-D01
-data.Events.FoodRiots$date <- anydate(data.Events.FoodRiots$date)
+data.Events$date <- anydate(data.Events$date)
 data.Prices$date <- anydate(data.Prices$date)
 data.Prices.Trends$date <- anydate(data.Prices.Trends$date)
 ## numeric
@@ -50,8 +51,8 @@ data.Prices.Trends <- data.Prices.Trends %>%
 data.Prices.Trends <- data.Prices.Trends %>%  
   dplyr::mutate(month.common = as.Date(cut(data.Prices.Trends$date.common,breaks = "month"))) # add a column that sets all month/day combinations to first day of the month
 
-data.Events.FoodRiots <- data.Events.FoodRiots %>%
-  dplyr::mutate(date.common = as.Date(paste0("2000-",format(data.Events.FoodRiots$date, "%j")), "%Y-%j")) %>% # add a column that sets all month/day combinations to the same year
+data.Events <- data.Events %>%
+  dplyr::mutate(date.common = as.Date(paste0("2000-",format(data.Events$date, "%j")), "%Y-%j")) %>% # add a column that sets all month/day combinations to the same year
   # separate lat and long for publication place
   tidyr::separate(location.coordinates, c("lat", "long"),sep = ", ", extra = "drop") %>%
   # change data type for coordinates to numeric
@@ -59,6 +60,12 @@ data.Events.FoodRiots <- data.Events.FoodRiots %>%
          long = as.numeric(long))
 
 # filter data and rename columns
+## events: food riots
+data.Events.FoodRiots <- data.Events %>%
+  dplyr::filter(type=="food riot")
+## write result to file
+write.table(data.Events.FoodRiots, "csv/summary/events_food-riots.csv" , row.names = F, quote = T , sep = ";")
+
 ## exchange rates
 data.Exchange <- data.Prices %>%
   dplyr::filter(commodity.1=="currency" & commodity.2=="currency") %>% # filter for rows containing exchange rates
