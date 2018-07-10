@@ -316,7 +316,7 @@ layer.Wheat.Price.Min.Scatter <- c(geom_point(data = data.Prices.Wheat.Period,
 layer.Wheat.Price.Max.Scatter <- c(geom_point(data = data.Prices.Wheat.Period, 
   aes(x=date, y=price.max, colour = "price.max"),
   na.rm=TRUE, size=2, pch=3))
-## scatter plot of maximum prices
+## scatter plot of average prices
 layer.Wheat.Price.Avg.Scatter <- c(geom_point(data = data.Prices.Wheat.Period, 
   aes(x=date, y=price.avg, colour = "price.avg"),
   na.rm=TRUE, size=2, pch=3))
@@ -344,6 +344,10 @@ layer.Barley.Price.Avg.Box <- c(geom_boxplot(data = data.Prices.Barley.Period,
 layer.Bread.Price.Avg.Box <- c(geom_boxplot(data = data.Prices.Bread.Period,
   aes(x = year %m+% months(6), # add six months to move box to center of the year
   group = year,y = price.avg, colour = "price.avg"), na.rm = T))
+## scatter plot of average prices
+layer.Bread.Price.Avg.Scatter <- c(geom_point(data = data.Prices.Bread.Period, 
+  aes(x=date, y=price.avg, colour = "price.avg"),
+  na.rm=TRUE, size=2, pch=3))
 ## layer for line of just price
 layer.Bread.Price.Threshold <- c(geom_segment(data = data.Prices.Bread.Period, 
   aes(x = date.Start, xend = date.Stop, 
@@ -515,6 +519,7 @@ plot.Bread.Box <- plot.Base +
   layer.Events.FoodRiots.Small +
   layer.Bread.Price.Threshold +
   layer.Bread.Price.Avg.Box +
+  #layer.Bread.Price.Avg.Scatter +
   # change legend and colours
   scale.Colours + 
   theme(legend.position="right", legend.box = "vertical")
