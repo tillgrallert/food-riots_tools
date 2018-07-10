@@ -52,12 +52,7 @@ data.Prices.Trends <- data.Prices.Trends %>%
   dplyr::mutate(month.common = as.Date(cut(data.Prices.Trends$date.common,breaks = "month"))) # add a column that sets all month/day combinations to first day of the month
 
 data.Events <- data.Events %>%
-  dplyr::mutate(date.common = as.Date(paste0("2000-",format(data.Events$date, "%j")), "%Y-%j")) %>% # add a column that sets all month/day combinations to the same year
-  # separate lat and long for publication place
-  tidyr::separate(location.coordinates, c("lat", "long"),sep = ", ", extra = "drop") %>%
-  # change data type for coordinates to numeric
-  dplyr::mutate(lat = as.numeric(lat), 
-         long = as.numeric(long))
+  dplyr::mutate(date.common = as.Date(paste0("2000-",format(data.Events$date, "%j")), "%Y-%j")) # add a column that sets all month/day combinations to the same year
 
 # filter data and rename columns
 ## events: food riots
