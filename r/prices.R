@@ -249,6 +249,18 @@ data.Prices.Bread.Period <- func.Period.Date(data.Prices.Bread,date.Start,date.S
 data.Prices.Trends.Period <- func.Period.Date(data.Prices.Trends,date.Start,date.Stop)
 data.Events.FoodRiots.Period <- func.Period.Date(data.Events.FoodRiots,date.Start,date.Stop)
 
+# specify a geographic region
+## Bilād al-Shām
+location.Levant <- c('Acre','Aleppo','Baʿbdā','Beirut','Bayrūt','Damascus','Haifa','Hama','Hebron','Homs','Jaffa','Jerusalem','Nablus','Latakia','Tripoli', 'Ottoman Empire','Syria')
+location.Beirut <- c('Beirut', 'Bayrūt')
+location.Damascus <- c('Damascus', 'Syria')
+
+## Egypt
+location.Egypt <- c('Alexandria', 'Cairo', 'Egypt', 'Port Said')
+location.Maghrib <- c('ALgiers', 'Tunis')
+location.OEm <- c('Constantinople','Istanbul','Ottoman Empire')
+## Yemen, Iraq, Iran, India still missing
+
 # descriptive statistics
 mean(data.Prices.Wheat.Period$price.avg, na.rm=T, trim = 0.1)
 mean(data.Prices.Barley.Period$price.avg, na.rm=T, trim = 0.1)
