@@ -522,7 +522,7 @@ plot.Wheat.Daily.Mean.Line <- plot.Base +
 plot.Wheat.Daily.Mean.Line
 
 ggsave(filename = paste("plots/rplot_prices-wheat-", period.String ,"_daily-avg-line.png", sep = ""), 
-       plot = plot.Wheat.Daily.Mean.Scatter,
+       plot = plot.Wheat.Daily.Mean.Line,
        units = units.Plot , height = height.Plot, width = width.Plot, dpi = dpi.Plot)
 
 ## box plot
