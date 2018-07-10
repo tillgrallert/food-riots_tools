@@ -87,7 +87,7 @@ data.Prices.Wheat <- subset(data.Prices,commodity=="wheat" & unit=="kile")
   ## descriptive stats
   # the computed arithmetic mean [mean(data.Prices.Wheat$price.min, na.rm=T, trim = 0.1)] based on the observed values
   #is much too high, compared to the prices reported as "normal" in our sources. Thus, I use a fixed parameter value
-data.Prices.Wheat.Mean <- 25
+data.Price.Wheat.Mean <- 25
 data.Prices.Wheat <- data.Prices.Wheat %>%
   ## deviation from the mean
   dplyr::mutate(dm.min = (price.min - mean(price.min, na.rm=T, trim = 0.1)),
@@ -121,6 +121,8 @@ data.Prices.Bread <- subset(data.Prices,commodity=="bread" & unit=="kg")%>%
                 dmp.avg = 100 * dm.avg / mean(price.avg, na.rm=T, trim = 0.1))
   # write result to file
   write.table(data.Prices.Bread, "csv/summary/prices_bread-kg.csv" , row.names = F, quote = T , sep = ",")
+# there is a customary threshold price for the ratl of bread at about Ps 3 per raṭl
+data.Price.Bread.Threshold <- 1.169 
 data.Prices.Newspapers <- subset(data.Prices,commodity=="newspaper")
   # write result to file
   write.table(data.Prices.Newspapers, "csv/summary/prices_newspapers.csv" , row.names = F, quote = T , sep = ",")
@@ -192,8 +194,8 @@ data.Prices.Wheat.Summary.Daily <- data.Prices.Wheat %>%
   dplyr::mutate(dmp.min = 100 * (mean.price.min - mean(mean.price.min, na.rm=T, trim = 0.1)) / mean(mean.price.min, na.rm=T, trim = 0.1),
                 dmp.max = 100 * (mean.price.max - mean(mean.price.max, na.rm=T, trim = 0.1)) / mean(mean.price.max, na.rm=T, trim = 0.1),
                 dmp.avg = 100 * (mean.price.avg - mean(mean.price.avg, na.rm=T, trim = 0.1)) / mean(mean.price.avg, na.rm=T, trim = 0.1))
-  #data.Prices.Wheat.Summary.Daily$dmp.2 <- (100 * (data.Prices.Wheat.Summary.Daily$mean.price.min - data.Prices.Wheat.Mean) / data.Prices.Wheat.Mean)
-  #data.Prices.Wheat.Summary.Daily$dmp.3 <- (100 * (data.Prices.Wheat.Summary.Daily$mean.price.max - data.Prices.Wheat.Mean) / data.Prices.Wheat.Mean)
+  #data.Prices.Wheat.Summary.Daily$dmp.2 <- (100 * (data.Prices.Wheat.Summary.Daily$mean.price.min - data.Price.Wheat.Mean) / data.Price.Wheat.Mean)
+  #data.Prices.Wheat.Summary.Daily$dmp.3 <- (100 * (data.Prices.Wheat.Summary.Daily$mean.price.max - data.Price.Wheat.Mean) / data.Price.Wheat.Mean)
   # write result to file
   write.table(data.Prices.Wheat.Summary.Daily, "csv/summary/prices_wheat-summary-daily.csv" , row.names = F, quote = T , sep = ",")
 
@@ -378,6 +380,12 @@ layer.Bread.Price.Max.Box <- c(geom_boxplot(data = data.Prices.Bread.Period,
 layer.Bread.Price.Avg.Box <- c(geom_boxplot(data = data.Prices.Bread.Period,
   aes(x = year %m+% months(6), # add six months to move box to center of the year
   group = year,y = price.avg, colour = "price.avg"), na.rm = T))
+## layer for line of just price
+layer.Bread.Price.Threshold <- c(geom_segment(data = data.Prices.Bread.Period, 
+  aes(x = date.Start, xend = date.Stop, 
+    y = data.Price.Bread.Threshold, yend = data.Price.Bread.Threshold,
+    colour = "price.just"), 
+  linetype = 3))
 
 
 # qualitative data: prices
@@ -425,11 +433,12 @@ layer.Trend.Low.Cycle <- c(geom_point(data = filter(data.Prices.Trends.Period, t
 
 # scales and colour schemes
 scale.Colours <- c(scale_colour_manual(name="Colours",
-  breaks=c("price.avg", "price.min", "price.max", 
+  breaks=c("price.avg", "price.just", "price.min", "price.max", 
            "prices: falling", "prices: high", "prices: low", "prices: normal", "prices: rising",
            "food riot"),
   values=c("food riot" = "#E11F05",
            "price.avg" = "black",
+           "price.just" = "#E11F05",
            "price.min" = "#6E42F7",
            "price.max" = "#001368",
            "prices: high" = "#E72100",
@@ -555,6 +564,7 @@ plot.Bread.Box <- plot.Base +
        subtitle="Average prices aggregated by year", 
        y="Price (piaster/kg)") + # provides title, subtitle, x, y, caption
   layer.Events.FoodRiots.Small +
+  layer.Bread.Price.Threshold +
   layer.Bread.Price.Avg.Box +
   #layer.Bread.Price.Min.Box +
   #layer.Bread.Price.Max.Box +
