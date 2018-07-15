@@ -52,14 +52,24 @@ data.Prices.Trends <- data.Prices.Trends %>%
   dplyr::mutate(month.common = as.Date(cut(data.Prices.Trends$date.common,breaks = "month"))) # add a column that sets all month/day combinations to first day of the month
 
 data.Events <- data.Events %>%
-  dplyr::mutate(date.common = as.Date(paste0("2000-",format(data.Events$date, "%j")), "%Y-%j")) # add a column that sets all month/day combinations to the same year
-
+  dplyr::mutate(date.common = as.Date(paste0("2000-",format(data.Events$date, "%j")), "%Y-%j")) %>% # add a column that sets all month/day combinations to the same year
+  dplyr::arrange(date) # sort by date
+  
 # filter data and rename columns
 ## events: food riots
 data.Events.FoodRiots <- data.Events %>%
   dplyr::filter(type=="food riot")
+data.Events.Mutinies <- data.Events %>%
+  dplyr::filter(type=="mutiny")
+data.Events.PrisonRiots <- data.Events %>%
+  dplyr::filter(type=="prison riot")
+data.Events.Famines <- data.Events %>%
+  dplyr::filter(type=="famine")
 ## write result to file
 write.table(data.Events.FoodRiots, "csv/summary/events_food-riots.csv" , row.names = F, quote = T , sep = ";")
+write.table(data.Events.Mutinies, "csv/summary/events_mutinies.csv" , row.names = F, quote = T , sep = ";")
+write.table(data.Events.PrisonRiots, "csv/summary/events_prison-riots.csv" , row.names = F, quote = T , sep = ";")
+write.table(data.Events.Famines, "csv/summary/events_famines.csv" , row.names = F, quote = T , sep = ";")
 
 ## exchange rates
 data.Exchange <- data.Prices %>%
