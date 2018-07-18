@@ -74,12 +74,16 @@
             <!-- ghirāra = 12 madd -->
             <tei:measure unit="ghirara" quantity="0.083333333">ghirāra</tei:measure>
             <tei:measure unit="madd" quantity="1"/>
-            <tei:measure unit="kile" quantity="2"/>
-            <tei:measure unit="cift" quantity="2"/>
+            <tei:measure unit="kile" quantity="0.5"/>
+            <tei:measure unit="cift" quantity="0.5"/>
         </tei:measureGrp>
         <tei:measureGrp type="volume" location="Damascus" source="FE4047B7-C0F9-486D-B43C-46844068B208" when="1907">
             <tei:measure unit="kile" quantity="1"/>
             <tei:measure unit="bushel" quantity="1.125"/>
+        </tei:measureGrp>
+        <tei:measureGrp type="volume" location="Damascus" source="FBBCC38B-083C-452C-91BC-B294656C1086" when="1908">
+            <tei:measure unit="kile" quantity="1"/>
+            <tei:measure unit="bushel" quantity="1.8"/>
         </tei:measureGrp>
         <!-- Gaza -->
         <tei:measureGrp type="volume" location="Gaza" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
@@ -185,6 +189,10 @@
             <tei:measure unit="kg" quantity="185"/>
         </tei:measureGrp>
         <tei:measureGrp type="weight" location="Damascus" source="FE4047B7-C0F9-486D-B43C-46844068B208" when="1907">
+            <tei:measure unit="okka" quantity="1"/>
+            <tei:measure unit="lb" quantity="2.8"/>
+        </tei:measureGrp>
+        <tei:measureGrp type="weight" location="Damascus" source="FBBCC38B-083C-452C-91BC-B294656C1086" when="1908">
             <tei:measure unit="okka" quantity="1"/>
             <tei:measure unit="lb" quantity="2.8"/>
         </tei:measureGrp>
