@@ -19,14 +19,19 @@
             <tei:measure unit="l"/>
         </tei:measureGrp>
         <tei:measureGrp type="weight">
+            <!-- metric -->
             <tei:measure unit="t"/>
             <tei:measure unit="kg"/>
             <tei:measure unit="gr"/>
+            <!-- Ottoman -->
             <tei:measure unit="ratl"/>
             <tei:measure unit="okka"/>
             <tei:measure unit="dirham"/>
             <tei:measure unit="qintar"/>
             <tei:measure unit="wazna"/>
+            <!-- British -->
+            <!-- if not otherwise noted, the lb refers to pound avoirdupois -->
+            <tei:measure unit="lb"/>
         </tei:measureGrp>
         <tei:measureGrp type="currency">
             <tei:measure unit="ops"/>
@@ -71,6 +76,10 @@
             <tei:measure unit="madd" quantity="1"/>
             <tei:measure unit="kile" quantity="2"/>
             <tei:measure unit="cift" quantity="2"/>
+        </tei:measureGrp>
+        <tei:measureGrp type="volume" location="Damascus" source="FE4047B7-C0F9-486D-B43C-46844068B208" when="1907">
+            <tei:measure unit="kile" quantity="1"/>
+            <tei:measure unit="bushel" quantity="1.125"/>
         </tei:measureGrp>
         <!-- Gaza -->
         <tei:measureGrp type="volume" location="Gaza" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
@@ -128,9 +137,15 @@
         <!-- weights -->
         <!-- metrical weights -->
         <tei:measureGrp type="weight">
+            <tei:measure unit="cwt" quantity="0.02"/>
             <tei:measure unit="kg" quantity="1"/>
             <tei:measure unit="gr" quantity="1000"/>
             <tei:measure unit="t" quantity="0.001"/>
+        </tei:measureGrp>
+        <!-- British pound avoirdupois to metric since 1878 -->
+        <tei:measureGrp type="weight" when="1878">
+            <tei:measure unit="lb" quantity="1"/>
+            <tei:measure unit="kg" quantity="0.45359237"/>
         </tei:measureGrp>
         <!-- okka-based weights -->
         <tei:measureGrp type="weight">
@@ -148,6 +163,13 @@
             <tei:measure unit="okka" quantity="250"/>
             <tei:measure unit="qintar" quantity="1"/>
         </tei:measureGrp>
+        <!-- Aleppo -->
+        <tei:measureGrp type="weight" location="Aleppo" source="AE618A9E-5EC7-4021-A4D9-36B9F65D5275" when="1911">
+            <tei:measure unit="okka" quantity="1"/>
+            <tei:measure unit="ratl" quantity="0.4"/>
+            <tei:measure unit="qintar" quantity="0.007843137"/>
+            <tei:measure unit="lb" quantity="2.1975"/>
+        </tei:measureGrp>
         <!-- Damascus  -->
         <tei:measureGrp type="weight" location="Damascus" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
             <tei:measure unit="qintar" quantity="0.005"/>
@@ -161,6 +183,10 @@
         <tei:measureGrp type="weight" location="Damascus" source="B32395CE-C4C1-4446-936C-DA22920B77E6" when="1749">
             <tei:measure unit="qintar" quantity="1"/>
             <tei:measure unit="kg" quantity="185"/>
+        </tei:measureGrp>
+        <tei:measureGrp type="weight" location="Damascus" source="FE4047B7-C0F9-486D-B43C-46844068B208" when="1907">
+            <tei:measure unit="okka" quantity="1"/>
+            <tei:measure unit="lb" quantity="2.8"/>
         </tei:measureGrp>
         <!-- Gaza -->
         <tei:measureGrp type="weight" location="Gaza" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
