@@ -174,19 +174,38 @@
             <tei:measure unit="qintar" quantity="0.007843137"/>
             <tei:measure unit="lb" quantity="2.1975"/>
         </tei:measureGrp>
-        <!-- Damascus  -->
-        <tei:measureGrp type="weight" location="Damascus" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
-            <tei:measure unit="qintar" quantity="0.005"/>
-            <!-- wazna = 12.5 ratl -->
-            <tei:measure unit="wazna" quantity="6.25"/>
+        <!-- Beirut -->
+        <tei:measureGrp type="weight" location="Beirut" source="4F7E63B5-6E4A-4F96-BAF2-B7A46F292462" when="1875">
+            <tei:measure unit="batman" quantity="0.166666667"/>
             <tei:measure unit="ratl" quantity="0.5"/>
             <tei:measure unit="okka" quantity="1"/>
             <tei:measure unit="dirham" quantity="400"/>
             <tei:measure unit="kg" quantity="1.282945"/>
+            <tei:measure unit="lb" quantity="2.841"/>
+            <tei:measure unit="cwt" quantity="0.01118268"/>
         </tei:measureGrp>
+        <!-- Damascus  -->
         <tei:measureGrp type="weight" location="Damascus" source="B32395CE-C4C1-4446-936C-DA22920B77E6" when="1749">
             <tei:measure unit="qintar" quantity="1"/>
             <tei:measure unit="kg" quantity="185"/>
+        </tei:measureGrp>
+        <tei:measureGrp type="weight" location="Damascus" source="4F7E63B5-6E4A-4F96-BAF2-B7A46F292462" when="1875">
+            <tei:measure unit="batman" quantity="0.166666667"/>
+            <tei:measure unit="ratl" quantity="0.5"/>
+            <tei:measure unit="okka" quantity="1"/>
+            <tei:measure unit="dirham" quantity="400"/>
+            <tei:measure unit="kg" quantity="1.282945"/>
+            <tei:measure unit="lb" quantity="2.841"/>
+            <tei:measure unit="cwt" quantity="0.01118268"/>
+        </tei:measureGrp>
+        <tei:measureGrp type="weight" location="Damascus" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
+            <tei:measure unit="qintar" quantity="0.005"/>
+            <!-- wazna = 12.5 ratl -->
+            <tei:measure unit="wazna" quantity="0.04"/>
+            <tei:measure unit="ratl" quantity="0.5"/>
+            <tei:measure unit="okka" quantity="1"/>
+            <tei:measure unit="dirham" quantity="400"/>
+            <tei:measure unit="kg" quantity="1.282945"/>
         </tei:measureGrp>
         <tei:measureGrp type="weight" location="Damascus" source="FE4047B7-C0F9-486D-B43C-46844068B208" when="1907">
             <tei:measure unit="okka" quantity="1"/>
