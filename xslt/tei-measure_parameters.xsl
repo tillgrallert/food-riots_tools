@@ -31,10 +31,13 @@
             <tei:measure unit="wazna"/>
             <!-- British -->
             <!-- if not otherwise noted, the lb refers to pound avoirdupois -->
+            <tei:measure unit="dr"/>
+            <tei:measure unit="oz"/>
             <tei:measure unit="lb"/>
+            <tei:measure unit="st"/>
+            <tei:measure unit="qr"/>
             <tei:measure unit="cwt"/>
-            <tei:measure unit="qr-av"/>
-            <tei:measure unit="ton-uk"/>
+            <tei:measure unit="ton"/>
         </tei:measureGrp>
         <tei:measureGrp type="currency">
             <tei:measure unit="ops"/>
@@ -51,6 +54,16 @@
             <tei:measure unit="kile" quantity="1"/>
             <tei:measure unit="cift" quantity="1"/>
         </tei:measureGrp>
+        <!-- legal British volume measures, 1826-1870; the imperial gallon was established in 1824 -->
+        <tei:measureGrp type="weight" when="1826">
+            <tei:measure unit="bushel" quantity="0.125">bushel = 8 gallon</tei:measure>
+            <tei:measure unit="peck" quantity="0.5">peck = 2 gallon</tei:measure>
+            <tei:measure unit="gallon" quantity="1">gallon (gal)</tei:measure>
+            <tei:measure unit="quart" quantity="4">gallon = 4 quart (qt)</tei:measure>
+            <tei:measure unit="pint" quantity="8">gallon = 8 pint (pt)</tei:measure>
+            <tei:measure unit="gill" quantity="32">gallon = 32 gill</tei:measure>
+            <tei:measure unit="l" quantity="4.54609">Since 1985 a gallon is defined as 4.54609 l</tei:measure>
+        </tei:measureGrp>
         <!-- Acre -->
         <tei:measureGrp type="volume" location="Acre">
             <tei:measure unit="shunbul" quantity="1"/>
@@ -61,6 +74,11 @@
             <tei:measure unit="kile" quantity="2.5"/>
         </tei:measureGrp>
         <!-- Aleppo -->
+        <tei:measureGrp type="volume" location="Aleppo" source="ABDA2C1D-2396-475F-B922-B3307910D959" when="1891">
+            <tei:measure unit="shunbul" quantity="1"/>
+            <!-- <tei:measure unit="madd" quantity="6"/> -->
+            <tei:measure unit="kile" quantity="3">3 kilos. (Constantinople)</tei:measure>
+        </tei:measureGrp>
         <tei:measureGrp type="volume" location="Aleppo" source="9DE8C694-F350-4485-8B29-DF93828B579C" when="1910-07-09">
             <tei:measure unit="shunbul" quantity="1"/>
             <tei:measure unit="madd" quantity="6"/>
@@ -148,15 +166,18 @@
             <tei:measure unit="gr" quantity="1000"/>
             <tei:measure unit="t" quantity="0.001"/>
         </tei:measureGrp>
-        <!-- British pound avoirdupois to metric since 1878 -->
-        <tei:measureGrp type="weight" when="1878">
+        <!-- British pound avoirdupois to metric since 1878, pound avoirdupois became the standard for pound-based measures in 1855 -->
+        <tei:measureGrp type="weight" when="1855">
             <!-- tons are not metric tonnes. the British long ton is 2240 lb -->
-            <tei:measure unit="ton-uk" quantity="0.000446429"/>
+            <tei:measure unit="ton" quantity="0.000446429">ton = 2240 pound</tei:measure>
             <!-- hundredweight: 112 lb or lb-av -->
-            <tei:measure unit="cwt" quantity="0.008928571"/>
+            <tei:measure unit="cwt" quantity="0.008928571">hundredweight = 112 pound</tei:measure>
             <!-- quarter (weight): 28 lb or lb-av -->
-            <tei:measure unit="qr-av" quantity="0.035714286"/>
-            <tei:measure unit="lb" quantity="1"/>
+            <tei:measure unit="qr" quantity="0.035714286">quarter = 28 pound</tei:measure>
+            <tei:measure unit="st" quantity="0.035714286">stone = 14 pound</tei:measure>
+            <tei:measure unit="lb" quantity="1">pound avoirdupois</tei:measure>
+            <tei:measure unit="oz" quantity="16">pound = 16 ounce</tei:measure>
+            <tei:measure unit="dr" quantity="256">pound = 16 drachm or dram</tei:measure>
             <tei:measure unit="kg" quantity="0.45359237"/>
         </tei:measureGrp>
         <tei:measureGrp type="weight" when="1835">
@@ -181,6 +202,16 @@
             <tei:measure unit="qintar" quantity="1"/>
         </tei:measureGrp>
         <!-- Aleppo -->
+        <tei:measureGrp type="weight" location="Aleppo" source="ABDA2C1D-2396-475F-B922-B3307910D959" when="1891">
+            <tei:measure unit="qintar" quantity="0.004"/>
+            <tei:measure unit="ratl" quantity="0.4"/>
+            <tei:measure unit="okka" quantity="1"/>
+            <tei:measure unit="dirham" quantity="400"/>
+            <tei:measure unit="kg" quantity="1.282945"/>
+            <tei:measure unit="lb" quantity="2.841"/>
+            <!-- one hundredweight (cwt) = 39,242 okka -->
+            <tei:measure unit="cwt" quantity="0.02536526"/>
+        </tei:measureGrp>
         <tei:measureGrp type="weight" location="Aleppo" source="AE618A9E-5EC7-4021-A4D9-36B9F65D5275" when="1911">
             <tei:measure unit="okka" quantity="1"/>
             <tei:measure unit="ratl" quantity="0.4"/>
