@@ -32,6 +32,9 @@
             <!-- British -->
             <!-- if not otherwise noted, the lb refers to pound avoirdupois -->
             <tei:measure unit="lb"/>
+            <tei:measure unit="cwt"/>
+            <tei:measure unit="qr-av"/>
+            <tei:measure unit="ton-uk"/>
         </tei:measureGrp>
         <tei:measureGrp type="currency">
             <tei:measure unit="ops"/>
@@ -141,16 +144,26 @@
         <!-- weights -->
         <!-- metrical weights -->
         <tei:measureGrp type="weight">
-            <tei:measure unit="cwt" quantity="0.02"/>
             <tei:measure unit="kg" quantity="1"/>
             <tei:measure unit="gr" quantity="1000"/>
             <tei:measure unit="t" quantity="0.001"/>
         </tei:measureGrp>
         <!-- British pound avoirdupois to metric since 1878 -->
         <tei:measureGrp type="weight" when="1878">
+            <!-- tons are not metric tonnes. the British long ton is 2240 lb -->
+            <tei:measure unit="ton-uk" quantity="0.000446429"/>
+            <!-- hundredweight: 112 lb or lb-av -->
+            <tei:measure unit="cwt" quantity="0.008928571"/>
+            <!-- quarter (weight): 28 lb or lb-av -->
+            <tei:measure unit="qr-av" quantity="0.035714286"/>
             <tei:measure unit="lb" quantity="1"/>
             <tei:measure unit="kg" quantity="0.45359237"/>
         </tei:measureGrp>
+        <tei:measureGrp type="weight" when="1835">
+            <tei:measure unit="cwt" quantity="1"/>
+            <tei:measure unit="lb" quantity="112"/>
+        </tei:measureGrp>
+
         <!-- okka-based weights -->
         <tei:measureGrp type="weight">
             <tei:measure unit="ratl" quantity="0.5"/>
