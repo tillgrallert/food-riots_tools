@@ -66,10 +66,10 @@ data.Events.PrisonRiots <- data.Events %>%
 data.Events.Famines <- data.Events %>%
   dplyr::filter(type=="famine")
 ## write result to file
-write.table(data.Events.FoodRiots, "csv/summary/events_food-riots.csv" , row.names = F, quote = T , sep = ";")
-write.table(data.Events.Mutinies, "csv/summary/events_mutinies.csv" , row.names = F, quote = T , sep = ";")
-write.table(data.Events.PrisonRiots, "csv/summary/events_prison-riots.csv" , row.names = F, quote = T , sep = ";")
-write.table(data.Events.Famines, "csv/summary/events_famines.csv" , row.names = F, quote = T , sep = ";")
+write.table(data.Events.FoodRiots, "csv/summary/events_food-riots.csv" , row.names = F, quote = T , sep = ",")
+write.table(data.Events.Mutinies, "csv/summary/events_mutinies.csv" , row.names = F, quote = T , sep = ",")
+write.table(data.Events.PrisonRiots, "csv/summary/events_prison-riots.csv" , row.names = F, quote = T , sep = ",")
+write.table(data.Events.Famines, "csv/summary/events_famines.csv" , row.names = F, quote = T , sep = ",")
 
 ## exchange rates
 data.Exchange <- data.Prices %>%
