@@ -38,7 +38,7 @@
     <xsl:variable name="v_csv-head">
 <!--        <xsl:text>date, source-uuid, orig-data, commodity-1, quantity-1, unit-1, commodity-2, quantity-2, unit-2,</xsl:text><xsl:copy-of select="$v_new-line"/>-->
         <!-- data based on the <tei:measureGrp> -->
-        <xsl:text>date, duration, location, source, orig-data, </xsl:text>
+        <xsl:text>date, duration, location.name, source, orig-data, </xsl:text>
         <!-- data based on the <tei:measure> children -->
         <xsl:text>commodity-1, quantity-1, unit-1, commodity-2, quantity-2, unit-2, commodity-3, quantity-3, unit-3,</xsl:text><xsl:copy-of select="$v_new-line"/>
     </xsl:variable>
