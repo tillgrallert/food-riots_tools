@@ -202,15 +202,23 @@
             <tei:measure unit="qintar" quantity="1"/>
         </tei:measureGrp>
         <!-- Aleppo -->
-        <tei:measureGrp type="weight" location="Aleppo" source="ABDA2C1D-2396-475F-B922-B3307910D959" when="1891">
-            <tei:measure unit="qintar" quantity="0.004"/>
-            <tei:measure unit="ratl" quantity="0.4"/>
+        <tei:measureGrp type="weight" location="Aleppo" source="2B2DFE93-9930-4C62-92B6-56F2E166130F" when="1889">
+            <tei:measure unit="qintar" quantity="0.005">qinṭar = 200 okka</tei:measure>
+            <tei:measure unit="ratl" quantity="0.5"/>
             <tei:measure unit="okka" quantity="1"/>
             <tei:measure unit="dirham" quantity="400"/>
             <tei:measure unit="kg" quantity="1.282945"/>
             <tei:measure unit="lb" quantity="2.841"/>
-            <!-- one hundredweight (cwt) = 39,242 okka -->
-            <tei:measure unit="cwt" quantity="0.02536526"/>
+            <tei:measure unit="cwt" quantity="0.011205486">one hundredweight (cwt) = 89,242 okka</tei:measure>
+        </tei:measureGrp>
+        <tei:measureGrp type="weight" location="Aleppo" source="ABDA2C1D-2396-475F-B922-B3307910D959" when="1891">
+            <tei:measure unit="qintar" quantity="0.004">qinṭar = 250 okka</tei:measure>
+            <tei:measure unit="ratl" quantity="0.4">raṭl = 2.5 okka </tei:measure>
+            <tei:measure unit="okka" quantity="1"/>
+            <tei:measure unit="dirham" quantity="400"/>
+            <tei:measure unit="kg" quantity="1.282945"/>
+            <tei:measure unit="lb" quantity="2.841"/>
+            <tei:measure unit="cwt" quantity="0.02536526">one hundredweight (cwt) = 39,242 okka [this is most probably a misprint]</tei:measure>
         </tei:measureGrp>
         <tei:measureGrp type="weight" location="Aleppo" source="AE618A9E-5EC7-4021-A4D9-36B9F65D5275" when="1911">
             <tei:measure unit="okka" quantity="1"/>
