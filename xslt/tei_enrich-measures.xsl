@@ -47,10 +47,10 @@
         </xsl:variable>
         <xsl:choose>
             <xsl:when test="$p_regularize = false()">
-                <xsl:copy-of select="$v_data-source-regularized"/>
+                <xsl:copy-of select="$v_data-source-normalized"/>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:copy-of select="$v_data-source-normalized"/>
+                <xsl:copy-of select="$v_data-source-regularized"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
