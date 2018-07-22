@@ -33,7 +33,7 @@ data.Locations <- read.csv("csv/locations.csv", header=TRUE, sep = ",", quote = 
 ## convert data types
 ## anydate() converts dates from Y0001 to Y0001-M01-D01
 data.Events.FoodRiots$date <- anydate(data.Events.FoodRiots$date)
-data.Exports$date <- anydate(data.Exports$date)
+data.Exports$date <- anydate(as.factor(data.Exports$date))
   
 ## add geo-coordinates based on data.Locations
 data.Events.FoodRiots <- data.Events.FoodRiots %>%
@@ -49,14 +49,20 @@ data.Exports <- data.Exports %>%
                 currency = unit.2,
                 value = quantity.2) %>% # rename the columns relevant to later operations
   dplyr::select(-commodity.2) # omit columns not needed
+
+
   
 # specify period
 ## function to create subsets for periods
 func.Period.Date <- function(f,x,y){f[f$date >= x & f$date <= y,]}
 #func.Period.Year <- function(f,x,y){f[f$year >= x & f$year <= y,]}
-date.Start <- anydate("1600-01-01")
+date.Start <- anydate("1855-01-01")
 date.Stop <- anydate("1916-12-31")
 data.Events.FoodRiots.Period <- func.Period.Date(data.Events.FoodRiots,date.Start,date.Stop)
+data.Exports.Period <- func.Period.Date(data.Exports, date.Start, date.Stop)
+
+# variable for period as string
+period.String <- paste(year(date.Start),"-",year(date.Stop),sep = "")
 
 # specify a geographic region
 ## Bilād al-Shām
@@ -77,10 +83,13 @@ data.Events.FoodRiots.Period.Summary <- data.Events.FoodRiots.Period %>%
   summarise(number.of.events = n()) %>%
   arrange(desc(number.of.events))
 ## Exports by location
-data.Exports.Summary <- data.Exports %>%
-  group_by(location.name,lat,long, commodity, unit) %>%
-  summarise(quantity = sum(quantity)) %>%
+data.Exports.Period.Summary <- data.Exports.Period %>%
+  group_by(location.name,lat,long, date, commodity, unit, currency) %>%
+  summarise(quantity = mean(quantity), # provides the quantity per location, per date, per commodity, per unit and per currency
+            value = mean(value)) %>% # same for value
   arrange(location.name)
+
+write.table(data.Exports.Period.Summary, paste("csv/summary/export-statistics_", period.String ,".csv", sep = ""), row.names = F, quote = T , sep = ",")
 
 
 # 2. plot: all layers can be stored as variables!
@@ -133,13 +142,13 @@ geom.Events.FoodRiots.Levant <- c(geom_point(data = data.Events.FoodRiots.Period
   #color = "#FEEE00",
   color = "#F2D902", fill = "#FEFDB2", 
   alpha = 0.5))
-geom.Exports <- c(geom_point(data = data.Exports.Summary, 
-  aes(x = long, y= lat, colour = commodity),
-  size = data.Exports.Summary$quantity/1000,
+geom.Exports <- c(geom_point(data = data.Exports.Period.Summary, 
+  aes(x = long, y= lat, colour = commodity, size = quantity),
+  #size = data.Exports.Summary$quantity/1000,
   shape = 21, stroke = 2,
   #color = "#F2D902", 
   #fill = "#FEFDB2", 
-  alpha = 0.5))
+  alpha = 0.8))
 
 # variable to store the labels for locations
 geom.FoodRiots.Labels <- c(geom_text(data = data.Events.FoodRiots.Period.Summary, 
@@ -149,7 +158,6 @@ geom.FoodRiots.Labels <- c(geom_text(data = data.Events.FoodRiots.Period.Summary
    color = "#000426", check_overlap = FALSE, size = 1.8 * size.Base.Px))
 
 # variables for saving the plots
-period.String <- paste(year(date.Start),"-",year(date.Stop),sep = "")
 width.Plot <- 600
 height.Plot <- 200
 dpi.Plot <- 300
@@ -184,14 +192,13 @@ ggsave(filename = paste("maps/map_food-riots-", period.String ,"_levant.png", se
 map.Exports <- map.Base +
   labs(title = "Exports of cereals",
        subtitle = paste("between", year(date.Start), "and", year(date.Stop)))+
-  geom_point(data = data.Exports.Summary, 
-             aes(x = long, y= lat, colour = commodity, size = quantity),
-             #size = data.Exports.Summary$quantity/10000,
-             shape = 21, stroke = 2,
-             #color = "#F2D902", fill = "#FEFDB2", 
-             alpha = 0.8)+
-  viewport.Events.Levant
+  geom.Exports +
+  viewport.ME
 map.Exports
+
+ggsave(filename = paste("maps/map_exports-", period.String ,"_levant.png", sep = ""), 
+       plot = map.Exports,
+       units = units.Plot , height = height.Plot, width = height.Plot, dpi = dpi.Plot)
 
 # add data table to plot
 theme.table <- ttheme_minimal(base_size = size.Base.Mm)
