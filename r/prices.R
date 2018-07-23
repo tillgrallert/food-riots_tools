@@ -13,10 +13,13 @@ Sys.setlocale("LC_ALL", "en_US.UTF-8")
 setwd("/BachCloud/BTSync/FormerDropbox/FoodRiots/food-riots_data") #Volumes/Dessau HD/
 
 # 1. read price data from csv, note that the first row is a date
-#data.Events.FoodRiots <- read.csv("csv/events_food-riots.csv", header=TRUE, sep = ";", quote = "\"")
 data.Events <- read.csv("csv/events.csv", header=TRUE, sep = ";", quote = "\"")
-data.Prices <- read.csv("csv/prices.csv", header=TRUE, sep = ",", quote = "\"")
+data.Prices <- read.csv("csv/prices.csv", header=TRUE, sep = ",", quote = "\"") # this is the main source file for prices
+data.Prices.Exports <- read.csv("csv/export-statistics_unit-prices.csv", sep = ",", quote = "\"")
 data.Prices.Trends <- read.csv("csv/qualitative-prices.csv", header=TRUE, sep = ",", quote = "\"")
+
+## amend data.Prices.Exports to data.Prices
+data.Prices <- plyr::rbind.fill(data.Prices, data.Prices.Exports)
 
 # add daily data based on the 'duration' column
 
@@ -40,7 +43,7 @@ data.Prices <- data.Prices %>%
                 week = as.Date(cut(data.Prices$schema.date,breaks = "week", start.on.monday = TRUE)), # first day of the week; allows to change weekly break point to Sunday
                 date.common = as.Date(paste0("2000-",format(data.Prices$schema.date, "%j")), "%Y-%j")) # add a column that sets all month/day combinations to the same year
 data.Prices <- data.Prices %>%  
-  dplyr::mutate(month.common = as.Date(cut(data.Prices$schema.date.common,breaks = "month"))) # add a column that sets all month/day combinations to first day of the month
+  dplyr::mutate(month.common = as.Date(cut(data.Prices$date.common,breaks = "month"))) # add a column that sets all month/day combinations to first day of the month
 
 data.Prices.Trends <- data.Prices.Trends %>%
   dplyr::mutate(year = as.Date(cut(data.Prices.Trends$schema.date, breaks = "year")), # first day of the year
@@ -49,7 +52,7 @@ data.Prices.Trends <- data.Prices.Trends %>%
                 week = as.Date(cut(data.Prices.Trends$schema.date,breaks = "week", start.on.monday = TRUE)), # first day of the week; allows to change weekly break point to Sunday
                 date.common = as.Date(paste0("2000-",format(data.Prices.Trends$schema.date, "%j")), "%Y-%j")) # add a column that sets all month/day combinations to the same year
 data.Prices.Trends <- data.Prices.Trends %>%  
-  dplyr::mutate(month.common = as.Date(cut(data.Prices.Trends$schema.date.common,breaks = "month"))) # add a column that sets all month/day combinations to first day of the month
+  dplyr::mutate(month.common = as.Date(cut(data.Prices.Trends$date.common,breaks = "month"))) # add a column that sets all month/day combinations to first day of the month
 
 data.Events <- data.Events %>%
   dplyr::mutate(date.common = as.Date(paste0("2000-",format(data.Events$schema.date, "%j")), "%Y-%j")) %>% # add a column that sets all month/day combinations to the same year
@@ -76,19 +79,25 @@ data.Exchange <- data.Prices %>%
   dplyr::filter(commodity.1=="currency" & commodity.2=="currency") %>% # filter for rows containing exchange rates
   dplyr::select(-commodity.1, -commodity.2, -commodity.3) # delete redundant rows
 
-## other prices
+## other commodity prices
+# rename columns
 data.Prices <- data.Prices %>%
-  dplyr::filter(commodity.2=="currency" & unit.2=="ops") %>% # filter for rows containing prices in Ottoman Piasters only
+  dplyr::filter(commodity.2=="currency") %>% # filter for rows containing prices only
   dplyr::rename(commodity = commodity.1,
                 quantity = quantity.1,
                 unit = unit.1,
                 price.min = quantity.2,
-                price.max = quantity.3) %>% # rename the columns relevant to later operations
-  dplyr::select(-commodity.2, -commodity.3, -unit.2, -unit.3) %>% # omit columns not needed
+                price.max = quantity.3,
+                currency = unit.2)%>% # rename the columns relevant to later operations
+  dplyr::select(-commodity.2)%>% # omit unnecessary column
+  arrange(schema.date)
+data.Prices.Ops <- data.Prices %>%
+  dplyr::filter(currency=="ops") %>% # filter for rows containing prices in Ottoman Piasters only
+  dplyr::select(-commodity.3, -unit.3) %>% # omit columns not needed
   dplyr::mutate(price.avg = case_when(price.max!='' ~ (price.min + price.max)/2, TRUE ~ price.min)) # add average between minimum and maximum prices
 
 # create a subset of rows based on conditions; this can also be achieved with the filter() function from dplyr
-data.Prices.Wheat <- subset(data.Prices,commodity=="wheat" & unit=="kile")
+data.Prices.Wheat <- subset(data.Prices.Ops,commodity=="wheat" & unit=="kile")
   ## descriptive stats
   # the computed arithmetic mean [mean(data.Prices.Wheat$price.min, na.rm=T, trim = 0.1)] based on the observed values
   #is much too high, compared to the prices reported as "normal" in our sources. Thus, I use a fixed parameter value
@@ -104,7 +113,7 @@ data.Prices.Wheat <- data.Prices.Wheat %>%
                 dmp.avg = 100 * dm.avg / mean(price.avg, na.rm=T, trim = 0.1))
   ## write result to file
   write.table(data.Prices.Wheat, "csv/summary/prices_wheat-kile.csv" , row.names = F, quote = T , sep = ",")
-data.Prices.Barley <- subset(data.Prices,commodity=="barley" & unit=="kile")%>%
+data.Prices.Barley <- subset(data.Prices.Ops,commodity=="barley" & unit=="kile")%>%
   ## deviation from the mean
   dplyr::mutate(dm.min = (price.min - mean(price.min, na.rm=T, trim = 0.1)),
                 dm.max = (price.max - mean(price.max, na.rm=T, trim = 0.1)),
@@ -115,7 +124,7 @@ data.Prices.Barley <- subset(data.Prices,commodity=="barley" & unit=="kile")%>%
                 dmp.avg = 100 * dm.avg / mean(price.avg, na.rm=T, trim = 0.1))
   # write result to file
   write.table(data.Prices.Barley, "csv/summary/prices_barley-kile.csv" , row.names = F, quote = T , sep = ",")
-data.Prices.Bread <- subset(data.Prices,commodity=="bread" & unit=="kg")%>%
+data.Prices.Bread <- subset(data.Prices.Ops,commodity=="bread" & unit=="kg")%>%
   ## deviation from the mean
   dplyr::mutate(dm.min = (price.min - mean(price.min, na.rm=T, trim = 0.1)),
                 dm.max = (price.max - mean(price.max, na.rm=T, trim = 0.1)),
