@@ -15,7 +15,7 @@ setwd("/BachCloud/BTSync/FormerDropbox/FoodRiots/food-riots_data") #Volumes/Dess
 # 1. read price data from csv, note that the first row is a date
 #data.Events.FoodRiots <- read.csv("csv/events_food-riots.csv", header=TRUE, sep = ";", quote = "\"")
 data.Events <- read.csv("csv/events.csv", header=TRUE, sep = ";", quote = "\"")
-data.Prices <- read.csv("csv/prices-2018-03-27.csv", header=TRUE, sep = ",", quote = "\"")
+data.Prices <- read.csv("csv/prices.csv", header=TRUE, sep = ",", quote = "\"")
 data.Prices.Trends <- read.csv("csv/qualitative-prices.csv", header=TRUE, sep = ",", quote = "\"")
 
 # add daily data based on the 'duration' column
@@ -23,9 +23,9 @@ data.Prices.Trends <- read.csv("csv/qualitative-prices.csv", header=TRUE, sep = 
 # fix date types
 ## convert date to Date class, note that dates supplied as years only will be turned into NA if one uses as.date()
 ## anydate() converts dates from Y0001 to Y0001-M01-D01
-data.Events$date <- anydate(data.Events$date)
-data.Prices$date <- anydate(data.Prices$date)
-data.Prices.Trends$date <- anydate(data.Prices.Trends$date)
+data.Events$schema.date <- anydate(data.Events$schema.date)
+data.Prices$schema.date <- anydate(data.Prices$schema.date)
+data.Prices.Trends$schema.date <- anydate(data.Prices.Trends$schema.date)
 ## numeric
 #data.Prices$quantity.2 <- as.numeric(data.Prices$quantity.2)
 #data.Prices$quantity.3 <- as.numeric(data.Prices$quantity.3)
@@ -34,26 +34,26 @@ data.Prices.Trends$date <- anydate(data.Prices.Trends$date)
 ## use cut() to generate summary stats for time periods
 ## create variables of the year, quarter week and month of each observation:
 data.Prices <- data.Prices %>%
-  dplyr::mutate(year = as.Date(cut(data.Prices$date, breaks = "year")), # first day of the year
-                quarter = as.Date(cut(data.Prices$date,breaks = "quarter")), # first day of the quarter
-                month = as.Date(cut(data.Prices$date,breaks = "month")), # first day of the month
-                week = as.Date(cut(data.Prices$date,breaks = "week", start.on.monday = TRUE)), # first day of the week; allows to change weekly break point to Sunday
-                date.common = as.Date(paste0("2000-",format(data.Prices$date, "%j")), "%Y-%j")) # add a column that sets all month/day combinations to the same year
+  dplyr::mutate(year = as.Date(cut(data.Prices$schema.date, breaks = "year")), # first day of the year
+                quarter = as.Date(cut(data.Prices$schema.date,breaks = "quarter")), # first day of the quarter
+                month = as.Date(cut(data.Prices$schema.date,breaks = "month")), # first day of the month
+                week = as.Date(cut(data.Prices$schema.date,breaks = "week", start.on.monday = TRUE)), # first day of the week; allows to change weekly break point to Sunday
+                date.common = as.Date(paste0("2000-",format(data.Prices$schema.date, "%j")), "%Y-%j")) # add a column that sets all month/day combinations to the same year
 data.Prices <- data.Prices %>%  
-  dplyr::mutate(month.common = as.Date(cut(data.Prices$date.common,breaks = "month"))) # add a column that sets all month/day combinations to first day of the month
+  dplyr::mutate(month.common = as.Date(cut(data.Prices$schema.date.common,breaks = "month"))) # add a column that sets all month/day combinations to first day of the month
 
 data.Prices.Trends <- data.Prices.Trends %>%
-  dplyr::mutate(year = as.Date(cut(data.Prices.Trends$date, breaks = "year")), # first day of the year
-                quarter = as.Date(cut(data.Prices.Trends$date,breaks = "quarter")), # first day of the quarter
-                month = as.Date(cut(data.Prices.Trends$date,breaks = "month")), # first day of the month
-                week = as.Date(cut(data.Prices.Trends$date,breaks = "week", start.on.monday = TRUE)), # first day of the week; allows to change weekly break point to Sunday
-                date.common = as.Date(paste0("2000-",format(data.Prices.Trends$date, "%j")), "%Y-%j")) # add a column that sets all month/day combinations to the same year
+  dplyr::mutate(year = as.Date(cut(data.Prices.Trends$schema.date, breaks = "year")), # first day of the year
+                quarter = as.Date(cut(data.Prices.Trends$schema.date,breaks = "quarter")), # first day of the quarter
+                month = as.Date(cut(data.Prices.Trends$schema.date,breaks = "month")), # first day of the month
+                week = as.Date(cut(data.Prices.Trends$schema.date,breaks = "week", start.on.monday = TRUE)), # first day of the week; allows to change weekly break point to Sunday
+                date.common = as.Date(paste0("2000-",format(data.Prices.Trends$schema.date, "%j")), "%Y-%j")) # add a column that sets all month/day combinations to the same year
 data.Prices.Trends <- data.Prices.Trends %>%  
-  dplyr::mutate(month.common = as.Date(cut(data.Prices.Trends$date.common,breaks = "month"))) # add a column that sets all month/day combinations to first day of the month
+  dplyr::mutate(month.common = as.Date(cut(data.Prices.Trends$schema.date.common,breaks = "month"))) # add a column that sets all month/day combinations to first day of the month
 
 data.Events <- data.Events %>%
-  dplyr::mutate(date.common = as.Date(paste0("2000-",format(data.Events$date, "%j")), "%Y-%j")) %>% # add a column that sets all month/day combinations to the same year
-  dplyr::arrange(date) # sort by date
+  dplyr::mutate(date.common = as.Date(paste0("2000-",format(data.Events$schema.date, "%j")), "%Y-%j")) %>% # add a column that sets all month/day combinations to the same year
+  dplyr::arrange(schema.date) # sort by date
   
 # filter data and rename columns
 ## events: food riots
@@ -248,7 +248,7 @@ data.Prices.Barley.Summary.Monthly <- data.Prices.Barley %>%
   
 # specify period
 ## function to create subsets for periods
-func.Period.Date <- function(f,x,y){f[f$date >= x & f$date <= y,]}
+func.Period.Date <- function(f,x,y){f[f$schema.date >= x & f$schema.date <= y,]}
 func.Period.Year <- function(f,x,y){f[f$year >= x & f$year <= y,]}
 date.Start <- anydate("1874-01-01")
 date.Stop <- anydate("1916-12-31")

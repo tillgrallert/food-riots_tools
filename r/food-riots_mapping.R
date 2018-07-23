@@ -32,14 +32,14 @@ data.Locations <- read.csv("csv/locations.csv", header=TRUE, sep = ",", quote = 
 
 ## convert data types
 ## anydate() converts dates from Y0001 to Y0001-M01-D01
-data.Events.FoodRiots$date <- anydate(data.Events.FoodRiots$date)
-data.Exports$date <- anydate(as.factor(data.Exports$date))
+data.Events.FoodRiots$schema.date <- anydate(data.Events.FoodRiots$schema.date)
+data.Exports$schema.date <- anydate(as.factor(data.Exports$schema.date))
   
 ## add geo-coordinates based on data.Locations
 data.Events.FoodRiots <- data.Events.FoodRiots %>%
-  dplyr::left_join(data.Locations,  by =  c("location.name" = "location.name"))
+  dplyr::left_join(data.Locations,  by =  c("schema.Place" = "schema.Place"))
 data.Exports <- data.Exports %>%
-  dplyr::left_join(data.Locations,  by =  c("location.name" = "location.name"))
+  dplyr::left_join(data.Locations,  by =  c("schema.Place" = "schema.Place"))
 
 ## clean data
 data.Exports <- data.Exports %>%
@@ -54,7 +54,7 @@ data.Exports <- data.Exports %>%
   
 # specify period
 ## function to create subsets for periods
-func.Period.Date <- function(f,x,y){f[f$date >= x & f$date <= y,]}
+func.Period.Date <- function(f,x,y){f[f$schema.date >= x & f$schema.date <= y,]}
 #func.Period.Year <- function(f,x,y){f[f$year >= x & f$year <= y,]}
 date.Start <- anydate("1855-01-01")
 date.Stop <- anydate("1916-12-31")
@@ -68,28 +68,32 @@ period.String <- paste(year(date.Start),"-",year(date.Stop),sep = "")
 ## Bilād al-Shām
 location.Levant <- c('Acre','Aleppo','Baʿbdā','Beirut','Bayrūt','Damascus','Haifa',
                      'Hama','Hebron','Homs','Jaffa','Jerusalem','Nablus','Latakia','Tripoli','Syria')
-data.Events.FoodRiots.Period.Levant <- subset(data.Events.FoodRiots.Period, location.name %in% location.Levant)
+data.Events.FoodRiots.Period.Levant <- subset(data.Events.FoodRiots.Period, schema.Place %in% location.Levant)
 
 
 ## summarise data
 ## Levant
 data.Events.FoodRiots.Period.Levant.Summary <- data.Events.FoodRiots.Period.Levant %>%
-  group_by(location.name, lat, long) %>%
+  group_by(schema.Place, schema.latitude, schema.longitude) %>%
   summarise(number.of.events = n()) %>%
   arrange(desc(number.of.events))
 ## Global
 data.Events.FoodRiots.Period.Summary <- data.Events.FoodRiots.Period %>%
-  group_by(location.name, lat, long) %>%
+  group_by(schema.Place, schema.latitude, schema.longitude) %>%
   summarise(number.of.events = n()) %>%
   arrange(desc(number.of.events))
 ## Exports by location
-data.Exports.Period.Summary <- data.Exports.Period %>%
-  group_by(location.name,lat,long, date, commodity, unit, currency) %>%
+data.Exports.Period.Summary.Annual <- data.Exports.Period %>%
+  group_by(schema.Place,schema.latitude,schema.longitude, schema.date, commodity, unit, currency) %>%
   summarise(quantity = mean(quantity), # provides the quantity per location, per date, per commodity, per unit and per currency
             value = mean(value)) %>% # same for value
-  arrange(location.name)
+  arrange(schema.Place)
+data.Exports.Period.Summary <- data.Exports.Period.Summary.Annual %>%
+  group_by(schema.Place,schema.latitude,schema.longitude, commodity, unit) %>%
+  summarise(quantity = mean(quantity))
 
-write.table(data.Exports.Period.Summary, paste("csv/summary/export-statistics_", period.String ,".csv", sep = ""), row.names = F, quote = T , sep = ",")
+write.table(data.Exports.Period.Summary.Annual, paste("csv/summary/export-statistics_", period.String ,".csv", sep = ""), row.names = F, quote = T , sep = ",")
+
 
 
 # 2. plot: all layers can be stored as variables!
@@ -115,35 +119,35 @@ size.Base.Px = (5/14) * size.Base.Mm
 
 # specify viewports / zoom levels
 # all data points
-viewport.Events.All <- c(coord_fixed(xlim = c(max(data.Events.FoodRiots.Period$long)+1, 
-    min(data.Events.FoodRiots.Period$long) -1),  
-  ylim = c(max(data.Events.FoodRiots.Period$lat), 
-    min(data.Events.FoodRiots.Period$lat)), ratio = 1.3))
+viewport.Events.All <- c(coord_fixed(xlim = c(max(data.Events.FoodRiots.Period$schema.longitude)+1, 
+    min(data.Events.FoodRiots.Period$schema.longitude) -1),  
+  ylim = c(max(data.Events.FoodRiots.Period$schema.latitude), 
+    min(data.Events.FoodRiots.Period$schema.latitude)), ratio = 1.3))
 # Middle East 
 viewport.ME <- c(coord_fixed(xlim = c(22, 46),  ylim = c(28, 42), ratio = 1.3))
-viewport.Events.Levant <- c(coord_fixed(xlim = c(max(data.Events.FoodRiots.Period.Levant$long)+1, 
-    min(data.Events.FoodRiots.Period.Levant$long) -1),  
-  ylim = c(max(data.Events.FoodRiots.Period.Levant$lat), 
-    min(data.Events.FoodRiots.Period.Levant$lat)), ratio = 1.3))
+viewport.Events.Levant <- c(coord_fixed(xlim = c(max(data.Events.FoodRiots.Period.Levant$schema.longitude)+1, 
+    min(data.Events.FoodRiots.Period.Levant$schema.longitude) -1),  
+  ylim = c(max(data.Events.FoodRiots.Period.Levant$schema.latitude), 
+    min(data.Events.FoodRiots.Period.Levant$schema.latitude)), ratio = 1.3))
 
 
 # variable to store the locations of events as points
 geom.Events.FoodRiots <- c(geom_point(data = data.Events.FoodRiots.Period.Summary, 
-    aes(x = long, y= lat),
+    aes(x = schema.longitude, y= schema.latitude),
     size = data.Events.FoodRiots.Period.Summary$number.of.events,
     shape = 21, stroke = 2,
     #color = "#FEEE00",
     color = "#F2D902", fill = "#FEFDB2", 
     alpha = 0.5))
 geom.Events.FoodRiots.Levant <- c(geom_point(data = data.Events.FoodRiots.Period.Levant.Summary, 
-  aes(x = long, y= lat),
+  aes(x = schema.longitude, y= schema.latitude),
   size = data.Events.FoodRiots.Period.Levant.Summary$number.of.events,
   shape = 21, stroke = 2,
   #color = "#FEEE00",
   color = "#F2D902", fill = "#FEFDB2", 
   alpha = 0.5))
 geom.Exports <- c(geom_point(data = data.Exports.Period.Summary, 
-  aes(x = long, y= lat, colour = commodity, size = quantity),
+  aes(x = schema.longitude, y= schema.latitude, colour = commodity, size = quantity),
   #size = data.Exports.Summary$quantity/1000,
   shape = 21, stroke = 2,
   #color = "#F2D902", 
@@ -152,8 +156,8 @@ geom.Exports <- c(geom_point(data = data.Exports.Period.Summary,
 
 # variable to store the labels for locations
 geom.FoodRiots.Labels <- c(geom_text(data = data.Events.FoodRiots.Period.Summary, 
-   aes(x = long, y = lat, 
-       label = ifelse(number.of.events > 0,paste(as.character(location.name),":",number.of.events),''),
+   aes(x = schema.longitude, y = schema.latitude, 
+       label = ifelse(number.of.events > 0,paste(as.character(schema.Place),":",number.of.events),''),
        hjust = -0.1, vjust = 0), 
    color = "#000426", check_overlap = FALSE, size = 1.8 * size.Base.Px))
 
@@ -191,7 +195,7 @@ ggsave(filename = paste("maps/map_food-riots-", period.String ,"_levant.png", se
 # map of exports
 map.Exports <- map.Base +
   labs(title = "Exports of cereals",
-       subtitle = paste("between", year(date.Start), "and", year(date.Stop)))+
+       subtitle = paste("Annual averages between", year(date.Start), "and", year(date.Stop)))+
   geom.Exports +
   viewport.ME
 map.Exports
@@ -227,7 +231,7 @@ ggdraw() +
 
 ## using ggmap
 # view port
-viewport.1 <- make_bbox(lon = data.Events$long, lat = data.Events$lat, f = .1)
+viewport.1 <- make_bbox(lon = data.Events$schema.longitude, schema.latitude = data.Events$schema.latitude, f = .1)
 # First get the map. By default it gets it from Google.  I want it to be a satellite map
 map.Base <- get_map(location = viewport.1, maptype = "terrain-background", source = "osm", color = "bw")
 ggmap(viewport.1)
