@@ -3,17 +3,19 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:tss="http://www.thirdstreetsoftware.com/SenteXML-1.0"
     xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:html="http://www.w3.org/1999/xhtml"
-    exclude-result-prefixes="xs" version="2.0">
+    exclude-result-prefixes="xs" version="30">
 
     <xsl:output method="xml" indent="yes" encoding="UTF-8" omit-xml-declaration="no" name="xml"/>
     
-    <!-- this stylesheet normalizes the attributes on tei:measure. Unfortunately <tei:measure> is not datable and cannot carry the when attribute. Therefore normalization cannot be based on changes over time -->
-    <!-- The normalizations are based on a number of primary sources, most notably among them: Chambre de Commerce Française de Constantinople. *Poids, Mesures, Monnaies et Cours du Change Dans les Principales Localités de L'Empire Ottoman à la Fin du 19e Siècle.* Istanbul: Isis, 2002 [1893]; Handelsarchiv 15 Nov. 1878 (#1878, Teil 2):II 489-96; NACP RG 84 Damascus Vol.8 Damascus 85, *Weights and Measures*, Mishāqa to Bissinger 22 Nov. 1889. -->
+    <!-- this stylesheet normalizes the attributes on tei:measure -->
+    <!-- The normalizations are based on a number of primary sources, most notably among them: Chambre de Commerce Française de Constantinople. *Poids, Mesures, Monnaies et Cours du Change Dans les Principales Localités de L'Empire Ottoman à la Fin du 19e Siècle.* Istanbul: Isis, 2002 [1893]; Handelsarchiv 15 Nov. 1878 (#1878, Teil 2):II 489-96; NACP RG 84 Damascus Vol.8 Damascus 85, *Weights and Measures*, Mishāqa to Bissinger 22 Nov. 1889. The localised and dated relationships between measures are recorded in $p_measures -->
     
     <xsl:include href="tei-measure_parameters.xsl"/>
     
     <xsl:param name="p_debug" select="true()"/>
-    <xsl:param name="p_normalize-by-location" select="false()"/>
+    <xsl:param name="p_normalize-by-location" select="true()"/>
+    <xsl:param name="p_file-gazetteer" select="document('/Volumes/Dessau HD/BachUni/BachBibliothek/GitHub/OpenArabicPE/authority-files/data/tei/gazetteer_levant-phd.TEIP5.xml')"/>
+    <xsl:param name="p_lang-target" select="'en'"/>
 
     <!-- identity transform -->
     <xsl:template match="node() | @*" mode="m_enrich-dates">
@@ -24,6 +26,14 @@
     <xsl:template match="node() | @*" mode="m_enrich-locations">
         <xsl:copy>
             <xsl:apply-templates select="@* | node()" mode="m_enrich-locations"/>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="@location" mode="m_enrich-locations">
+        <xsl:copy>
+            <!-- regularise the location's name -->
+            <xsl:call-template name="t_normalize-toponyms">
+                <xsl:with-param name="p_toponym" select="."/>
+            </xsl:call-template>
         </xsl:copy>
     </xsl:template>
     <xsl:template match="node() | @*" mode="m_enrich">
@@ -84,12 +94,12 @@
             <xsl:when test="count(descendant::tei:measure[@commodity='currency'][@when]) &gt; 1">
                 <xsl:for-each select="descendant::tei:measure[@commodity='currency'][@when]">
                     <tei:measureGrp type="split" source="{$v_id-source}" when="{@when}">
-                        <!-- check if a duration needs to be added -->
-                        <xsl:if test="not(@dur)">
+                        <!-- a duration need  NOT to be added -->
+                        <!--<xsl:if test="not(@dur)">
                             <xsl:call-template name="t_add-durations">
                                 <xsl:with-param name="p_when" select="@when"/>
                             </xsl:call-template>
-                        </xsl:if>
+                        </xsl:if>-->
                         <xsl:copy-of select="ancestor::tei:measureGrp/descendant::tei:measure[not(@commodity='currency')]"/>
                         <xsl:apply-templates select="." mode="m_enrich-dates"/>
                     </tei:measureGrp>
@@ -126,11 +136,20 @@
     
     <xsl:template name="t_add-durations">
         <xsl:param name="p_when"/>
-        <xsl:analyze-string select="$p_when" regex="^\d+$">
-            <xsl:matching-substring>
-                <xsl:attribute name="dur" select="'P1Y'"/>
-            </xsl:matching-substring>
-        </xsl:analyze-string>
+        <xsl:choose>
+            <!-- thest if $p_when is a four-digit number, i.e. refers to a full year -->
+            <xsl:when test="matches($p_when, '^\d+$')">
+                <!--<xsl:analyze-string select="$p_when" regex="^\d+$">
+                    <xsl:matching-substring>-->
+                        <xsl:attribute name="dur" select="'P1Y'"/>
+                    <!--</xsl:matching-substring>
+                </xsl:analyze-string>-->
+            </xsl:when>
+            <!-- test for a specific publication, which might be known for having published prices for fixed periods of time, such as Ḥadīqat al-Akhbār and its weekly prices -->
+            <xsl:when test="contains(lower-case(ancestor::tss:reference/tss:characteristics/tss:characteristic[@name='publicationTitle']),'ḥadīqat al-akhbār')">
+                <xsl:attribute name="dur" select="'P7D'"/>
+            </xsl:when>
+        </xsl:choose>
     </xsl:template>
 
     <!-- add location information -->
@@ -142,7 +161,7 @@
                 <xsl:for-each select="descendant::tei:measure[@commodity='currency'][@location]">
                     <tei:measureGrp type="split">
                         <xsl:apply-templates select="@*" mode="m_enrich-locations"/>
-                        <xsl:attribute name="location" select="@location"/>
+                        <xsl:apply-templates select="@location" mode="m_enrich-locations"/>
                         <xsl:copy-of select="ancestor::tei:measureGrp/descendant::tei:measure[not(@commodity='currency')]"/>
                         <xsl:apply-templates select="." mode="m_enrich-locations"/>
                     </tei:measureGrp>
@@ -167,9 +186,36 @@
         </xsl:variable>
         <xsl:copy>
             <xsl:apply-templates select="@*" mode="m_enrich-locations"/>
-            <xsl:attribute name="location" select="$v_location"/>
+            <xsl:attribute name="location">
+                <!-- regularise the location's name -->
+                <xsl:call-template name="t_normalize-toponyms">
+                    <xsl:with-param name="p_toponym" select="$v_location"/>
+                </xsl:call-template>
+            </xsl:attribute>
             <xsl:apply-templates select="node()" mode="m_enrich-locations"/>
         </xsl:copy>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <!-- this template checks a TEI gazetteer for authoritative names of locations based on the input of toponym and target language -->
+    <xsl:template name="t_normalize-toponyms">
+        <xsl:param name="p_toponym"/>
+        <xsl:param name="p_lang" select="$p_lang-target"/>
+        <!-- where is the gazetteer? -->
+        <xsl:param name="p_gazetteer" select="$p_file-gazetteer"/>
+        <xsl:variable name="v_place" select="$p_gazetteer/descendant::tei:place[tei:placeName/string()=$p_toponym][1]"/>
+        <xsl:choose>
+            <xsl:when test="$v_place/tei:placeName[@xml:lang=$p_lang]">
+                <xsl:value-of select="$v_place/tei:placeName[@xml:lang=$p_lang][1]/string()"/>
+            </xsl:when>
+            <!-- fallback option 1: use regularised toponym from the Gazetteer -->
+            <xsl:when test="$v_place/tei:placeName">
+                <xsl:value-of select="$v_place/tei:placeName[not(@xml:lang='ar')][1]/string()"/>
+            </xsl:when>
+            <!-- fallback option 2: return input -->
+            <xsl:otherwise>
+                <xsl:value-of select="$p_toponym"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
