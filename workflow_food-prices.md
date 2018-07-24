@@ -72,6 +72,8 @@ I settled on the following TEI elements and attributes
     ```
 
     + `@dur`: in order to specify a duration, one can use the `@dur` attribute whith the datatype [`xs:duration`](https://docstore.mik.ua/orelly/xml/schema/ch16_01.htm#ch16-77046) / [`teidata.duration.w3c`](http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-teidata.duration.w3c.html).
+    
+    >The lexical space of `xs:duration` is the format defined by ISO 8601 under the form "PnYnMnDTnHnMnS," in which the capital letters are delimiters and can be omitted when the corresponding member is not used. 
 
 4. *Spatial information*: Since non-metrical measures varied between places and since source can record prices from more than one location, the location can be specified with a custom `@location` attribute on `<measureGrp>` and `<measure>` elements denoting the price. If all measures relate to the same place, the attributes go on the wrapping `<measureGrp>`. `@location` accepts simple toponyms.
 
