@@ -119,7 +119,7 @@
                                                 </paramDescriptor>
                                             </field>
                                             <field name="value">
-                                                <String>false()</String>
+                                                <String>true()</String>
                                             </field>
                                             <field name="hasXPathValue">
                                                 <Boolean>true</Boolean>
