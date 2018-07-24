@@ -20,6 +20,19 @@ data.Prices.Trends <- read.csv("csv/qualitative-prices.csv", header=TRUE, sep = 
 
 ## amend data.Prices.Exports to data.Prices
 data.Prices <- plyr::rbind.fill(data.Prices, data.Prices.Exports)
+## toponyms have not been normalised in the source data, this should be done now for later filtering.
+## load location data
+data.Locations <- read.csv("csv/locations.csv", header=TRUE, sep = ",", quote = "\"")
+## join data.Price with data.Locations
+data.Prices <- data.Prices %>% 
+  dplyr::left_join(data.Locations,  by =  c("schema.Place" = "schema.Place"))
+
+## find a way to unify toponyms: use the identifier to look up an authoritative toponym
+df1 <- data.Prices
+df2 <- data.Locations %>%
+  dplyr::filter(schema.language=="en")
+  
+df1$name.en <- with(df2, schema.Place[match(df1$schema.identifier, schema.identifier)])
 
 # add daily data based on the 'duration' column
 
