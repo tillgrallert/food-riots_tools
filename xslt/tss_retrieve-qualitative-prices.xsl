@@ -10,6 +10,8 @@
     <xsl:output method="xml" encoding="UTF-8" omit-xml-declaration="no" name="xml" indent="yes"/>
 
     <!-- this stylesheet can be run on any XML input. The actual data set is provided by $v_data-source -->
+    
+    <xsl:include href="tei-measure_parameters.xsl"/>
 
     <xsl:param name="p_test" select="true()"/>
 
@@ -40,61 +42,14 @@
         <xsl:apply-templates select="$v_data-source/descendant::tss:keyword" mode="m_tss-to-csv"/>
     </xsl:variable>
     
-    <xsl:template match="tss:keyword[text() = 'prices: high']" mode="m_tss-to-csv">
+    <xsl:template match="tss:keyword[string() = ('prices: high', 'prices: rising', 'prices: stable', 'prices: falling', 'prices: low', 'prices: normal') ]" mode="m_tss-to-csv">
         <!-- publication date -->
         <xsl:apply-templates select="ancestor::tss:reference" mode="m_establish-date"/><xsl:value-of select="$p_separator"/>
         <!-- publication place -->
-        <xsl:value-of select="ancestor::tss:reference/tss:characteristics/tss:characteristic[@name='publicationCountry']"/><xsl:value-of select="$p_separator"/>
-        <!-- source identifier -->
-        <xsl:value-of select="ancestor::tss:reference/tss:characteristics/tss:characteristic[@name='UUID']"/><xsl:value-of select="$p_separator"/>
-        <!-- tag value -->
-        <xsl:value-of select="."/><xsl:value-of select="$p_new-line"/>
-    </xsl:template>
-    <xsl:template match="tss:keyword[text() = 'prices: rising']" mode="m_tss-to-csv">
-        <!-- publication date -->
-        <xsl:apply-templates select="ancestor::tss:reference" mode="m_establish-date"/><xsl:value-of select="$p_separator"/>
-        <!-- publication place -->
-        <xsl:value-of select="ancestor::tss:reference/tss:characteristics/tss:characteristic[@name='publicationCountry']"/><xsl:value-of select="$p_separator"/>
-        <!-- source identifier -->
-        <xsl:value-of select="ancestor::tss:reference/tss:characteristics/tss:characteristic[@name='UUID']"/><xsl:value-of select="$p_separator"/>
-        <!-- tag value -->
-        <xsl:value-of select="."/><xsl:value-of select="$p_new-line"/>
-    </xsl:template>
-    <xsl:template match="tss:keyword[text() = 'prices: stable']" mode="m_tss-to-csv">
-        <!-- publication date -->
-        <xsl:apply-templates select="ancestor::tss:reference" mode="m_establish-date"/><xsl:value-of select="$p_separator"/>
-        <!-- publication place -->
-        <xsl:value-of select="ancestor::tss:reference/tss:characteristics/tss:characteristic[@name='publicationCountry']"/><xsl:value-of select="$p_separator"/>
-        <!-- source identifier -->
-        <xsl:value-of select="ancestor::tss:reference/tss:characteristics/tss:characteristic[@name='UUID']"/><xsl:value-of select="$p_separator"/>
-        <!-- tag value -->
-        <xsl:value-of select="."/><xsl:value-of select="$p_new-line"/>
-    </xsl:template>
-    <xsl:template match="tss:keyword[text() = 'prices: falling']" mode="m_tss-to-csv">
-        <!-- publication date -->
-        <xsl:apply-templates select="ancestor::tss:reference" mode="m_establish-date"/><xsl:value-of select="$p_separator"/>
-        <!-- publication place -->
-        <xsl:value-of select="ancestor::tss:reference/tss:characteristics/tss:characteristic[@name='publicationCountry']"/><xsl:value-of select="$p_separator"/>
-        <!-- source identifier -->
-        <xsl:value-of select="ancestor::tss:reference/tss:characteristics/tss:characteristic[@name='UUID']"/><xsl:value-of select="$p_separator"/>
-        <!-- tag value -->
-        <xsl:value-of select="."/><xsl:value-of select="$p_new-line"/>
-    </xsl:template>
-    <xsl:template match="tss:keyword[text() = 'prices: low']" mode="m_tss-to-csv">
-        <!-- publication date -->
-        <xsl:apply-templates select="ancestor::tss:reference" mode="m_establish-date"/><xsl:value-of select="$p_separator"/>
-        <!-- publication place -->
-        <xsl:value-of select="ancestor::tss:reference/tss:characteristics/tss:characteristic[@name='publicationCountry']"/><xsl:value-of select="$p_separator"/>
-        <!-- source identifier -->
-        <xsl:value-of select="ancestor::tss:reference/tss:characteristics/tss:characteristic[@name='UUID']"/><xsl:value-of select="$p_separator"/>
-        <!-- tag value -->
-        <xsl:value-of select="."/><xsl:value-of select="$p_new-line"/>
-    </xsl:template>
-    <xsl:template match="tss:keyword[text() = 'prices: normal']" mode="m_tss-to-csv">
-        <!-- publication date -->
-        <xsl:apply-templates select="ancestor::tss:reference" mode="m_establish-date"/><xsl:value-of select="$p_separator"/>
-        <!-- publication place -->
-        <xsl:value-of select="ancestor::tss:reference/tss:characteristics/tss:characteristic[@name='publicationCountry']"/><xsl:value-of select="$p_separator"/>
+        <xsl:call-template name="t_normalize-toponyms">
+            <xsl:with-param name="p_toponym" select="ancestor::tss:reference/tss:characteristics/tss:characteristic[@name='publicationCountry']"/>
+        </xsl:call-template>
+        <xsl:value-of select="$p_separator"/>
         <!-- source identifier -->
         <xsl:value-of select="ancestor::tss:reference/tss:characteristics/tss:characteristic[@name='UUID']"/><xsl:value-of select="$p_separator"/>
         <!-- tag value -->
@@ -134,7 +89,7 @@
     
 
     <xsl:variable name="v_csv-head">
-        <xsl:text>date, location, source, tag</xsl:text><xsl:value-of select="$p_new-line"/>
+        <xsl:text>schema:date,schema:Place,source,tag</xsl:text><xsl:value-of select="$p_new-line"/>
     </xsl:variable>    
 
     <xsl:template match="/">
@@ -143,5 +98,27 @@
                     <xsl:value-of select="$v_csv-head"/>
                     <xsl:copy-of select="$v_refs-qualiative-price-data"/>
                 </xsl:result-document>
+    </xsl:template>
+    
+    <!-- this template checks a TEI gazetteer for authoritative names of locations based on the input of toponym and target language -->
+    <xsl:template name="t_normalize-toponyms">
+        <xsl:param name="p_toponym"/>
+        <xsl:param name="p_lang" select="$p_lang-target"/>
+        <!-- where is the gazetteer? -->
+        <xsl:param name="p_gazetteer" select="$p_file-gazetteer"/>
+        <xsl:variable name="v_place" select="$p_gazetteer/descendant::tei:place[tei:placeName/string()=$p_toponym][1]"/>
+        <xsl:choose>
+            <xsl:when test="$v_place/tei:placeName[@xml:lang=$p_lang]">
+                <xsl:value-of select="$v_place/tei:placeName[@xml:lang=$p_lang][1]/string()"/>
+            </xsl:when>
+            <!-- fallback option 1: use regularised toponym from the Gazetteer -->
+            <xsl:when test="$v_place/tei:placeName">
+                <xsl:value-of select="$v_place/tei:placeName[not(@xml:lang='ar')][1]/string()"/>
+            </xsl:when>
+            <!-- fallback option 2: return input -->
+            <xsl:otherwise>
+                <xsl:value-of select="$p_toponym"/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 </xsl:stylesheet>
