@@ -144,10 +144,10 @@ data.Prices.Newspapers <- subset(data.Prices,commodity=="newspaper")
 # calculate means for periods
 ## annual means: not used
 ## data frame with annual mean for min and max prices
-data.Prices.Wheat.Mean.Annual <- merge(
-  aggregate(price.min ~ year, data=data.Prices.Wheat.Period, FUN = mean),
-  aggregate(price.max ~ year, data=data.Prices.Wheat.Period, FUN = mean), 
-  by=c("year"), all=T)
+#data.Prices.Wheat.Mean.Annual <- merge(
+#  aggregate(price.min ~ year, data=data.Prices.Wheat.Period, FUN = mean),
+#  aggregate(price.max ~ year, data=data.Prices.Wheat.Period, FUN = mean), 
+#  by=c("year"), all=T)
 ## use the more powerful dplyr package
 data.Prices.Wheat.Summary.Annual <- data.Prices.Wheat %>%
   group_by(year) %>%
@@ -192,7 +192,7 @@ data.Prices.Wheat.Summary.Monthly <- data.Prices.Wheat %>%
 
 ## data frame with daily mean for min and max prices
 data.Prices.Wheat.Summary.Daily <- data.Prices.Wheat %>%
-	group_by(date) %>%
+	group_by(schema.date) %>%
 	summarise(count=n(), 
 	          mean.price.min=mean(price.min, na.rm = TRUE),
 	          mean.price.max=mean(price.max, na.rm = TRUE),
@@ -259,7 +259,7 @@ data.Prices.Barley.Summary.Monthly <- data.Prices.Barley %>%
 ## function to create subsets for periods
 func.Period.Date <- function(f,x,y){f[f$schema.date >= x & f$schema.date <= y,]}
 func.Period.Year <- function(f,x,y){f[f$year >= x & f$year <= y,]}
-date.Start <- anydate("1874-01-01")
+date.Start <- anydate("1855-01-01")
 date.Stop <- anydate("1916-12-31")
 data.Prices.Wheat.Period <- func.Period.Date(data.Prices.Wheat,date.Start,date.Stop)
 data.Prices.Wheat.Daily.Period <- func.Period.Date(data.Prices.Wheat.Summary.Daily,date.Start,date.Stop)
@@ -320,32 +320,32 @@ labels.Wheat <- c(labs(title="Wheat prices in Bilad al-Sham",
                              y="Prices (piaster/kile)"))
 ## vertical lines for bread riots
 layer.Events.FoodRiots <- c(geom_segment(data = data.Events.FoodRiots.Period, 
-  aes(x = date, xend = date, y = 0, yend = 24, colour = type),
+  aes(x = schema.date, xend = schema.date, y = 0, yend = 24, colour = type),
   size = 1, show.legend = T, na.rm = T, linetype=1)) # linetypes: 1=solid, 2=dashed)
 layer.Events.FoodRiots.Small <- c(geom_segment(data = data.Events.FoodRiots.Period, 
-  aes(x = date, xend = date, y = 0, yend = 1, colour = type),
+  aes(x = schema.date, xend = schema.date, y = 0, yend = 1, colour = type),
   size = 1, show.legend = T, na.rm = T, linetype=1)) # linetypes: 1=solid, 2=dashed)
 # Wheat prices
 ## scater plot of minimum prices
 layer.Wheat.Price.Min.Scatter <- c(geom_point(data = data.Prices.Wheat.Period, 
-  aes(x = date, # select period: date, year, quarter, month
+  aes(x = schema.date, # select period: date, year, quarter, month
       y = price.min, colour="price.min"),
   na.rm=TRUE, size=2, pch=3))
 ## scatter plot of maximum prices
 layer.Wheat.Price.Max.Scatter <- c(geom_point(data = data.Prices.Wheat.Period, 
-  aes(x=date, y=price.max, colour = "price.max"),
+  aes(x = schema.date, y=price.max, colour = "price.max"),
   na.rm=TRUE, size=2, pch=3))
 ## scatter plot of average prices
 layer.Wheat.Price.Avg.Scatter <- c(geom_point(data = data.Prices.Wheat.Period, 
-  aes(x=date, y=price.avg, colour = "price.avg"),
+  aes(x = schema.date, y=price.avg, colour = "price.avg"),
   na.rm=TRUE, size=2, pch=3))
 ## scatter plot of daily average prices
 layer.Wheat.Price.Avg.Daily.Scatter <- c(geom_point(data = data.Prices.Wheat.Daily.Period, 
-  aes(x = date, y = mean.price.avg, colour = "price.avg"),
+  aes(x = schema.date, y = mean.price.avg, colour = "price.avg"),
   na.rm=TRUE, size=2, pch=3))
 ## line plot of daily average prices
 layer.Wheat.Price.Avg.Daily.Line <- c(geom_line(data = data.Prices.Wheat.Daily.Period, 
-  aes(x = date, y = mean.price.avg, colour = "price.avg"),
+  aes(x = schema.date, y = mean.price.avg, colour = "price.avg"),
   na.rm=TRUE))
 ## box plot of average prices, aggregated by year
 layer.Wheat.Price.Avg.Box <- c(geom_boxplot(data = data.Prices.Wheat.Period,
@@ -365,7 +365,7 @@ layer.Bread.Price.Avg.Box <- c(geom_boxplot(data = data.Prices.Bread.Period,
   group = year,y = price.avg, colour = "price.avg"), na.rm = T))
 ## scatter plot of average prices
 layer.Bread.Price.Avg.Scatter <- c(geom_point(data = data.Prices.Bread.Period, 
-  aes(x=date, y=price.avg, colour = "price.avg"),
+  aes(x = schema.date, y=price.avg, colour = "price.avg"),
   na.rm=TRUE, size=2, pch=3))
 ## layer for line of just price
 layer.Bread.Price.Threshold <- c(geom_segment(data = data.Prices.Bread.Period, 
@@ -379,22 +379,22 @@ layer.Bread.Price.Threshold <- c(geom_segment(data = data.Prices.Bread.Period,
 size.Dot <- 10
 alpha.Dot <- 0.3
 layer.Trend.High <- c(geom_point(data = filter(data.Prices.Trends.Period, tag=="prices: high"),
-  aes(x = date, y = size.Dot / 5 * 8, fill = tag),
+  aes(x = schema.date, y = size.Dot / 5 * 8, fill = tag),
   #fill = "#871020",
   shape=21, size=size.Dot, alpha = alpha.Dot))
 layer.Trend.Rising <- c(geom_point(data = filter(data.Prices.Trends.Period, tag=="prices: rising"),
-  aes(x = date, y = size.Dot / 5 * 6, fill = tag), 
+  aes(x = schema.date, y = size.Dot / 5 * 6, fill = tag), 
   #fill = "#F7240C",
   shape=21, size=size.Dot, alpha = alpha.Dot))
 layer.Trend.Normal <- c(geom_point(data = filter(data.Prices.Trends.Period, tag=="prices: normal"),
-  aes(x = date, y = size.Dot / 5 * 4, fill = tag),
+  aes(x = schema.date, y = size.Dot / 5 * 4, fill = tag),
   shape=21, size=size.Dot, alpha = alpha.Dot))
 layer.Trend.Falling <- c(geom_point(data = filter(data.Prices.Trends.Period, tag=="prices: falling"),
-  aes(x = date, y = size.Dot / 5 * 2, fill = tag),
+  aes(x = schema.date, y = size.Dot / 5 * 2, fill = tag),
   #fill = "#91F200",
   shape=21, size=size.Dot, alpha = alpha.Dot))
 layer.Trend.Low <- c(geom_point(data = filter(data.Prices.Trends.Period, tag=="prices: low"),
-  aes(x = date, y = size.Dot / 5 * 0, fill = tag),
+  aes(x = schema.date, y = size.Dot / 5 * 0, fill = tag),
   #fill = "#1B8500",
   shape=21, size=size.Dot, alpha = alpha.Dot))
 ## annual cycle
@@ -468,7 +468,7 @@ plot.Wheat.Daily.Mean.Scatter <- plot.Base +
   layer.Wheat.Price.Avg.Daily.Scatter +
 # layer with connecting lines between min and max prices
 #geom_segment(data = data.Prices.Wheat.Daily.Period, 
-#             aes(x = date, xend = date, y = mean.price.min, yend = mean.price.max),
+#             aes(x = schema.date, xend = schema.date, y = mean.price.min, yend = mean.price.max),
 #             size = 0.3, show.legend = F, na.rm = T, linetype=1) # linetypes: 1=solid, 2=dashed,
   # add labels
   labs(title = paste("Wheat prices in Bilād al-Shām","between",year(date.Start), "and", year(date.Stop)), 
@@ -636,19 +636,19 @@ ggsave(filename = paste("plots/rplot_prices-wheat-", period.String ,"_box-plot-t
 # percentage of difference from the mean
 plot.Food.Deviance <- plot.Base +
   geom_segment(data = data.Events.FoodRiots.Period, 
-               aes(x = date, xend = date, y = -100, yend = -50, colour = type),
+               aes(x = schema.date, xend = schema.date, y = -100, yend = -50, colour = type),
                size = 1, show.legend = T, na.rm = T, linetype=1)+
   # first layer: min prices of wheat
   geom_line(data = data.Prices.Wheat.Daily.Period, 
-            aes(x = date,y = dmp.avg, linetype = "wheat"),
+            aes(x = schema.date,y = dmp.avg, linetype = "wheat"),
             na.rm=TRUE, color="black") +
   # second layer: min prices of barley
   geom_line(data = data.Prices.Barley.Period, 
-            aes(x = date,y = dmp.avg, linetype = "barley"),
+            aes(x = schema.date,y = dmp.avg, linetype = "barley"),
             na.rm=TRUE, color="black") +
   # second layer: min prices of bread
   geom_line(data = data.Prices.Bread.Period, 
-            aes(x = date,y = dmp.avg, linetype = "bread"),
+            aes(x = schema.date,y = dmp.avg, linetype = "bread"),
             na.rm=TRUE, color="black") +
   labs(title=paste("Food prices in Bilād al-Shām","between", year(date.Start), "and", year(date.Stop)),
        subtitle="Wheat, barley and bread prices", 
@@ -724,18 +724,18 @@ plot.Wheat.Jitter <- plot.Base+
        y="Prices (piaster/kile)") +
   # first layer: min prices
   geom_jitter(data = data.Prices.Wheat.Period, 
-              aes(x = date, # select period: date, year, quarter, month
+              aes(x = schema.date, # select period: date, year, quarter, month
                   y = price.min),
               na.rm=TRUE,width = 100, # width controls the jitter around the original position. High values are required for my data
               size=1) +
   # second layer: max prices
   geom_jitter(data = data.Prices.Wheat.Period, 
-              aes(x = date, # select period: date, year, quarter, month
+              aes(x = schema.date, # select period: date, year, quarter, month
                   y = price.max),
               na.rm=TRUE,width = 100, # width controls the jitter around the original position. High values are required for my data
               size=1) +
   # second layer: fitted line
-  stat_smooth(data = data.Prices.Wheat.Period, aes(x = date, # select period: date, year, quarter, month
+  stat_smooth(data = data.Prices.Wheat.Period, aes(x = schema.date, # select period: date, year, quarter, month
                                                 y = price.min),
               colour="green",na.rm = TRUE,
               method="loess", # methods are "lm", "loess" ...
@@ -751,7 +751,7 @@ plot.Wheat.Annual.Cycle.Scatter <- ggplot()+
              aes(x = date.common, y = price.min),
              na.rm=TRUE, size=2, pch=3, color="black")+
   geom_point(data = data.Prices.Wheat.Period, 
-             aes(x = date.common, y = price.max),
+             aes(x = schema.date, y = price.max),
              na.rm=TRUE, size=2, pch=3, color="black")+
   scale_x_date(breaks=date_breaks("1 month"), 
                labels=date_format("%d-%b")) + # if plotting more than one graph, it is helpful to provide the same limits for each
