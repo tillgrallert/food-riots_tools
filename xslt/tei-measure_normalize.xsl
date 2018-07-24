@@ -14,8 +14,6 @@
     
     <xsl:param name="p_debug" select="true()"/>
     <xsl:param name="p_normalize-by-location" select="true()"/>
-    <xsl:param name="p_file-gazetteer" select="document('/Volumes/Dessau HD/BachUni/BachBibliothek/GitHub/OpenArabicPE/authority-files/data/tei/gazetteer_levant-phd.TEIP5.xml')"/>
-    <xsl:param name="p_lang-target" select="'en'"/>
 
     <!-- identity transform -->
     <xsl:template match="node() | @*" mode="m_enrich-dates">

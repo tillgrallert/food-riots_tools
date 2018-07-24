@@ -5,6 +5,9 @@
     xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:html="http://www.w3.org/1999/xhtml"
     exclude-result-prefixes="xs" version="2.0">
     
+    <xsl:param name="p_file-gazetteer" select="document('/Volumes/Dessau HD/BachUni/BachBibliothek/GitHub/OpenArabicPE/authority-files/data/tei/gazetteer_levant-phd.TEIP5.xml')"/>
+    <xsl:param name="p_lang-target" select="'en'"/>
+    
     <xsl:param name="p_measures">
         <!-- establish the type of measures encountered in @unit -->
         <!-- NOTE: do not currently (2018-06-22) record @unit values for currencies for which there are no conversion rates later in this file -->
