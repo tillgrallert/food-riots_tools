@@ -14,7 +14,9 @@
         <tei:measureGrp type="volume">
             <tei:measure unit="shunbul"/>
             <tei:measure unit="madd"/>
-            <tei:measure unit="kile"/>
+            <tei:measure unit="kile">the local kile</tei:measure>
+            <tei:measure unit="kile-ist">The old Istanbuli kilesi</tei:measure>
+            <tei:measure unit="kile-oe">The new metric official kile for the Ottoman Empire</tei:measure>
             <tei:measure unit="cift"/>
             <tei:measure unit="ghirara"/>
             <tei:measure unit="tchinik"/>
@@ -34,19 +36,19 @@
             <tei:measure unit="wazna"/>
             <!-- British -->
             <!-- if not otherwise noted, the lb refers to pound avoirdupois -->
-            <tei:measure unit="dr"/>
-            <tei:measure unit="oz"/>
-            <tei:measure unit="lb"/>
-            <tei:measure unit="st"/>
-            <tei:measure unit="qr"/>
-            <tei:measure unit="cwt"/>
-            <tei:measure unit="ton"/>
+            <tei:measure unit="dr">dram</tei:measure>
+            <tei:measure unit="oz">ounce</tei:measure>
+            <tei:measure unit="lb">pound</tei:measure>
+            <tei:measure unit="st">stone</tei:measure>
+            <tei:measure unit="qr">quarter</tei:measure>
+            <tei:measure unit="cwt">hundredweight</tei:measure>
+            <tei:measure unit="ton">ton</tei:measure>
         </tei:measureGrp>
         <tei:measureGrp type="currency">
-            <tei:measure unit="ops"/>
-            <tei:measure unit="lt"/>
-            <tei:measure unit="ltq"/>
-            <tei:measure unit="mec"/>
+            <tei:measure unit="ops">Ottoman silver piasters, ghurūsh</tei:measure>
+            <tei:measure unit="lt">Ottoman gold pound, līra</tei:measure>
+            <tei:measure unit="ltq">same</tei:measure>
+            <tei:measure unit="mec">Ottoman silver mecidiye</tei:measure>
             <!--<tei:measure unit="gbp"/>
             <tei:measure unit="frc"/>-->
         </tei:measureGrp>
@@ -58,7 +60,7 @@
             <tei:measure unit="cift" quantity="1"/>
         </tei:measureGrp>
         <!-- legal British volume measures, 1826-1870; the imperial gallon was established in 1824 -->
-        <tei:measureGrp type="weight" when="1826">
+        <tei:measureGrp type="volume" when="1826">
             <tei:measure unit="bushel" quantity="0.125">bushel = 8 gallon</tei:measure>
             <tei:measure unit="peck" quantity="0.5">peck = 2 gallon</tei:measure>
             <tei:measure unit="gallon" quantity="1">gallon (gal)</tei:measure>
@@ -88,8 +90,9 @@
             <tei:measure unit="kile" quantity="3"/>
         </tei:measureGrp>
         <tei:measureGrp type="volume" location="Aleppo" when="1860-02-29" source="226DCF23-CF34-4000-B441-B886E11607E5">
-            <tei:measure unit="shunbul" quantity="1"/>
-            <tei:measure unit="kile" quantity="2.5">2.5 Istanbul kilesi</tei:measure>
+            <tei:measure unit="shunbul" quantity="0.067934782">1 shunbul = 2.5 Istanbul kilesi</tei:measure>
+            <tei:measure unit="kile-ist" quantity="0.027173913">The old Istanbul kilesi = 36,8 l</tei:measure>
+            <tei:measure unit="l" quantity="1"/>
         </tei:measureGrp>
         <!-- Damascus  -->
         <tei:measureGrp type="volume" location="Damascus" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
@@ -111,29 +114,29 @@
         </tei:measureGrp>
         <!-- Gaza -->
         <tei:measureGrp type="volume" location="Gaza" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
-            <!-- Gaza used the old Istanbul kilesi -->
-            <tei:measure unit="kile" quantity="10"/>
-            <tei:measure unit="tchinik" quantity="37"/>
+            <tei:measure unit="tchinik" quantity="0.100543478">1 tchinik = 3,7 kile</tei:measure>
+            <tei:measure unit="kile" quantity="0.027173913">Gaza used the old Istanbul kilesi</tei:measure>
+            <tei:measure unit="kile-ist" quantity="0.027173913">The old Istanbul kilesi = 36,8 l</tei:measure>
+            <tei:measure unit="l" quantity="1"/>
         </tei:measureGrp>
         <!-- Haifa -->
         <tei:measureGrp type="volume" location="Haifa" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
-            <!-- Haifa used the Istanbul kilesi -->
-            <tei:measure unit="kile" quantity="1"/>
+            <tei:measure unit="kile" quantity="0.027173913">Haifa used the Istanbul kilesi</tei:measure>
+            <tei:measure unit="kile-ist" quantity="0.027173913">The old Istanbul kilesi = 36,8 l</tei:measure>
+            <tei:measure unit="l" quantity="1"/>
         </tei:measureGrp>
         <!-- Istanbul -->
         <tei:measureGrp type="volume" location="Istanbul" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
-            <tei:measure unit="kileNew" quantity="1"/>
-            <tei:measure unit="l" quantity="40"/>
-        </tei:measureGrp>
-        <tei:measureGrp type="volume" location="Istanbul" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
-            <tei:measure unit="kileOld" quantity="1">Istanbul kilesi</tei:measure>
-            <tei:measure unit="l" quantity="36.8"/>
+            <tei:measure unit="kile-oe" quantity="0.025">the new standard kile = 40 l</tei:measure>
+            <tei:measure unit="kile-ist" quantity="0.027173913">The old Istanbul kilesi = 36,8 l</tei:measure>
+            <tei:measure unit="l" quantity="1"/>
         </tei:measureGrp>
         <!-- Jaffa -->
-        <tei:measureGrp type="volume" location="Haifa" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
-            <!-- Jaffa used the old Istanbul kilesi -->
-            <tei:measure unit="kile" quantity="10"/>
-            <tei:measure unit="tchinik" quantity="37"/>
+        <tei:measureGrp type="volume" location="Jaffa" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
+            <tei:measure unit="tchinik" quantity="0.100543478">1 tchinik = 3,7 kile</tei:measure>
+            <tei:measure unit="kile" quantity="0.027173913">Jaffa used the old Istanbul kilesi</tei:measure>
+            <tei:measure unit="kile-ist" quantity="0.027173913">The old Istanbul kilesi = 36,8 l</tei:measure>
+            <tei:measure unit="l" quantity="1"/>
         </tei:measureGrp>
         <!-- Jerusalem -->
         <tei:measureGrp type="volume" location="Jerusalem" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
