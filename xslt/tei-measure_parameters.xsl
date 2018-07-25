@@ -159,10 +159,15 @@
             <tei:measure unit="kile" quantity="2.5"/>
         </tei:measureGrp>
         <!-- Syria / Bilād al-Shām -->
+        <tei:measureGrp type="volume" location="Syria" source="99DA2CDE-4BF4-4413-8CC3-E8F7FD14610A" when="1849">
+            <tei:measure unit="shunbul" quantity="1"/>
+            <tei:measure unit="madd" quantity="6"/>
+        </tei:measureGrp>
         <tei:measureGrp type="volume" location="Syria" source="243D3AEC-773E-450D-A993-A1B8321A3B7D" when="1873">
             <tei:measure unit="ghirara" quantity="1"/>
             <tei:measure unit="kile" quantity="36"/>
         </tei:measureGrp>
+
         
 
         <!-- weights -->
@@ -208,6 +213,10 @@
             <tei:measure unit="qintar" quantity="1"/>
         </tei:measureGrp>
         <!-- Aleppo -->
+        <tei:measureGrp type="weight" location="Aleppo" source="99DA2CDE-4BF4-4413-8CC3-E8F7FD14610A" when="1849">
+            <tei:measure unit="qintar" quantity="0.005555556">qinṭar = 180 okka</tei:measure>
+            <tei:measure unit="okka" quantity="1"/>
+        </tei:measureGrp>
         <tei:measureGrp type="weight" location="Aleppo" source="2B2DFE93-9930-4C62-92B6-56F2E166130F" when="1889">
             <tei:measure unit="qintar" quantity="0.005">qinṭar = 200 okka</tei:measure>
             <tei:measure unit="ratl" quantity="0.5"/>
@@ -246,6 +255,10 @@
         <tei:measureGrp type="weight" location="Damascus" source="B32395CE-C4C1-4446-936C-DA22920B77E6" when="1749">
             <tei:measure unit="qintar" quantity="1"/>
             <tei:measure unit="kg" quantity="185"/>
+        </tei:measureGrp>
+        <tei:measureGrp type="weight" location="Damascus" source="99DA2CDE-4BF4-4413-8CC3-E8F7FD14610A" when="1849">
+            <tei:measure unit="qintar" quantity="0.005">qinṭar = 200 okka</tei:measure>
+            <tei:measure unit="okka" quantity="1"/>
         </tei:measureGrp>
         <tei:measureGrp type="weight" location="Damascus" source="4F7E63B5-6E4A-4F96-BAF2-B7A46F292462" when="1875">
             <tei:measure unit="batman" quantity="0.166666667"/>
@@ -326,6 +339,12 @@
             <tei:measure unit="kg" quantity="1.282945"/>
         </tei:measureGrp>
         <!-- Syria / Bilād al-Shām -->
+        <tei:measureGrp type="weight" location="Syria" source="99DA2CDE-4BF4-4413-8CC3-E8F7FD14610A" when="1849">
+            <tei:measure unit="ratl" quantity="0.5"/>
+            <tei:measure unit="okka" quantity="1"/>
+            <tei:measure unit="dirham" quantity="400">errenously quoted as 1 okka = 100 dirham</tei:measure>
+            <tei:measure unit="kg" quantity="1.282945">312 dirham = 1 French kg</tei:measure>
+        </tei:measureGrp>
         <tei:measureGrp type="weight" location="Syria" source="243D3AEC-773E-450D-A993-A1B8321A3B7D" when="1873">
             <tei:measure unit="ratl" quantity="0.5"/>
             <tei:measure unit="okka" quantity="1"/>
