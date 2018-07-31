@@ -34,7 +34,6 @@ data.Locations <- read.csv("csv/locations.csv", header=TRUE, sep = ",", quote = 
 
 ## convert data types
 ## anydate() converts dates from Y0001 to Y0001-M01-D01
-data.Events.FoodRiots$schema.date <- anydate(data.Events.FoodRiots$schema.date)
 data.Exports$schema.date <- anydate(as.factor(data.Exports$schema.date))
   
 ## add geo-coordinates based on data.Locations
