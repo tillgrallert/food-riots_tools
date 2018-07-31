@@ -104,12 +104,19 @@ data.Prices <- data.Prices %>%
                 currency = unit.2)%>% # rename the columns relevant to later operations
   dplyr::select(-commodity.2)%>% # omit unnecessary column
   arrange(schema.date)
+# filter for prices in Ottoman piasters
 data.Prices.Ops <- data.Prices %>%
   dplyr::filter(currency=="ops") %>% # filter for rows containing prices in Ottoman Piasters only
   dplyr::select(-commodity.3, -unit.3) %>% # omit columns not needed
   dplyr::mutate(price.avg = case_when(price.max!='' ~ (price.min + price.max)/2, TRUE ~ price.min)) # add average between minimum and maximum prices
+# filter for prices in GBP
+data.Prices.Gbp <- data.Prices %>%
+  dplyr::filter(currency=="gbp") %>% # filter for rows containing prices in Ottoman Piasters only
+  dplyr::select(-commodity.3, -unit.3) %>% # omit columns not needed
+  dplyr::mutate(price.avg = case_when(price.max!='' ~ (price.min + price.max)/2, TRUE ~ price.min)) # add average between minimum and maximum prices
 
 # create a subset of rows based on conditions; this can also be achieved with the filter() function from dplyr
+## wheat prices
 data.Prices.Wheat <- subset(data.Prices.Ops,commodity=="wheat" & unit=="kile")
   ## descriptive stats
   # the computed arithmetic mean [mean(data.Prices.Wheat$price.min, na.rm=T, trim = 0.1)] based on the observed values
@@ -126,6 +133,19 @@ data.Prices.Wheat <- data.Prices.Wheat %>%
                 dmp.avg = 100 * dm.avg / mean(price.avg, na.rm=T, trim = 0.1))
   ## write result to file
   write.table(data.Prices.Wheat, "csv/summary/prices_wheat-kile.csv" , row.names = F, quote = T , sep = ",")
+  
+data.Prices.Wheat.Gbp <- subset(data.Prices.Gbp,commodity=="wheat" & unit=="kg")%>%
+  ## deviation from the mean
+  dplyr::mutate(dm.min = (price.min - mean(price.min, na.rm=T, trim = 0.1)),
+    dm.max = (price.max - mean(price.max, na.rm=T, trim = 0.1)),
+    dm.avg = (price.avg - mean(price.avg, na.rm=T, trim = 0.1))) %>%
+    ## the same as percentages of mean
+  dplyr::mutate(dmp.min = 100 * dm.min / mean(price.min, na.rm=T, trim = 0.1),
+    dmp.max = 100 * dm.max / mean(price.max, na.rm=T, trim = 0.1),
+    dmp.avg = 100 * dm.avg / mean(price.avg, na.rm=T, trim = 0.1))
+  # write result to file
+  write.table(data.Prices.Wheat.Gbp, "csv/summary/prices_wheat-kg-gbp.csv" , row.names = F, quote = T , sep = ",")
+## barley prices
 data.Prices.Barley <- subset(data.Prices.Ops,commodity=="barley" & unit=="kile")%>%
   ## deviation from the mean
   dplyr::mutate(dm.min = (price.min - mean(price.min, na.rm=T, trim = 0.1)),
