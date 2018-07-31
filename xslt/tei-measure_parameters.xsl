@@ -66,7 +66,8 @@
             <tei:measure unit="gallon" quantity="1">gallon (gal)</tei:measure>
             <tei:measure unit="quart" quantity="4">gallon = 4 quart (qt)</tei:measure>
             <tei:measure unit="pint" quantity="8">gallon = 8 pint (pt)</tei:measure>
-            <tei:measure unit="gill" quantity="32">gallon = 32 gill</tei:measure>
+            <tei:measure unit="gill" quantity="32">gallon = 32 gill (gi)</tei:measure>
+            <tei:measure unit="ounce" quantity="160">gallon = 160 fluid ounces (fl oz)</tei:measure>
             <tei:measure unit="l" quantity="4.54609">Since 1985 a gallon is defined as 4.54609 l</tei:measure>
         </tei:measureGrp>
         <!-- Acre -->
@@ -177,14 +178,12 @@
             <tei:measure unit="gr" quantity="1000"/>
             <tei:measure unit="t" quantity="0.001"/>
         </tei:measureGrp>
-        <!-- British pound avoirdupois to metric since 1878, pound avoirdupois became the standard for pound-based measures in 1855 -->
+        <!-- British imperial measures: pound avoirdupois to metric since 1878, pound avoirdupois became the standard for pound-based measures in 1855 -->
         <tei:measureGrp type="weight" when="1855">
             <!-- tons are not metric tonnes. the British long ton is 2240 lb -->
             <tei:measure unit="ton" quantity="0.000446429">ton = 2240 pound</tei:measure>
-            <!-- hundredweight: 112 lb or lb-av -->
             <tei:measure unit="cwt" quantity="0.008928571">hundredweight = 112 pound</tei:measure>
-            <!-- quarter (weight): 28 lb or lb-av -->
-            <tei:measure unit="qr" quantity="0.035714286">quarter = 28 pound</tei:measure>
+            <tei:measure unit="qr" quantity="0.035714286">(imperial) quarter = 28 pound</tei:measure>
             <tei:measure unit="st" quantity="0.035714286">stone = 14 pound</tei:measure>
             <tei:measure unit="lb" quantity="1">pound avoirdupois</tei:measure>
             <tei:measure unit="oz" quantity="16">pound = 16 ounce</tei:measure>
