@@ -22,6 +22,7 @@
             <tei:measure unit="tchinik"/>
             <tei:measure unit="tabba"/>
             <tei:measure unit="l"/>
+            <tei:measure unit="bushel"/>
         </tei:measureGrp>
         <tei:measureGrp type="weight">
             <!-- metric -->
@@ -60,7 +61,7 @@
             <tei:measure unit="cift" quantity="1"/>
         </tei:measureGrp>
         <!-- legal British volume measures, 1826-1870; the imperial gallon was established in 1824 -->
-        <tei:measureGrp type="volume" when="1826">
+        <tei:measureGrp type="volume" when="1826" source="F68BF464-8A7A-4D50-B830-C780C6D2D2E2">
             <tei:measure unit="bushel" quantity="0.125">bushel = 8 gallon</tei:measure>
             <tei:measure unit="peck" quantity="0.5">peck = 2 gallon</tei:measure>
             <tei:measure unit="gallon" quantity="1">gallon (gal)</tei:measure>
@@ -179,7 +180,7 @@
             <tei:measure unit="t" quantity="0.001"/>
         </tei:measureGrp>
         <!-- British imperial measures: pound avoirdupois to metric since 1878, pound avoirdupois became the standard for pound-based measures in 1855 -->
-        <tei:measureGrp type="weight" when="1855">
+        <tei:measureGrp type="weight" when="1855" source="F68BF464-8A7A-4D50-B830-C780C6D2D2E2">
             <!-- tons are not metric tonnes. the British long ton is 2240 lb -->
             <tei:measure unit="ton" quantity="0.000446429">ton = 2240 pound</tei:measure>
             <tei:measure unit="cwt" quantity="0.008928571">hundredweight = 112 pound</tei:measure>
