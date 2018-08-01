@@ -29,38 +29,18 @@ setwd("/BachCloud/BTSync/FormerDropbox/FoodRiots/food-riots_data") #Volumes/Dess
 
 # read / load data
 load("rda/events_food-riots.rda") # loads data.Events.FoodRiots
-data.Exports <- read.csv("csv/export-statistics.csv", header=TRUE, sep = ",", quote = "\"")
 data.Locations <- read.csv("csv/locations.csv", header=TRUE, sep = ",", quote = "\"") # this file contains toponyms and coordinates
 
-## convert data types
-## anydate() converts dates from Y0001 to Y0001-M01-D01
-data.Exports$schema.date <- anydate(as.factor(data.Exports$schema.date))
-  
 ## add geo-coordinates based on data.Locations
 data.Events.FoodRiots <- data.Events.FoodRiots %>%
   dplyr::left_join(data.Locations,  by =  c("schema.Place" = "schema.Place"))
-data.Exports <- data.Exports %>%
-  dplyr::left_join(data.Locations,  by =  c("schema.Place" = "schema.Place"))
-
-## clean data
-data.Exports <- data.Exports %>%
-  dplyr::rename(commodity = commodity.1,
-                quantity = quantity.1,
-                unit = unit.1,
-                currency = unit.2,
-                value = quantity.2) %>% # rename the columns relevant to later operations
-  dplyr::select(-commodity.2) # omit columns not needed
-
-
   
-# specify period
+# specify period to be mapped / plotted
 ## function to create subsets for periods
 func.Period.Date <- function(f,x,y){f[f$schema.date >= x & f$schema.date <= y,]}
-#func.Period.Year <- function(f,x,y){f[f$year >= x & f$year <= y,]}
 date.Start <- anydate("1855-01-01")
 date.Stop <- anydate("1916-12-31")
 data.Events.FoodRiots.Period <- func.Period.Date(data.Events.FoodRiots,date.Start,date.Stop)
-data.Exports.Period <- func.Period.Date(data.Exports, date.Start, date.Stop)
 
 # variable for period as string
 period.String <- paste(year(date.Start),"-",year(date.Stop),sep = "")
@@ -83,19 +63,6 @@ data.Events.FoodRiots.Period.Summary <- data.Events.FoodRiots.Period %>%
   group_by(schema.Place, schema.latitude, schema.longitude) %>%
   summarise(number.of.events = n()) %>%
   arrange(desc(number.of.events))
-## Exports by location
-data.Exports.Period.Summary.Annual <- data.Exports.Period %>%
-  group_by(schema.Place,schema.latitude,schema.longitude, schema.date, commodity, unit, currency) %>%
-  summarise(quantity = mean(quantity), # provides the quantity per location, per date, per commodity, per unit and per currency
-            value = mean(value)) %>% # same for value
-  arrange(schema.Place)
-data.Exports.Period.Summary <- data.Exports.Period.Summary.Annual %>%
-  group_by(schema.Place,schema.latitude,schema.longitude, commodity, unit) %>%
-  summarise(quantity = mean(quantity))
-
-write.table(data.Exports.Period.Summary.Annual, paste("csv/summary/export-statistics_", period.String ,".csv", sep = ""), row.names = F, quote = T , sep = ",")
-
-
 
 # 2. plot: all layers can be stored as variables!
 ## simple  map; use geom_polygon in ggplot2 to map dataframes
@@ -147,13 +114,6 @@ geom.Events.FoodRiots.Levant <- c(geom_point(data = data.Events.FoodRiots.Period
   #color = "#FEEE00",
   color = "#F2D902", fill = "#FEFDB2", 
   alpha = 0.5))
-geom.Exports <- c(geom_point(data = data.Exports.Period.Summary, 
-  aes(x = schema.longitude, y= schema.latitude, colour = commodity, size = quantity),
-  #size = data.Exports.Summary$quantity/1000,
-  shape = 21, stroke = 2,
-  #color = "#F2D902", 
-  #fill = "#FEFDB2", 
-  alpha = 0.8))
 
 # variable to store the labels for locations
 geom.FoodRiots.Labels <- c(geom_text(data = data.Events.FoodRiots.Period.Summary, 
@@ -193,17 +153,6 @@ ggsave(filename = paste("maps/map_food-riots-", period.String ,"_levant.png", se
        plot = map.FoodRiots.Levant,
        units = units.Plot , height = height.Plot, width = height.Plot, dpi = dpi.Plot)
 
-# map of exports
-map.Exports <- map.Base +
-  labs(title = "Exports of cereals",
-       subtitle = paste("Annual averages between", year(date.Start), "and", year(date.Stop)))+
-  geom.Exports +
-  viewport.ME
-map.Exports
-
-ggsave(filename = paste("maps/map_exports-", period.String ,"_levant.png", sep = ""), 
-       plot = map.Exports,
-       units = units.Plot , height = height.Plot, width = height.Plot, dpi = dpi.Plot)
 
 # add data table to plot
 theme.table <- ttheme_minimal(base_size = size.Base.Mm)
