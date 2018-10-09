@@ -89,7 +89,7 @@ viewport.ME <- c(coord_fixed(xlim = c(22, 46),  ylim = c(28, 42), ratio = 1.3))
 
 
 # variable to store the locations of events as points
-geom.Exports <- c(geom_point(data = data.Exports.Period, 
+geom.Exports <- c(geom_point(data = data.Exports.Period.Summary, 
   aes(x = schema.longitude, y= schema.latitude, colour = commodity, size = quantity),
   #size = data.Exports.Summary$quantity/1000,
   shape = 21, stroke = 2,
