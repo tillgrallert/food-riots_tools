@@ -331,6 +331,10 @@
             <tei:measure unit="dirham" quantity="900"/>
             <tei:measure unit="kg" quantity="2.88662625"/>
         </tei:measureGrp>
+        <!-- <tei:measureGrp type="weight" location="Jerusalem" source="6E1D8F8B-7C07-4023-AC4D-96E7450A370A" when="1914">
+            <tei:measure unit="ratl" quantity="1">During World War I, the Jerusalem ratl was equivalent to 3000 grams</tei:measure>
+            <tei:measure unit="kg" quantity="3"/>
+        </tei:measureGrp> -->
         <!-- Mosul -->
         <tei:measureGrp type="weight" location="Mosul" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
             <tei:measure unit="wazna" quantity="0.096153846"/>
