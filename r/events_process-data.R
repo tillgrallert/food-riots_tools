@@ -12,7 +12,7 @@ Sys.setlocale("LC_ALL", "en_US.UTF-8")
 setwd("/BachCloud/BTSync/FormerDropbox/FoodRiots/food-riots_data") #Volumes/Dessau HD/
 
 # 1. read price data from csv, note that the first row is a date
-data.Events <- read.csv("csv/events.csv", header=TRUE, sep = ";", quote = "\"")
+data.Events <- read.csv("csv/events.csv", header=TRUE, sep = ",", quote = "\"")
 
 # fix date types
 ## convert date to Date class, note that dates supplied as years only will be turned into NA if one uses as.date()
@@ -45,3 +45,4 @@ save(data.Events.PrisonRiots, file = "rda/events_prison-riots.rda")
 write.table(data.Events.PrisonRiots, "csv/summary/events_prison-riots.csv" , row.names = F, quote = T , sep = ",")
 save(data.Events.Famines, file = "rda/events_famines.rda")
 write.table(data.Events.Famines, "csv/summary/events_famines.csv" , row.names = F, quote = T , sep = ",")
+
