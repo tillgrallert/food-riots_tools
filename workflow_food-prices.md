@@ -35,6 +35,7 @@ I settled on the following TEI elements and attributes
         + non metrical values can be recorded without `@quantity`
         - to differentiate **taxes** from **prices**, the wrapping `<measureGrp>` must carry an `@type="tax"` attribute.
         - to differentiate **observed prices** from those **set by the authorities**, the wrapping `<measureGrp>` must carry an `@type="official"` attribute.
+        - to differentiate **acute prices** from **average prices**, the wrapping `<measureGrp>` carries an `@type="average"` attribute in the latter case.
         - [*NOTE*]: There is a difference between abstract currencies (for lack of a better word) and concrete denominations. 
     - for **wages**, I suggest the same as for prices of commodities, but instead of, for instance, wheat, `@commodity="labor"` would be counted in `@unit="day"` or `@unit="month"`
 
