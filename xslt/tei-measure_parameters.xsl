@@ -72,7 +72,7 @@
             <tei:measure unit="l" quantity="4.54609">Since 1985 a gallon is defined as 4.54609 l</tei:measure>
         </tei:measureGrp>
         <!-- Acre -->
-        <tei:measureGrp type="volume" location="Acre">
+        <tei:measureGrp type="volume" location="Acre" when="1878" source="892DA1CB-ABD8-4741-8DA5-D41F3B92E56A">
             <tei:measure unit="shunbul" quantity="1"/>
             <tei:measure unit="kile" quantity="2.25"/>
         </tei:measureGrp>
@@ -97,6 +97,10 @@
             <tei:measure unit="l" quantity="1"/>
         </tei:measureGrp>
         <!-- Damascus  -->
+        <tei:measureGrp type="volume" location="Damascus" source="892DA1CB-ABD8-4741-8DA5-D41F3B92E56A" when="1878">
+            <tei:measure unit="kile-ist" quantity="1">Das Kile (oder Kilo) von Konstantinopel = 36,103 Liter dient als Vollmaß zum Messen des Getreides</tei:measure>
+            <tei:measure unit="l" quantity="36.103"/>
+        </tei:measureGrp>
         <tei:measureGrp type="volume" location="Damascus" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
             <!-- shunbul = 72 madd -->
             <tei:measure unit="shunbul" quantity="0.013888889"/>
@@ -152,7 +156,7 @@
             <tei:measure unit="kile" quantity="10"/>
         </tei:measureGrp>
         <!-- Tripoli -->
-        <tei:measureGrp type="volume" location="Tripoli">
+        <tei:measureGrp type="volume" location="Tripoli" source="892DA1CB-ABD8-4741-8DA5-D41F3B92E56A" when="1878">
             <tei:measure unit="shunbul" quantity="1"/>
             <tei:measure unit="kile" quantity="2.25"/>
         </tei:measureGrp>
@@ -251,6 +255,13 @@
             <tei:measure unit="lb" quantity="2.841"/>
             <tei:measure unit="cwt" quantity="0.01118268"/>
         </tei:measureGrp>
+        <tei:measureGrp type="weight" location="Beirut" source="892DA1CB-ABD8-4741-8DA5-D41F3B92E56A" when="1878">
+            <tei:measure unit="qintar" quantity="0.022727273">44 Ocka geben einen Kantar nach Konstantinopeler Gewicht = 56 Kilogramm</tei:measure>
+            <tei:measure unit="ratl" quantity="0.5"/>
+            <tei:measure unit="okka" quantity="1"/>
+            <tei:measure unit="dirham" quantity="400"/>
+            <tei:measure unit="kg" quantity="1.272727273"/>
+        </tei:measureGrp>
         <!-- Damascus  -->
         <tei:measureGrp type="weight" location="Damascus" source="B32395CE-C4C1-4446-936C-DA22920B77E6" when="1749">
             <tei:measure unit="qintar" quantity="1"/>
@@ -268,6 +279,13 @@
             <tei:measure unit="kg" quantity="1.282945"/>
             <tei:measure unit="lb" quantity="2.841"/>
             <tei:measure unit="cwt" quantity="0.01118268"/>
+        </tei:measureGrp>
+        <tei:measureGrp type="weight" location="Damascus" source="892DA1CB-ABD8-4741-8DA5-D41F3B92E56A" when="1878">
+            <tei:measure unit="qintar" quantity="0.022727273">44 Ocka geben einen Kantar nach Konstantinopeler Gewicht = 56 Kilogramm</tei:measure>
+            <tei:measure unit="ratl" quantity="0.5"/>
+            <tei:measure unit="okka" quantity="1"/>
+            <tei:measure unit="dirham" quantity="400"/>
+            <tei:measure unit="kg" quantity="1.272727273"/>
         </tei:measureGrp>
         <tei:measureGrp type="weight" location="Damascus" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
             <tei:measure unit="qintar" quantity="0.005"/>
