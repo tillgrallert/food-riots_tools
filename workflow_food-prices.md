@@ -1,4 +1,4 @@
----
+ ---
 title: "Workflow: food prices"
 author: Till Grallert
 date: 2018-01-31 22:49:01 +0200
@@ -58,17 +58,17 @@ I settled on the following TEI elements and attributes
 
     ```xml
     <tei:measureGrp when="1865-03-14">Yesterday, <tei:measure commodity="wheat" unit="kile"
-    quantity="1">a kile of best wheat</tei:measure> was sold for <tei:measure commodity="currency" 
-    unit="ops" quantity="38">Ps 38</tei:measure> to <tei:measure commodity="currency" unit="ops" 
-    quantity="42">Ps 42</tei:measure></tei:measureGrp>
+     quantity="1">a kile of best wheat</tei:measure> was sold for <tei:measure commodity="currency" 
+     unit="ops" quantity="38">Ps 38</tei:measure> to <tei:measure commodity="currency" unit="ops" 
+     quantity="42">Ps 42</tei:measure></tei:measureGrp>
     ```
 
 
     ```xml
     Last week <tei:measureGrp>the price for <tei:measure commodity="wheat" unit="kile" 
-    quantity="1">a kile of best wheat</tei:measure> rose from <tei:measure commodity="currency" 
-    unit="ops" quantity="38" when="1863-03-20">Ps 38</tei:measure> to <tei:measure 
-    commodity="currency" unit="ops" quantity="42" when="1863-03-25">Ps 42</tei:measure>
+     quantity="1">a kile of best wheat</tei:measure> rose from <tei:measure commodity="currency" 
+     unit="ops" quantity="38" when="1863-03-20">Ps 38</tei:measure> to <tei:measure 
+     commodity="currency" unit="ops" quantity="42" when="1863-03-25">Ps 42</tei:measure>
     </tei:measureGrp>.
     ```
 
