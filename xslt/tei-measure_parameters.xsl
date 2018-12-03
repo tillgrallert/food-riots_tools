@@ -354,6 +354,10 @@
             <tei:measure unit="kg" quantity="3"/>
         </tei:measureGrp> -->
         <!-- Mosul -->
+        <tei:measureGrp type="weight" location="Mosul" source="50B93B4E-FEEA-4055-BAC9-07368A043F12" when="1880-03-02">
+            <tei:measure unit="wazna" quantity="0.1">one wazna of 10 okka of wheat</tei:measure>
+            <tei:measure unit="okka" quantity="1"/>
+        </tei:measureGrp>
         <tei:measureGrp type="weight" location="Mosul" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
             <tei:measure unit="wazna" quantity="0.096153846"/>
             <tei:measure unit="qintar" quantity="0.025"/>
@@ -364,7 +368,7 @@
         <tei:measureGrp type="weight" location="Syria" source="99DA2CDE-4BF4-4413-8CC3-E8F7FD14610A" when="1849">
             <tei:measure unit="ratl" quantity="0.5"/>
             <tei:measure unit="okka" quantity="1"/>
-            <tei:measure unit="dirham" quantity="400">errenously quoted as 1 okka = 100 dirham</tei:measure>
+            <tei:measure unit="dirham" quantity="400">erroneously quoted as 1 okka = 100 dirham</tei:measure>
             <tei:measure unit="kg" quantity="1.282945">312 dirham = 1 French kg</tei:measure>
         </tei:measureGrp>
         <tei:measureGrp type="weight" location="Syria" source="243D3AEC-773E-450D-A993-A1B8321A3B7D" when="1873">
