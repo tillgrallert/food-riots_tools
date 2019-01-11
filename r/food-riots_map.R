@@ -87,6 +87,7 @@ size.Base.Px = (5/14) * size.Base.Mm
 
 # specify viewports / zoom levels
 # all data points
+# there is a problem with this viewport
 viewport.Events.All <- c(coord_fixed(xlim = c(max(data.Events.FoodRiots.Period$schema.longitude)+1, 
     min(data.Events.FoodRiots.Period$schema.longitude) -1),  
   ylim = c(max(data.Events.FoodRiots.Period$schema.latitude), 
@@ -118,7 +119,7 @@ geom.Events.FoodRiots.Levant <- c(geom_point(data = data.Events.FoodRiots.Period
 # variable to store the labels for locations
 geom.FoodRiots.Labels <- c(geom_text(data = data.Events.FoodRiots.Period.Summary, 
    aes(x = schema.longitude, y = schema.latitude, 
-       label = ifelse(number.of.events > 0,paste(as.character(schema.Place),":",number.of.events),''),
+       label = ifelse(number.of.events > 0,paste(as.character(schema.Place),": ",number.of.events, sep = ""),''),
        hjust = -0.1, vjust = 0), 
    color = "#000426", check_overlap = FALSE, size = 1.8 * size.Base.Px))
 
@@ -133,8 +134,8 @@ map.FoodRiots.All <- map.Base +
   geom.Events.FoodRiots +
   geom.FoodRiots.Labels +
   labs(title = "Food riots",
-       subtitle = paste("between", year(date.Start), "and", year(date.Stop))) + 
-  viewport.Events.All
+       subtitle = paste("between", year(date.Start), "and", year(date.Stop))) +
+  viewport.ME # there is a problem with this view port
 map.FoodRiots.All
 
 ggsave(filename = paste("maps/map_food-riots-", period.String ,".png", sep = ""), 
