@@ -38,7 +38,7 @@ data.Events.FoodRiots <- data.Events.FoodRiots %>%
 # specify period to be mapped / plotted
 ## function to create subsets for periods
 func.Period.Date <- function(f,x,y){f[f$schema.date >= x & f$schema.date <= y,]}
-date.Start <- anydate("1855-01-01")
+date.Start <- anydate("1874-01-01")
 date.Stop <- anydate("1916-12-31")
 data.Events.FoodRiots.Period <- func.Period.Date(data.Events.FoodRiots,date.Start,date.Stop)
 
@@ -135,7 +135,7 @@ map.FoodRiots.All <- map.Base +
   geom.FoodRiots.Labels +
   labs(title = "Food riots",
        subtitle = paste("between", year(date.Start), "and", year(date.Stop))) +
-  viewport.ME # there is a problem with this view port
+  viewport.ME # there is a problem with this viewport for all events
 map.FoodRiots.All
 
 ggsave(filename = paste("maps/map_food-riots-", period.String ,".png", sep = ""), 
