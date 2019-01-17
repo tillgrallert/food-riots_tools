@@ -102,13 +102,11 @@
             <tei:measure unit="l" quantity="36.103"/>
         </tei:measureGrp>
         <tei:measureGrp type="volume" location="Damascus" source="83D74086-8E7D-4D96-9638-03F2A5BEA10F" when="1893">
-            <!-- shunbul = 72 madd -->
-            <tei:measure unit="shunbul" quantity="0.013888889"/>
-            <!-- ghirāra = 12 madd -->
-            <tei:measure unit="ghirara" quantity="0.083333333">ghirāra</tei:measure>
+            <tei:measure unit="shunbul" quantity="0.013888889">shunbul = 72 madd</tei:measure>
+            <tei:measure unit="ghirara" quantity="0.083333333">ghirāra = 12 madd</tei:measure>
             <tei:measure unit="madd" quantity="1"/>
-            <tei:measure unit="kile" quantity="0.5"/>
-            <tei:measure unit="cift" quantity="0.5"/>
+            <tei:measure unit="kile" quantity="0.5">1 madd = 2 kile</tei:measure>
+            <tei:measure unit="cift" quantity="0.5">kile = cift</tei:measure>
         </tei:measureGrp>
         <tei:measureGrp type="volume" location="Damascus" source="FE4047B7-C0F9-486D-B43C-46844068B208" when="1907">
             <tei:measure unit="kile" quantity="1"/>
