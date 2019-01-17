@@ -12,6 +12,9 @@ Sys.setlocale("LC_ALL", "en_US.UTF-8")
 # set a working directory
 setwd("/BachCloud/BTSync/FormerDropbox/FoodRiots/food-riots_data") #Volumes/Dessau HD/
 
+# load functions from external R script
+source("/BachCloud/BTSync/FormerDropbox/FoodRiots/food-riots_tools/r/food-riots_functions.R")
+
 # load data output from `prices_process-data.R` and `events_process-data.R`
 ## event data
 load("rda/events_food-riots.rda") # data.Events.FoodRiots
@@ -29,19 +32,6 @@ load("rda/prices_wheat-summary-monthly.rda") # data.Prices.Wheat.Summary.Monthly
 load("rda/prices_wheat-summary-daily.rda") # data.Prices.Wheat.Summary.Daily
 load("rda/prices_trends.rda") # data.Prices.Trends
 
-# specify period
-## function to create subsets for periods
-func.Period.Date <- function(f,x,y){f[f$schema.date >= x & f$schema.date <= y,]}
-#func.Period.Year <- function(f,x,y){f[f$year >= x & f$year <= y,]}
-date.Start <- anydate("1855-01-01")
-date.Stop <- anydate("1916-12-31")
-data.Prices.Wheat.Period <- func.Period.Date(data.Prices.Wheat,date.Start,date.Stop)
-data.Prices.Wheat.Daily.Period <- func.Period.Date(data.Prices.Wheat.Summary.Daily,date.Start,date.Stop)
-data.Prices.Barley.Period <- func.Period.Date(data.Prices.Barley,date.Start,date.Stop) 
-data.Prices.Bread.Period <- func.Period.Date(data.Prices.Bread,date.Start,date.Stop) 
-data.Prices.Trends.Period <- func.Period.Date(data.Prices.Trends,date.Start,date.Stop)
-data.Events.FoodRiots.Period <- func.Period.Date(data.Events.FoodRiots,date.Start,date.Stop)
-
 # specify a geographic region
 ## Bilād al-Shām
 location.Levant <- c('Acre','Aleppo','Baʿbdā','Beirut','Bayrūt','Damascus','Haifa','Hama','Hebron','Homs','Jaffa','Jerusalem','Nablus','Latakia','Tripoli', 'Ottoman Empire','Syria')
@@ -53,6 +43,17 @@ location.Egypt <- c('Alexandria', 'Cairo', 'Egypt', 'Port Said')
 location.Maghrib <- c('ALgiers', 'Tunis')
 location.OEm <- c('Constantinople','Istanbul','Ottoman Empire')
 ## Yemen, Iraq, Iran, India still missing
+
+# specify period
+## function to create subsets for periods
+date.Start <- anydate("1875-01-01")
+date.Stop <- anydate("1882-12-31")
+data.Prices.Wheat.Period <- f.date.period(data.Prices.Wheat,date.Start,date.Stop)
+data.Prices.Wheat.Daily.Period <- f.date.period(data.Prices.Wheat.Summary.Daily,date.Start,date.Stop)
+data.Prices.Barley.Period <- f.date.period(data.Prices.Barley,date.Start,date.Stop) 
+data.Prices.Bread.Period <- f.date.period(data.Prices.Bread,date.Start,date.Stop) 
+data.Prices.Trends.Period <- f.date.period(data.Prices.Trends,date.Start,date.Stop)
+data.Events.FoodRiots.Period <- f.date.period(data.Events.FoodRiots,date.Start,date.Stop)
 
 # the list of wheat prices includes two very high data points for regions outside Bilād al-Shām, they should be filtered out
 data.Prices.Wheat.Period <- data.Prices.Wheat.Period %>% 
@@ -424,7 +425,7 @@ plot.Food.Deviance <- plot.Base +
             aes(x = schema.date,y = dmp.avg, linetype = "bread"),
             na.rm=TRUE, color="black") +
   labs(title=paste("Food prices in Bilād al-Shām","between", year(date.Start), "and", year(date.Stop)),
-       subtitle="Wheat, barley and bread prices", 
+       subtitle="Deviation of wheat, barley and bread prices from the mean", 
        y="Deviation from mean in per cent") +
   scale_linetype_manual("Commodity",values=c("wheat"=1,"barley"=2, "bread" = 3)) +
   scale.Colours
