@@ -10,11 +10,11 @@ tags:
 ---
 
 This file briefly describes the workflow to:
-1. mark-up food prices in transcriptions and excerpts using TEI; 
+1. mark-up food prices in transcriptions and excerpts using TEI;
 2. extract, normalise and convert price information to CSV;
 3. plot the resulting dataset with R.
 
-There are two types of price information to be found in our sources: 
+There are two types of price information to be found in our sources:
 
 1. quantitative information on the ratio of two commodities, one of which is a currency;
 2. qualitative information, such as "rising prices", "high prices", "falling prices", and "low prices" (etc.)
@@ -26,8 +26,8 @@ I settled on the following TEI elements and attributes
 
 1. `<measureGrp>`: grouping element to group more than one measure together and provide attributes that pertain to all of them.
 2. at least two children `<measure>`, one of which must be of `@commodity="currency"`
-    - for **prices**, I suggest using `@commodity="currency"`. 
-        + The `@unit` then follows standard three-letter shorthand for currencies. 
+    - for **prices**, I suggest using `@commodity="currency"`.
+        + The `@unit` then follows standard three-letter shorthand for currencies.
             * Ottoman piasters shall be recorded as `@unit="ops"`
             * Ottoman beshlik coins are converted as Ps 2"20
             * Ottoman pound / lira (£T) shall be recorded as `@unit="ltq"`[^1]
@@ -36,45 +36,45 @@ I settled on the following TEI elements and attributes
         - to differentiate **taxes** from **prices**, the wrapping `<measureGrp>` must carry an `@type="tax"` attribute.
         - to differentiate **observed prices** from those **set by the authorities**, the wrapping `<measureGrp>` must carry an `@type="official"` attribute.
         - to differentiate **acute prices** from **average prices**, the wrapping `<measureGrp>` carries an `@type="average"` attribute in the latter case.
-        - [*NOTE*]: There is a difference between abstract currencies (for lack of a better word) and concrete denominations. 
+        - [*NOTE*]: There is a difference between abstract currencies (for lack of a better word) and concrete denominations.
     - for **wages**, I suggest the same as for prices of commodities, but instead of, for instance, wheat, `@commodity="labor"` would be counted in `@unit="day"` or `@unit="month"`
 
     ```xml
     Imagine, someone bought <measureGrp><measure commodity="wheat" quantity="2" unit="kile">
-    two kile of wheat</measure> at the price of <measure commodity="currency" quantity="3" 
+    two kile of wheat</measure> at the price of <measure commodity="currency" quantity="3"
     unit="ops">Ps 3</measure></measureGrp>.
     ```
 
     ```xml
     <measureGrp>
-        <measure commodity="wheat" unit="kile" quantity="1">kile  | wheat </measure> | 
-        <measure commodity="currency" unit="ops" quantity="50">50</measure> | 
+        <measure commodity="wheat" unit="kile" quantity="1">kile  | wheat </measure> |
+        <measure commodity="currency" unit="ops" quantity="50">50</measure> |
         <measure commodity="currency" unit="ops" quantity="56">56</measure>
     </measureGrp>
     ```
 
-3. *Temporal information*: The precision and duration of dates differs between sources; some provide information on a single date fixed in time, others provide similar punctual information but without it being fixed in time, yet others provide information on periods longer or shorter than a single day. 
+3. *Temporal information*: The precision and duration of dates differs between sources; some provide information on a single date fixed in time, others provide similar punctual information but without it being fixed in time, yet others provide information on periods longer or shorter than a single day.
     + `@when`: For the first and the third scenario, `<measureGrp>` and `<measure>` elements denoting the price can be dated with the `@when` attribute. If all measures are dated to the same moment/period, the attributes go on the wrapping `<measureGrp>`
 
     ```xml
     <tei:measureGrp when="1865-03-14">Yesterday, <tei:measure commodity="wheat" unit="kile"
-     quantity="1">a kile of best wheat</tei:measure> was sold for <tei:measure commodity="currency" 
-     unit="ops" quantity="38">Ps 38</tei:measure> to <tei:measure commodity="currency" unit="ops" 
+     quantity="1">a kile of best wheat</tei:measure> was sold for <tei:measure commodity="currency"
+     unit="ops" quantity="38">Ps 38</tei:measure> to <tei:measure commodity="currency" unit="ops"
      quantity="42">Ps 42</tei:measure></tei:measureGrp>
     ```
 
 
     ```xml
-    Last week <tei:measureGrp>the price for <tei:measure commodity="wheat" unit="kile" 
-     quantity="1">a kile of best wheat</tei:measure> rose from <tei:measure commodity="currency" 
-     unit="ops" quantity="38" when="1863-03-20">Ps 38</tei:measure> to <tei:measure 
+    Last week <tei:measureGrp>the price for <tei:measure commodity="wheat" unit="kile"
+     quantity="1">a kile of best wheat</tei:measure> rose from <tei:measure commodity="currency"
+     unit="ops" quantity="38" when="1863-03-20">Ps 38</tei:measure> to <tei:measure
      commodity="currency" unit="ops" quantity="42" when="1863-03-25">Ps 42</tei:measure>
     </tei:measureGrp>.
     ```
 
     + `@dur`: in order to specify a duration, one can use the `@dur` attribute whith the datatype [`xs:duration`](https://docstore.mik.ua/orelly/xml/schema/ch16_01.htm#ch16-77046) / [`teidata.duration.w3c`](http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-teidata.duration.w3c.html).
-    
-    >The lexical space of `xs:duration` is the format defined by ISO 8601 under the form "PnYnMnDTnHnMnS," in which the capital letters are delimiters and can be omitted when the corresponding member is not used. 
+
+    >The lexical space of `xs:duration` is the format defined by ISO 8601 under the form "PnYnMnDTnHnMnS," in which the capital letters are delimiters and can be omitted when the corresponding member is not used.
 
 4. *Spatial information*: Since non-metrical measures varied between places and since source can record prices from more than one location, the location can be specified with a custom `@location` attribute on `<measureGrp>` and `<measure>` elements denoting the price. If all measures relate to the same place, the attributes go on the wrapping `<measureGrp>`. `@location` accepts simple toponyms.
 
@@ -94,14 +94,14 @@ All transcription and annotation of sources is done in Sente, which, albeit now 
 
 Data can be extracted from Sente using either the built-in XML export or my custom workflow published [here](https://www.github.com/tillgrallert/lossless-sente-export). The direct export has some glitches and data must be cleaned / pre-processed using [custom XSLT](https://www.github.com/tillgrallert/tss_tools).
 
-## 3. extract and normalize price data 
+## 3. extract and normalize price data
 
 The XSLT stylesheet [`tei_retrieve-measures-as-csv.xsl`](xslt/tei_retrieve-measures-as-csv.xsl) can be run on any input XML. It will gather all `<measureGrp>` elements based on a number of selection criteria and outputs them as CSV sorted by date (either publication date of the source or the date recorded  `@when` attributes). With the help of [`tei-measure_normalize.xsl`](xslt/tei-measure_normalize.xsl) units are normalised as far as possible to allow for greater comparability across the dataset. The stylesheet performs the following steps using different modes:
 
 1. extract data: all `<tei:measureGrp>` are extracted from a folder containing one Sente XML file per source.
 2. enrich every `<tei:measure>` with dates and locations based on information from ancestors `<tei:measureGrp>` and `<tss:reference>`. These are performed by `@mode="m_enrich-dates"`, `@mode="m_enrich-locations"`, and `@mode="m_enrich"`
     + in case `@when` provides information on a single year only, the stylesheet automatically adds `@dur="P1Y"`
-3. normalize non-metrical measures: this is done with a [parameter file](xslt/tei-measure_parameters.xsl) that records localised and dated information on conversion rates between different units; e.g. 
+3. normalize non-metrical measures: this is done with a [parameter file](xslt/tei-measure_parameters.xsl) that records localised and dated information on conversion rates between different units; e.g.
 
     ```xml
     <!-- Nablus: volumes -->
@@ -116,9 +116,40 @@ The XSLT stylesheet [`tei_retrieve-measures-as-csv.xsl`](xslt/tei_retrieve-measu
     </tei:measureGrp>
     ```
 
-    [*NOTE*]: this step also includes a normalization of various denominations of a currency, such as Ottoman *mecidiye*, *ġurūş*, *līra*, into a single denomination (piaster or "ops" in the Ottoman case). It is important that the stylesheets in question do not attempt to normalize denominations across currencies, without information on exchange rates (the final output of this conversion can be used as a basis for looking up exchange rates, so they should not be touched in this step).
+    - [*NOTE*]: this step also includes a normalization of various denominations of a currency, such as Ottoman *mecidiye*, *ġurūş*, *līra*, into a single denomination (piaster or "ops" in the Ottoman case). It is important that the stylesheets in question do not attempt to normalize denominations across currencies, without information on exchange rates (the final output of this conversion can be used as a basis for looking up exchange rates, so they should not be touched in this step).
+    - [***NOTE*** 2019-08-07]: The latest relase of the TEI P5 guidelines (3.6.0) added a completely new element, [`<unitDecl>`](https://tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HDUDECL), for declaring units and conversions. The later are datable as members of `att.datable.w3c`.This should be adopted for future conversions.
+        + Instead of this:
 
-4. regularize all commodities that are not money to quantities of 1 
+    ```xml
+    <tei:measureGrp type="volume" when="1826" source="F68BF464-8A7A-4D50-B830-C780C6D2D2E2">
+        <tei:measure unit="bushel" quantity="0.125">bushel = 8 gallon</tei:measure>
+        <tei:measure unit="peck" quantity="0.5">peck = 2 gallon</tei:measure>
+        <tei:measure unit="gallon" quantity="1">gallon (gal)</tei:measure>
+        <tei:measure unit="quart" quantity="4">gallon = 4 quart (qt)</tei:measure>
+        <tei:measure unit="pint" quantity="8">gallon = 8 pint (pt)</tei:measure>
+        <tei:measure unit="gill" quantity="32">gallon = 32 gill (gi)</tei:measure>
+        <tei:measure unit="ounce" quantity="160">gallon = 160 fluid ounces (fl oz)</tei:measure>
+        <tei:measure unit="l" quantity="4.54609">Since 1985 a gallon is defined as 4.54609 l</tei:measure>
+    </tei:measureGrp>
+    ```
+
+    one would write something akin to that:
+
+    ```xml
+    <unitDecl>
+        <unitDef type="volume" xml:id="bushel">
+            <label>bushel</label>
+            <placeName>England</placeName>
+            <!-- add one or more conversion formulas -->
+            <conversion formula="$fromUnit * 0.125" from="1421" fromUnit="#bushel" to="1676" toUnit="#gallon"/>
+            <conversion formula="$fromUnit * 0.125 * 4.54609" from="1985" fromUnit="#bushel" toUnit="l"/>
+            <desc>A volume of one bushel was defined as 8 gallons in England in the mid-19th century.</desc>
+        </unitDef>
+    </unitDecl>
+    ```
+
+
+4. regularize all commodities that are not money to quantities of 1
 5. safe output as xml and csv
 
 ## 4. Statistics and plots with R
@@ -133,7 +164,7 @@ There are two main plots of quantitative price data:
 
     ![Box plot of wheat prices](https://github.com/tillgrallert/food-riots_data/raw/master/plots/rplot_prices-wheat-1874-1916_box-plot.png)
 
-2. plot all years over each other in order to see seasonal trends 
+2. plot all years over each other in order to see seasonal trends
 
     ![seasonal fluctuation of wheat prices](https://github.com/tillgrallert/food-riots_data/raw/master/plots/rplot_prices-wheat-1874-1916_annual-cycle-box.png)
 
@@ -154,7 +185,7 @@ For the time being, I settled on manually tagging each reference in Sente that i
 
 ## extract information
 
-If the information is explicitly marked-up in Sente, export is simple and similar to that of quantitative information. Otherwise, one would need to run co-location analysis for pairs of words on the entire source corpus and record the result in some serialisation format. 
+If the information is explicitly marked-up in Sente, export is simple and similar to that of quantitative information. Otherwise, one would need to run co-location analysis for pairs of words on the entire source corpus and record the result in some serialisation format.
 
 The stylesheet [`tss_retrieve-qualitative-prices.xsl`](xslt/tss_retrieve-qualitative-prices.xsl) extracts all explicitly marked-up price information from `<tss:keyword>` as CSV with the columns:
 
@@ -165,12 +196,12 @@ The stylesheet [`tss_retrieve-qualitative-prices.xsl`](xslt/tss_retrieve-qualita
 
 ## statistics and plots with R
 
-The CSV generated by `tss_retrieve-qualitative-prices.xsl` is used to plot this qualitative data in R. One can use the `geom_point()` function from ggplot to plot dots for each mention of a tag on a temporal axis; e.g. 
+The CSV generated by `tss_retrieve-qualitative-prices.xsl` is used to plot this qualitative data in R. One can use the `geom_point()` function from ggplot to plot dots for each mention of a tag on a temporal axis; e.g.
 
 ```r
 ggplot() +
 # layer: falling prices
-geom_point(data = filter(v.Prices.Trends.Period, tag=="prices: high"), # filter data frame of qualitative data for a specific tag 
+geom_point(data = filter(v.Prices.Trends.Period, tag=="prices: high"), # filter data frame of qualitative data for a specific tag
             aes(x = date, y = 9, # using a fixed value for y puts all dots on the same horizontal line
                 colour = tag),
             fill = "#871020",
