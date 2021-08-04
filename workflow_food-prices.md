@@ -148,6 +148,21 @@ The XSLT stylesheet [`tei_retrieve-measures-as-csv.xsl`](xslt/tei_retrieve-measu
     </unitDecl>
     ```
 
+    - [***NOTE*** 2020-05-03]: I wrote a feature request in which I asked for differentiation of conversions by location by means of an attribute. This would allow for the following
+
+    ```xml
+    <unitDef type="volume" xml:id="shunbul">
+       <label xml:lang="ar-Latn-x-ijmes">shunbul</label>
+       <label xml:lang="ar">شنبل</label>
+       <conversion formula="$fromUnit * 2.5" fromUnit="#shunbul" toUnit="#kile" when="1873" where="#acre #tripoli"/>
+       <conversion formula="$fromUnit * 2.25" fromUnit="#shunbul" toUnit="#kile" when="1878"  where="#acre #tripoli"/>
+       <conversion formula="$fromUnit * 3" from="1891" fromUnit="#shunbul" to="1910" toUnit="#kile" where="#aleppo"/>
+       <conversion formula="$fromUnit * 2.5" fromUnit="#shunbul" toUnit="#kile_istanbul" when="1860" where="#aleppo"/>
+       <conversion formula="$fromUnit * 72" fromUnit="#shunbul" toUnit="#madd" when="1893" where="#damascus"/>
+       <desc xml:lang="en">The <foreign xml:lang="ar-Latn-x-ijmes">shunbul</foreign> was the main unit to measure grain in the Northern parts of Greater Syria.</desc>
+    </unitDef>
+    ```
+
 
 4. regularize all commodities that are not money to quantities of 1
 5. safe output as xml and csv
