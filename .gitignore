@@ -3,3 +3,4 @@ _output/
 *.history
 
 r/.Rhistory
+.Rproj.user
